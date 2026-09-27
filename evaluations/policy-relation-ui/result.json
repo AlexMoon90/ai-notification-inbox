@@ -1,0 +1,32 @@
+{
+  "unit_tests": {
+    "tests": 60,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "debug_build": "passed",
+  "test_apk_build": "passed",
+  "lint": "passed",
+  "source_matches_build": true,
+  "apk_sha256": "318523c8703a11b6207cb34b710c8ae9375fd292c8f5bd97008ba01d4abe1fd1",
+  "galaxy_install": "passed",
+  "galaxy_ui": "passed on third attempt (40.756 s)",
+  "live_ai_calls_this_change": 0,
+  "phase_0_gate": "unchanged",
+  "galaxy_cases": [
+    "relation selection preserves policy",
+    "rule detail opens",
+    "reset cancellation preserves rules",
+    "confirmed reset removes rules",
+    "Room reload remains reset",
+    "actual user policy unchanged"
+  ],
+  "earlier_attempts": [
+    "device-first-attempt.log",
+    "device-second-attempt.log"
+  ],
+  "remaining_checks": [
+    "physical multi-app icon display and width-drag gestures across other devices not separately automated"
+  ]
+}

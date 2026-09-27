@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-25",
+  "diagnosis": {
+    "sports_probability": 0.98,
+    "generic_evidence_probability": 0.79,
+    "unrelated_news_probability": 0.42
+  },
+  "fixes": [
+    "CONTENT question and sufficiency use title plus text, specific to requested topic",
+    "uncertainty cannot veto a confirmed match when all applicable rules/exceptions have the same action"
+  ],
+  "unit_tests": 73,
+  "build_lint": "passed",
+  "live_jev_cases": {
+    "sports": 3,
+    "weather": 1,
+    "security_backup": 2
+  },
+  "results": {
+    "outside": 4,
+    "review_visible": 2
+  },
+  "actual_calls": 6,
+  "estimated_usd": 0.000185136,
+  "galaxy_installed": true,
+  "user_policy": "unchanged",
+  "history_reclassification": false
+}

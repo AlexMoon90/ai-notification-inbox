@@ -1,0 +1,10 @@
+{
+  "debug": {
+    "key_present": true,
+    "config_asset": true
+  },
+  "release": {
+    "key_present": false,
+    "config_asset": false
+  }
+}

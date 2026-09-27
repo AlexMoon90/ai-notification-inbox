@@ -1,0 +1,16 @@
+
+com.ainotification.inbox.StructuredPolicyDeviceTest:INSTRUMENTATION_STATUS: api_calls=6
+INSTRUMENTATION_STATUS: estimated_usd=0.00257778
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+.INSTRUMENTATION_STATUS: api_calls=0
+INSTRUMENTATION_STATUS: estimated_usd=0.0
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+.
+
+Time: 98.948
+
+OK (2 tests)
+
+

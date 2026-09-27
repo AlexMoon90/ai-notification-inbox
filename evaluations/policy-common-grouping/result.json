@@ -1,0 +1,26 @@
+{
+  "unit_tests": 64,
+  "unit_failures": 0,
+  "build": "passed",
+  "lint": "passed",
+  "device_final": "2 tests passed, 98.948 seconds",
+  "api_calls_final": 6,
+  "estimated_usd_final": 0.00257778,
+  "jev_compile_calls": 0,
+  "actual_policy": "preserved",
+  "apk_sha256": "01f0c1aac89022906dc97ddda84de066a4bb5774823ea64a1ef5d82ab4f2d8af",
+  "checks": [
+    "same behavior displayed once without mutating member IDs",
+    "different state/action/time/qualifier/sender not merged",
+    "actual OpenAI sequential Kakao then SMS produces one exact multi-app HIDE preserving ID",
+    "actual OpenAI sender shopping exception preserves common rule and Kakao-only scope",
+    "Kakao shows common plus individual; SMS excludes Kakao exception",
+    "scope priority tested with deterministic Jev judgments",
+    "drag, settings and isolated reset regression passed"
+  ],
+  "limitations": [
+    "first device run failed with empty UI hierarchy; logs retained",
+    "overview capture occurred during secure-window transition and is black; overlay capture inspected successfully",
+    "broad AI meaning accuracy and semantic paraphrase grouping not established"
+  ]
+}

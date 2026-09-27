@@ -1,0 +1,25 @@
+{
+  "unit_tests": {
+    "tests": 90,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build_and_lint": "passed",
+  "device_install": "passed",
+  "device_ui_validation": "passed_synthetic_sheet_preview_apply",
+  "live_recommendation_jev": "passed_promotion_classification_hide_and_delivery_show",
+  "user_policy_changed": false,
+  "advanced_watch_undo": "not_implemented",
+  "apk": "/tmp/inbox-preservation-build/app/build/outputs/apk/debug/app-debug.apk",
+  "device_tests": {
+    "tests": 2,
+    "failures": 0,
+    "skipped": 0,
+    "seconds": 6.041
+  },
+  "device": "Galaxy SM-S911N",
+  "jev_calls": 3,
+  "openai_calls": 0,
+  "estimated_usd": 8.1396e-05
+}

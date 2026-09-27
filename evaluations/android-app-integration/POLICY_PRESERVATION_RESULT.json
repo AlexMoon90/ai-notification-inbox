@@ -1,0 +1,44 @@
+{
+  "date": "2026-09-24",
+  "changes": [
+    "shared interpretation contract and executable condition definitions",
+    "one bounded semantic repair followed by fresh deterministic and semantic checks",
+    "preserved history on retry",
+    "structured scope/conditions/action/exceptions/time display including pending read-only previews",
+    "actual group target clarification instead of widening to all chats"
+  ],
+  "unit_tests": {
+    "passed": 57,
+    "failed": 0
+  },
+  "build": [
+    "debug APK",
+    "test APK",
+    "lintDebug"
+  ],
+  "device": "Galaxy S23 / Android 16",
+  "device_evidence": {
+    "structured_ui_fixture_confirmation_and_save": "passed; synthetic fixture, no live AI in this UI-only test",
+    "group_scope_clarification": "passed with live API in earlier targeted run",
+    "live_semantic_preservation": "ready/validated observed, including a one-repair response; old full UI runs failed on scrolling/automation, not reported as fully passing",
+    "stored_user_request_refresh": "passed without changing active policy; clarification_required with 7 partial preview rules",
+    "current_question": "단체방 잡담을 숨길 대화방 선택"
+  },
+  "failed_attempts": [
+    "unnecessary login clarification before executable condition definitions were supplied",
+    "overlap-priority clarification retained as a legitimate user choice",
+    "one generic request connection/storage failure",
+    "UI target inspection/fast scroll failures; slower container scroll passed",
+    "ADB/UiAutomation DeadObjectException during one run",
+    "initial workspace build file IO delays and intermediate test result write failure"
+  ],
+  "installed": true,
+  "active_user_policy_preserved": true,
+  "limitations": [
+    "No broad multilingual accuracy claim or Phase 0 completion",
+    "Full live AI-to-UI scenario did not have a single clean passing run in this turn; components verified separately",
+    "Stored user proposal is partial and not activated; no answer or approval was invented",
+    "FLAG_SECURE retained; accessibility state inspected",
+    "Failed API attempt costs not aggregated; app per-call usage logs remain the source"
+  ]
+}

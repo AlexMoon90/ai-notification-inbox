@@ -1,0 +1,10 @@
+{
+  "date": "2026-09-25",
+  "build_lint": "passed",
+  "unit_tests": 70,
+  "native_render": "passed; visually inspected",
+  "installed": true,
+  "device_ui": "blocked: systemui lock screen; 2 attempts did not reach app UI",
+  "user_policy": "unchanged",
+  "actual_external_api_calls": 0
+}

@@ -1,0 +1,12 @@
+{
+  "button_bounds": [
+    350,
+    1788,
+    731,
+    1932
+  ],
+  "speech_foreground_packages": [
+    "com.google.android.tts"
+  ],
+  "returned_to_editor_after_back": true
+}

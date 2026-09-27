@@ -1,0 +1,8 @@
+{
+  "model": "gpt-4.1-2025-04-14",
+  "source_sha256": {
+    "policy_setup_v5.py": "69c4258d45b20d83d1ee236df3edae8bb3dc3328c58912222fee9d82f7071f4c",
+    "evaluate_policy_setup_v5.py": "406be5046b4d470d2b5688a5c4fc40e41affb4a3efc53f3f7c9c022418743218"
+  },
+  "note": "Only settings model changed from v4. v4 failed cases are preserved. All fixtures reused, not blind."
+}

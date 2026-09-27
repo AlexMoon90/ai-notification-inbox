@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-23",
+  "unit_tests": 28,
+  "unit_failures": 0,
+  "lint_errors": 0,
+  "debug_release_builds": "passed",
+  "galaxy_test": "passed",
+  "galaxy_device": "SM-S911N Android 16",
+  "live_api_calls_final_test": 4,
+  "synthetic_statuses": [
+    "match",
+    "outside",
+    "review",
+    "review"
+  ],
+  "final_test_estimated_usd": 9.3114e-05,
+  "device_api_calls_including_failed_test_attempts": 12,
+  "diagnostic_api_calls_on_host": 7,
+  "estimated_usd_all_recorded_attempts": 0.000446502,
+  "existing_records_preserved_during_test": true,
+  "selection_left_active": false,
+  "full_ui_test": "blocked_by_secure_device_lock",
+  "evaluation_scope": "integration and development fixtures; not held-out accuracy evaluation",
+  "earlier_failures": [
+    "compiler insufficiently distinguished verified room binding from unavailable context",
+    "initial evidence threshold kept clear bill request in review",
+    "Android Notification.Builder shortened long test input before capture; corrected fixture extras"
+  ],
+  "original_os_notifications_cancelled": false,
+  "phase_quality_gate": "not passed"
+}

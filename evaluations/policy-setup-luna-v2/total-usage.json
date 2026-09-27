@@ -1,0 +1,12 @@
+{
+  "calls": 100,
+  "tokens": {
+    "input_tokens": 169868,
+    "output_tokens": 19914,
+    "cached_tokens": 136020
+  },
+  "estimated_usd_known_usage": 0.0333868,
+  "unknown_cost_calls": 0,
+  "p50_ms": 3109.26,
+  "p95_ms": 5494.59
+}

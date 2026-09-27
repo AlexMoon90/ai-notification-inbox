@@ -1,0 +1,88 @@
+{
+  "date": "2026-09-23",
+  "device": "Galaxy S23 SM-S911N / Android 16 API 36",
+  "status": "development_integration_only_not_full_mvp",
+  "android_unit_tests": {
+    "passed": 13,
+    "failed": 0
+  },
+  "python_setup_regression_tests": {
+    "passed": 49,
+    "failed": 0
+  },
+  "python_bridge_tests": {
+    "passed": 4,
+    "failed": 0
+  },
+  "final_device_tests": {
+    "passed": 5,
+    "failed": 0,
+    "cases": [
+      "synthetic timeline, long message filter, detail and back navigation",
+      "real OpenAI instruction form, question selection, activity recreation, review, disk reload, no activation",
+      "system sources excluded from capture and listing",
+      "listener connected on new Inbox screen",
+      "missing original token dialog and explicit Kakao app launch"
+    ]
+  },
+  "openai_confirmed_final_run": {
+    "calls": 3,
+    "estimated_usd": 0.00133688,
+    "model": "gpt-5.6-luna",
+    "reasoning": "low",
+    "metrics": [
+      {
+        "model": "gpt-5.6-luna",
+        "latency_ms": 5593.18,
+        "input_tokens": 1553,
+        "output_tokens": 355,
+        "cached_tokens": 1550,
+        "estimated_usd": 0.0004576,
+        "purpose": "clarify",
+        "reasoning_effort": "low",
+        "recorded_at": 1790167839.898178,
+        "request_bytes": 108
+      },
+      {
+        "model": "gpt-5.6-luna",
+        "latency_ms": 2196.14,
+        "input_tokens": 1830,
+        "output_tokens": 109,
+        "cached_tokens": 1334,
+        "estimated_usd": 0.00025667999999999996,
+        "purpose": "clarify",
+        "reasoning_effort": "low",
+        "recorded_at": 1790167847.163318,
+        "request_bytes": 1565
+      },
+      {
+        "model": "gpt-5.6-luna",
+        "latency_ms": 2594.2,
+        "input_tokens": 2087,
+        "output_tokens": 171,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0006226000000000001,
+        "purpose": "semantic_review",
+        "reasoning_effort": "low",
+        "recorded_at": 1790167847.1633332,
+        "request_bytes": 1565
+      }
+    ]
+  },
+  "usage_limit": "Earlier UI debugging call totals were not retained after synthetic draft cleanup. This is not the total turn cost. Aggregate metadata recording added for subsequent calls.",
+  "privacy": "Live API integration used synthetic user instructions only; no collected personal notification candidates sent. Screenshots use synthetic debug Activity.",
+  "limitations": [
+    "USB and running PC bridge required for AI setup",
+    "No Jev policy compiler or live classification",
+    "No Topic/Relationship auto classification",
+    "No AI Watch",
+    "No fresh Kakao conversation deep link test this turn; fallback app launch verified",
+    "Activity recreation and file reload verified; arbitrary OS kill during HTTP and OEM background cases not covered",
+    "Phase 0 and reliability gates not complete"
+  ],
+  "lint_debug": "passed",
+  "release_manifest": {
+    "internet_permission": false,
+    "design_preview_activity": false
+  }
+}

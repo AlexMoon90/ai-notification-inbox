@@ -1,0 +1,371 @@
+[
+  {
+    "id": "h_clear_no_candidates",
+    "expected": {
+      "id": "h_clear_no_candidates",
+      "instruction": "어느 앱에서 오든 배송 도착 안내와 예약 취소 소식은 알려줘.",
+      "empty": true,
+      "status": "ready",
+      "contains": [
+        "배송",
+        "예약"
+      ]
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "요청하신 조건에 따라 어느 앱에서 오든 배송 도착 안내와 예약 취소 소식은 알려주는 기준 초안입니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "모든 앱에서 배송 도착 안내와 예약 취소 소식은 알려준다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "모든 앱에서 배송 도착 안내와 예약 취소 소식을 알려주는 기준을 설정함"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"요청하신 조건에 따라 어느 앱에서 오든 배송 도착 안내와 예약 취소 소식은 알려주는 기준 초안입니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"모든 앱에서 배송 도착 안내와 예약 취소 소식은 알려준다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"모든 앱에서 배송 도착 안내와 예약 취소 소식을 알려주는 기준을 설정함\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 13584,
+        "latency_ms": 1589.5,
+        "input_tokens": 1781,
+        "output_tokens": 101,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0008740000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "h_known_name",
+    "expected": {
+      "id": "h_known_name",
+      "instruction": "카카오톡 전체에서 내 별명 달곰을 부르면 알려줘.",
+      "status": "ready",
+      "contains": [
+        "달곰"
+      ]
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "카카오톡 전체에서 별명 '달곰'이 언급되면 알려주는 기준 초안입니다. 검토해 주세요.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "카카오톡 전체에서 별명 '달곰'이 언급되면 알려준다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "카카오톡 전체 범위에서 별명 '달곰' 호출 시 알림 설정"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"카카오톡 전체에서 별명 '달곰'이 언급되면 알려주는 기준 초안입니다. 검토해 주세요.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"카카오톡 전체에서 별명 '달곰'이 언급되면 알려준다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"카카오톡 전체 범위에서 별명 '달곰' 호출 시 알림 설정\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 14140,
+        "latency_ms": 1641.67,
+        "input_tokens": 1894,
+        "output_tokens": 101,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009192,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "h_vague",
+    "expected": {
+      "id": "h_vague",
+      "instruction": "앱 구분 없이 꼭 내가 봐야 할 소식만 골라줘. 어떤 종류인지는 아직 정하지 않았어.",
+      "status": "needs_input",
+      "field": "meaning"
+    },
+    "turns": [],
+    "errors": [
+      "unsafe_incomplete_state"
+    ],
+    "synthetic_model_outputs": [
+      "{\"status\":\"needs_input\",\"message\":\"'꼭 봐야 할 소식'의 의미가 아직 명확하지 않습니다. 어떤 종류의 소식을 중요하다고 생각하는지 구체적으로 알려주세요.\",\"questions\":[{\"id\":\"q1\",\"field\":\"meaning\",\"kind\":\"multiple\",\"prompt\":\"꼭 봐야 할 소식의 의미로 어떤 항목들을 포함할까요? (중복 선택 가능)\",\"reason\":\"중요함의 기준이 명확하지 않아 구체적인 종류를 확인해야 합니다.\",\"options\":[{\"id\":\"urgent\",\"label\":\"긴급한 요청이나 알림\",\"candidate_id\":null},{\"id\":\"일정변경\",\"label\":\"일정 변경이나 약속 관련\",\"candidate_id\":null},{\"id\":\"답변요청\",\"label\":\"답변이나 확인이 필요한 메시지\",\"candidate_id\":null},{\"id\":\"중요공지\",\"label\":\"중요 공지사항\",\"candidate_id\":null},{\"id\":\"기타\",\"label\":\"기타 (직접 입력 예정)\",\"candidate_id\":null}]}],\"unresolved\":[], \"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 14220,
+        "latency_ms": 2607.63,
+        "input_tokens": 1905,
+        "output_tokens": 245,
+        "cached_tokens": 0,
+        "estimated_usd": 0.001154,
+        "error": "unsafe_incomplete_state",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "h_missing_identity",
+    "expected": {
+      "id": "h_missing_identity",
+      "instruction": "모든 앱에서 나를 직접 호명하는 내용만 알려줘. 아직 내 이름이나 별명은 등록하지 않았어.",
+      "status": "needs_input",
+      "kind": "text",
+      "follow": "name"
+    },
+    "turns": [],
+    "errors": [
+      "unsafe_incomplete_state"
+    ],
+    "synthetic_model_outputs": [
+      "{\"status\":\"needs_input\",\"message\":\"사용자 이름이나 별명을 입력해 주세요. 그래야 '나를 직접 호명하는 내용'을 정확히 판단할 수 있습니다.\",\"questions\":[{\"id\":\"q1\",\"field\":\"identity\",\"kind\":\"text\",\"prompt\":\"알림을 받을 때 인식할 사용자 이름이나 별명을 입력해 주세요.\",\"reason\":\"사용자 이름이나 별명이 등록되어야 해당 이름이 포함된 알림만 선별할 수 있습니다.\",\"options\":[]}],\"unresolved\":[], \"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 14243,
+        "latency_ms": 1911.25,
+        "input_tokens": 1904,
+        "output_tokens": 128,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009664000000000001,
+        "error": "unsafe_incomplete_state",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "h_membership",
+    "expected": {
+      "id": "h_membership",
+      "instruction": "수진이가 들어가 있는 모든 채팅방을 자동으로 찾아서 그 방에서만 알림 줘.",
+      "status": "unsupported"
+    },
+    "turns": [
+      {
+        "status": "unsupported",
+        "message": "수진이가 참여한 모든 채팅방 목록을 자동으로 찾는 기능은 지원되지 않습니다. 대신 사용자가 직접 원하는 대화방을 선택하는 방식으로 설정할 수 있습니다.",
+        "questions": [],
+        "unresolved": [
+          "전체 방 참여자 명단을 알 수 없음"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "수진이 참여 방 자동 탐색은 불가, 직접 대화방 선택 필요"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"unsupported\",\"message\":\"수진이가 참여한 모든 채팅방 목록을 자동으로 찾는 기능은 지원되지 않습니다. 대신 사용자가 직접 원하는 대화방을 선택하는 방식으로 설정할 수 있습니다.\",\"questions\":[],\"unresolved\":[\"전체 방 참여자 명단을 알 수 없음\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"수진이 참여 방 자동 탐색은 불가, 직접 대화방 선택 필요\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 14204,
+        "latency_ms": 1465.48,
+        "input_tokens": 1901,
+        "output_tokens": 103,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009252,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "h_read",
+    "expected": {
+      "id": "h_read",
+      "instruction": "카카오톡에서 내가 읽은 메시지는 알림 목록에서 빼줘.",
+      "status": "unsupported"
+    },
+    "turns": [
+      {
+        "status": "unsupported",
+        "message": "카카오톡에서 사용자가 읽은 메시지를 알림 목록에서 제외하는 기능은 현재 지원되지 않습니다. 읽음 여부 정보를 알 수 없기 때문입니다. 대신 특정 대화를 지정하여 알림을 관리하는 방법을 고려할 수 있습니다.",
+        "questions": [],
+        "unresolved": [
+          "읽음 여부 정보 부재"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "읽음 메시지 제외 기능은 지원되지 않음"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"unsupported\",\"message\":\"카카오톡에서 사용자가 읽은 메시지를 알림 목록에서 제외하는 기능은 현재 지원되지 않습니다. 읽음 여부 정보를 알 수 없기 때문입니다. 대신 특정 대화를 지정하여 알림을 관리하는 방법을 고려할 수 있습니다.\",\"questions\":[],\"unresolved\":[\"읽음 여부 정보 부재\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"읽음 메시지 제외 기능은 지원되지 않음\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 14152,
+        "latency_ms": 1528.17,
+        "input_tokens": 1894,
+        "output_tokens": 105,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009256000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "h_modify",
+    "expected": {
+      "id": "h_modify",
+      "current": "모든 앱의 배송 안내와 예약 변경을 알려준다.",
+      "instruction": "예약 변경은 그대로 두고 배송 안내만 조용히 해줘.",
+      "status": "ready",
+      "change": "modify",
+      "contains": [
+        "예약",
+        "배송"
+      ]
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "예약 변경은 그대로 두고 배송 안내만 조용히 처리하는 기준 초안입니다. 검토해 주세요.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "모든 앱에서 예약 변경 알림은 그대로 두고 배송 안내 알림만 조용히 처리한다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "modify",
+        "change_summary": "배송 안내 알림만 조용히 처리하고 예약 변경 알림은 기존대로 유지하도록 변경"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"예약 변경은 그대로 두고 배송 안내만 조용히 처리하는 기준 초안입니다. 검토해 주세요.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"모든 앱에서 예약 변경 알림은 그대로 두고 배송 안내 알림만 조용히 처리한다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"modify\",\"change_summary\":\"배송 안내 알림만 조용히 처리하고 예약 변경 알림은 기존대로 유지하도록 변경\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 14256,
+        "latency_ms": 1822.38,
+        "input_tokens": 1905,
+        "output_tokens": 100,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000922,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "h_family_room",
+    "expected": {
+      "id": "h_family_room",
+      "instruction": "가족 단톡에서 모임 일정 변경만 알려줘.",
+      "status": "needs_input",
+      "kind": "conversation",
+      "follow": "room"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "'가족 단톡'이 어떤 대화인지 선택해 주세요. 관찰된 대화 중에서 선택할 수 있습니다.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "conversation",
+            "prompt": "가족 단톡으로 알림을 받을 대화를 선택해 주세요.",
+            "reason": "가족 단톡이 어떤 대화인지 명확하지 않아 알림 범위를 정해야 합니다.",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "가족 단톡 대화 선택 필요"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "가족 단톡 대화 범위 선택 필요"
+      },
+      {
+        "status": "ready",
+        "message": "가족 단톡으로 선택한 대화 A에서 모임 일정 변경만 알려주는 기준 초안입니다. 검토해 주세요.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "대화 A에서 모임 일정 변경만 알려준다.",
+        "referenced_candidate_ids": [
+          "room_a"
+        ],
+        "change_kind": "new",
+        "change_summary": "가족 단톡으로 지정한 대화 A에서 모임 일정 변경 알림만 받도록 설정"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"needs_input\",\"message\":\"'가족 단톡'이 어떤 대화인지 선택해 주세요. 관찰된 대화 중에서 선택할 수 있습니다.\",\"questions\":[{\"id\":\"q1\",\"field\":\"scope\",\"kind\":\"conversation\",\"prompt\":\"가족 단톡으로 알림을 받을 대화를 선택해 주세요.\",\"reason\":\"가족 단톡이 어떤 대화인지 명확하지 않아 알림 범위를 정해야 합니다.\",\"options\":[{\"id\":\"room_a\",\"label\":\"대화 A · 카카오톡 (합성)\",\"candidate_id\":\"room_a\"},{\"id\":\"room_b\",\"label\":\"대화 B · 카카오톡 (합성)\",\"candidate_id\":\"room_b\"},{\"id\":\"room_c\",\"label\":\"대화 C · 카카오톡 (합성)\",\"candidate_id\":\"room_c\"}]}],\"unresolved\":[\"가족 단톡 대화 선택 필요\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"가족 단톡 대화 범위 선택 필요\"}",
+      "{\"status\":\"ready\",\"message\":\"가족 단톡으로 선택한 대화 A에서 모임 일정 변경만 알려주는 기준 초안입니다. 검토해 주세요.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"대화 A에서 모임 일정 변경만 알려준다.\",\"referenced_candidate_ids\":[\"room_a\"],\"change_kind\":\"new\",\"change_summary\":\"가족 단톡으로 지정한 대화 A에서 모임 일정 변경 알림만 받도록 설정\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 14115,
+        "latency_ms": 2980.01,
+        "input_tokens": 1890,
+        "output_tokens": 215,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0011,
+        "error": null,
+        "api_attempts": 1
+      },
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v3",
+        "request_bytes": 15128,
+        "latency_ms": 1606.06,
+        "input_tokens": 2097,
+        "output_tokens": 97,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000994,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  }
+]

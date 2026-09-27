@@ -1,0 +1,60 @@
+
+com.ainotification.inbox.StructuredPolicyDeviceTest:INSTRUMENTATION_STATUS: synthetic_editor_result={"status":"ready","message":"모든 앱의 광고를 숨기되, 기타 장비 할인 광고는 예외적으로 표시하도록 설정합니다. 광고가 아닌 알림은 기존 기본 동작대로 표시됩니다.","question":"","options":[],"uncertain":false,"rules":[{"id":"new_1","name":"일반 광고 숨김, 기타 장비 할인 예외","enabled":true,"scope":{"type":"ALL_APPS","apps":[],"conversation_ids":[],"sender_names":[],"relationship":"","source_type":""},"conditions":[{"type":"PROMOTION","value":"","negated":false}],"logic":"ANY","action":"HIDE","exceptions":[{"id":"new_1_exception_1","conditions":[{"type":"CONTENT","value":"기타 장비 할인","negated":false}],"logic":"ANY","action":"SHOW"}],"time":{"zone":"Asia\/Seoul","days":[],"start":"","end":"","from":"","until":""},"source_instruction":"모든 앱에서 일반 광고는 숨겨줘. 단, 기타 장비 할인 광고는 보여줘. 다른 알림은 그대로 보여줘."}],"operations":[{"type":"ADD","id":"new_1"}]}
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: judgment_metrics={"provider":"typesafe","model":"jev-1.13.0","purpose":"rule_match","time":1790182265683,"request_bytes":933,"input_tokens":453,"output_tokens":90,"estimated_usd":1.9026E-5,"judgments":{"r0c0":0.99,"r0c0_evidence":0.98,"r0e0c0":0.19,"r0e0c0_evidence":0.54},"ok":true,"latency_ms":830}
+{"provider":"typesafe","model":"jev-1.13.0","purpose":"rule_match","time":1790182266514,"request_bytes":941,"input_tokens":454,"output_tokens":90,"estimated_usd":1.9068E-5,"judgments":{"r0c0":0.99,"r0c0_evidence":0.98,"r0e0c0":0.98,"r0e0c0_evidence":0.97},"ok":true,"latency_ms":401}
+{"provider":"typesafe","model":"jev-1.13.0","purpose":"rule_match","time":1790182266917,"request_bytes":950,"input_tokens":459,"output_tokens":90,"estimated_usd":1.9278E-5,"judgments":{"r0c0":0.01,"r0c0_evidence":0.63,"r0e0c0":0.01,"r0e0c0_evidence":0.38},"ok":true,"latency_ms":406}
+
+INSTRUMENTATION_STATUS: synthetic_results=[{"status":"review","reason":"조건 또는 예외를 확실히 판단하지 못해 표시합니다. 원문을 확인해 주세요."},{"status":"match","action":"SHOW","matched_policy_ids":["new_1"],"reason":"일반 광고 숨김, 기타 장비 할인 예외 기준을 적용했습니다."},{"status":"review","reason":"조건 또는 예외를 확실히 판단하지 못해 표시합니다. 원문을 확인해 주세요."}]
+INSTRUMENTATION_STATUS: synthetic_rules=[{"id":"new_1","name":"일반 광고 숨김, 기타 장비 할인 예외","enabled":true,"scope":{"type":"ALL_APPS","apps":[],"conversation_ids":[],"sender_names":[],"relationship":"","source_type":""},"conditions":[{"type":"PROMOTION","value":"","negated":false}],"logic":"ANY","action":"HIDE","exceptions":[{"id":"new_1_exception_1","conditions":[{"type":"CONTENT","value":"기타 장비 할인","negated":false}],"logic":"ANY","action":"SHOW"}],"time":{"zone":"Asia\/Seoul","days":[],"start":"","end":"","from":"","until":""},"source_instruction":"모든 앱에서 일반 광고는 숨겨줘. 단, 기타 장비 할인 광고는 보여줘. 다른 알림은 그대로 보여줘."}]
+INSTRUMENTATION_STATUS_CODE: 0
+
+Error in actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(com.ainotification.inbox.StructuredPolicyDeviceTest):
+org.junit.ComparisonFailure: expected:<[outside]> but was:<[review]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:68)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(StructuredPolicyDeviceTest.kt:47)
+
+
+Time: 10.707
+There was 1 failure:
+1) actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(com.ainotification.inbox.StructuredPolicyDeviceTest)
+org.junit.ComparisonFailure: expected:<[outside]> but was:<[review]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:68)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(StructuredPolicyDeviceTest.kt:47)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+

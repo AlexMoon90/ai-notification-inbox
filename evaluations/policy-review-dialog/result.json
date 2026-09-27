@@ -1,0 +1,14 @@
+{
+  "unit_tests": 64,
+  "unit_failures": 0,
+  "build": "passed",
+  "lint": "passed",
+  "additional_native_render": "passed; two app-specific rules visibly adjacent to their apps",
+  "device_install": "installed on Galaxy S23",
+  "device_ui_tests": "relation navigation/reset passed in first run; review dialog/adjacent alignment passed after fixture correction, 27.677 seconds",
+  "external_api_calls": 0,
+  "actual_user_policy": "preserved, asserted by both tests",
+  "apk_sha256": "76bd87e8bbaeb7687ea1e6ec27d70aadef758f8f25677ae15b7394d6a1d4450a",
+  "pending": [],
+  "first_run_issue": "Identical test criteria correctly grouped as common; changed fixture to distinct per-app criteria. No production fix needed."
+}

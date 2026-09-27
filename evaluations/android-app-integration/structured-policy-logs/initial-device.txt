@@ -1,0 +1,96 @@
+
+com.ainotification.inbox.StructuredPolicyDeviceTest:
+Error in actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(com.ainotification.inbox.StructuredPolicyDeviceTest):
+org.junit.ComparisonFailure: expected:<[outside]> but was:<[review]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:63)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(StructuredPolicyDeviceTest.kt:47)
+.INSTRUMENTATION_STATUS: api_calls=1
+INSTRUMENTATION_STATUS: estimated_usd=2.5232E-4
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+.
+Error in onboardingNavigationAndSavedInputRestoration(com.ainotification.inbox.StructuredPolicyDeviceTest):
+java.lang.IllegalStateException: Missing control: onboarding_instruction
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.find(StructuredPolicyDeviceTest.kt:32)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$find(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$onboardingNavigationAndSavedInputRestoration$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:82)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.onboardingNavigationAndSavedInputRestoration(StructuredPolicyDeviceTest.kt:73)
+
+
+Time: 33.655
+There were 2 failures:
+1) actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(com.ainotification.inbox.StructuredPolicyDeviceTest)
+org.junit.ComparisonFailure: expected:<[outside]> but was:<[review]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:63)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification(StructuredPolicyDeviceTest.kt:47)
+2) onboardingNavigationAndSavedInputRestoration(com.ainotification.inbox.StructuredPolicyDeviceTest)
+java.lang.IllegalStateException: Missing control: onboarding_instruction
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.find(StructuredPolicyDeviceTest.kt:32)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$find(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$onboardingNavigationAndSavedInputRestoration$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:82)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.onboardingNavigationAndSavedInputRestoration(StructuredPolicyDeviceTest.kt:73)
+
+FAILURES!!!
+Tests run: 4,  Failures: 2
+
+

@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-24",
+  "unit_tests": 37,
+  "unit_failures": 0,
+  "debug_release_build": "passed",
+  "lint": "passed",
+  "device": "Galaxy S23 Android 16",
+  "device_tests": 2,
+  "device_result": "passed",
+  "existing_policy_unchanged": true,
+  "current_user_items": 3,
+  "synthetic_api_calls": 9,
+  "synthetic_estimated_usd": 0.001323208,
+  "apk_checks": {
+    "debug_contains_authorized_keys": [
+      true,
+      true
+    ],
+    "release_contains_authorized_keys": [
+      false,
+      false
+    ]
+  },
+  "limits": [
+    "Development fixtures, not overall reliability qualification",
+    "Existing conversation binding applies to whole rule set",
+    "AI editor request/apply invoked through manager in device test; checkbox and delete exercised through UI"
+  ]
+}

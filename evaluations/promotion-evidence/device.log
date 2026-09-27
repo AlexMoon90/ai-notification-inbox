@@ -1,0 +1,24 @@
+
+com.ainotification.inbox.StructuredPolicyDeviceTest:INSTRUMENTATION_STATUS: case_result=0 expected=outside actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1 expected=outside actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=2 expected=outside actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=3 expected=match actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=4 expected=match actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=5 expected=match actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: api_calls=6
+INSTRUMENTATION_STATUS: estimated_usd=1.1995200000000002E-4
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+.
+
+Time: 2.57
+
+OK (1 test)
+
+

@@ -1,0 +1,36 @@
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.StructuredPolicyDeviceTest:
+INSTRUMENTATION_STATUS: test=actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: synthetic_editor_result={"status":"ready","message":"모든 앱의 광고를 숨기되, 악기인 일렉기타 및 기타 앰프의 할인 광고는 예외적으로 표시하도록 구성했습니다. 다른 알림에는 별도 규칙을 적용하지 않습니다.","question":"","options":[],"uncertain":false,"rules":[{"id":"new_1","name":"광고 숨기기 — 일렉기타·기타 앰프 할인 예외","enabled":true,"scope":{"type":"ALL_APPS","apps":[],"conversation_ids":[],"sender_names":[],"relationship":"","source_type":""},"conditions":[{"type":"PROMOTION","value":"","negated":false}],"logic":"ANY","action":"HIDE","exceptions":[{"id":"new_1_exception_1","conditions":[{"type":"CONTENT","value":"악기인 일렉기타 또는 기타 앰프의 할인 광고","negated":false}],"logic":"ANY","action":"SHOW"}],"time":{"zone":"Asia\/Seoul","days":[],"start":"","end":"","from":"","until":""},"source_instruction":"모든 앱에서 광고는 숨겨줘. 단, 악기인 일렉기타와 기타 앰프의 할인 광고는 보여줘. 다른 알림은 그대로 보여줘."}],"operations":[{"type":"ADD","id":"new_1"}]}
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: judgment_metrics={"provider":"typesafe","model":"jev-1.13.0","purpose":"rule_match","time":1790183452359,"request_bytes":845,"input_tokens":445,"output_tokens":90,"estimated_usd":1.8690000000000002E-5,"judgments":{"r0c0":0.99,"r0c0_evidence":0.96,"r0e0c0":0.01,"r0e0c0_evidence":0.96},"ok":true,"latency_ms":661}
+{"provider":"typesafe","model":"jev-1.13.0","purpose":"rule_match","time":1790183453022,"request_bytes":853,"input_tokens":446,"output_tokens":90,"estimated_usd":1.8732000000000003E-5,"judgments":{"r0c0":0.99,"r0c0_evidence":0.96,"r0e0c0":0.99,"r0e0c0_evidence":0.96},"ok":true,"latency_ms":409}
+{"provider":"typesafe","model":"jev-1.13.0","purpose":"rule_match","time":1790183453433,"request_bytes":862,"input_tokens":451,"output_tokens":90,"estimated_usd":1.8942E-5,"judgments":{"r0c0":0.01,"r0c0_evidence":0.93,"r0e0c0":0.01,"r0e0c0_evidence":0.94},"ok":true,"latency_ms":324}
+
+INSTRUMENTATION_STATUS: synthetic_results=[{"status":"outside","action":"HIDE","matched_policy_ids":["new_1"],"reason":"광고 숨기기 — 일렉기타·기타 앰프 할인 예외 기준을 적용했습니다."},{"status":"match","action":"SHOW","matched_policy_ids":["new_1"],"reason":"광고 숨기기 — 일렉기타·기타 앰프 할인 예외 기준을 적용했습니다."},{"status":"match","action":"SHOW","matched_policy_ids":[],"reason":"해당하는 조건이 없어 기본 표시합니다."}]
+INSTRUMENTATION_STATUS: synthetic_rules=[{"id":"new_1","name":"광고 숨기기 — 일렉기타·기타 앰프 할인 예외","enabled":true,"scope":{"type":"ALL_APPS","apps":[],"conversation_ids":[],"sender_names":[],"relationship":"","source_type":""},"conditions":[{"type":"PROMOTION","value":"","negated":false}],"logic":"ANY","action":"HIDE","exceptions":[{"id":"new_1_exception_1","conditions":[{"type":"CONTENT","value":"악기인 일렉기타 또는 기타 앰프의 할인 광고","negated":false}],"logic":"ANY","action":"SHOW"}],"time":{"zone":"Asia\/Seoul","days":[],"start":"","end":"","from":"","until":""},"source_instruction":"모든 앱에서 광고는 숨겨줘. 단, 악기인 일렉기타와 기타 앰프의 할인 광고는 보여줘. 다른 알림은 그대로 보여줘."}]
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: api_calls=5
+INSTRUMENTATION_STATUS: estimated_usd=8.92084E-4
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 15.015
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

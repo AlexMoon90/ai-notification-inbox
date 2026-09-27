@@ -1,0 +1,26 @@
+{
+  "settings": {
+    "completed": 40,
+    "valid": 40,
+    "status_correct": 40
+  },
+  "multiturn": {
+    "completed": 10,
+    "automated_pass": 9,
+    "initial_status_correct": 10,
+    "final_status_correct": 9
+  },
+  "usage": {
+    "calls": 67,
+    "tokens": {
+      "input_tokens": 92973,
+      "output_tokens": 12746,
+      "cached_tokens": 72077
+    },
+    "estimated_usd_known_usage": 0.02091594,
+    "unknown_cost_calls": 0,
+    "p50_ms": 2602.9,
+    "p95_ms": 4504.93
+  },
+  "stopped_on_service_error": false
+}

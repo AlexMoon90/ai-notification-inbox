@@ -1,0 +1,32 @@
+[
+  {
+    "id": "clear",
+    "expected": {
+      "id": "clear",
+      "instruction": "모든 앱에서 광고는 조용히 처리하고 일정 변경은 알려줘.",
+      "status": "ready",
+      "contains": [
+        "광고",
+        "일정"
+      ]
+    },
+    "turns": [],
+    "errors": [
+      "network_or_timeout"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8122,
+        "latency_ms": 66.91,
+        "input_tokens": null,
+        "output_tokens": null,
+        "cached_tokens": null,
+        "estimated_usd": null,
+        "error": "network_or_timeout",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  }
+]

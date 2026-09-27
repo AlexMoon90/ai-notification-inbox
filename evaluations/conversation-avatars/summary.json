@@ -1,0 +1,21 @@
+{
+  "unit_tests": 102,
+  "build_lint": "passed",
+  "installed": true,
+  "device_tests": {
+    "passed": 3,
+    "skipped": 0,
+    "seconds": 6.787
+  },
+  "ui": "synthetic room and sender avatar screenshots inspected",
+  "real_kakao": "not_verified_no_active_notifications",
+  "preservation": {
+    "before_count": 9072,
+    "after_count": 9072,
+    "old_rows_preserved": true,
+    "policy_preserved": true,
+    "database_version_before": 3,
+    "database_version_after": 4
+  },
+  "avatar_ai_calls": 0
+}

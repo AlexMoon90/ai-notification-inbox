@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-25",
+  "diagnosis": "Historical 500-character message in MessagingStyle caused warning on latest short replies",
+  "affected_saved_short_notifications": 23,
+  "fix": "latest timestamp; array order breaks ties; body fallback if latest text absent",
+  "unit_tests": 71,
+  "failures": 0,
+  "build_lint": "passed",
+  "galaxy_test": "passed (0.020s)",
+  "installed": true,
+  "api_calls": 0,
+  "user_rules_and_records": "unchanged",
+  "limitation": "old persisted review decisions are not reclassified; dynamic long-content hint is corrected"
+}

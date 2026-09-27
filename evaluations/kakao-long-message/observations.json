@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-23",
+  "device": "Galaxy SM-S911N",
+  "source": "real_received_kakao_notification_saved_snapshot",
+  "expected_utf16_length": 1369,
+  "user_confirmed_full_fixture_sent": true,
+  "observed": {
+    "text_length": 500,
+    "messaging_style_text_length": 500,
+    "big_text_present": false,
+    "start_marker": false,
+    "middle_marker": false,
+    "end_marker": false,
+    "fixture_contains_entire_saved_text": true,
+    "longest_contiguous_fixture_overlap": 500,
+    "saved_fixture_start_marker_snapshot_count": 0,
+    "requested_sender_active_notification_count": 0
+  },
+  "conclusion": "Saved notification does not contain full test original; exact truncation stage and general Kakao size limit not established.",
+  "not_verified": [
+    "system notification collapsed/expanded UI",
+    "original posted payload before normalization",
+    "all lengths/chat types/versions"
+  ],
+  "tests": {
+    "marked_original_comparison": "failed_missing_marked_active_notification",
+    "sender_length_diagnostic": "passed",
+    "sender_fixture_overlap_diagnostic": "passed"
+  }
+}

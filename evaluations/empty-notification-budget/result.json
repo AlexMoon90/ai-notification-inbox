@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-25",
+  "diagnosis": {
+    "empty": "saved CONTENT rule bypassed by pre-classification summary/empty guards",
+    "weather": "app daily Jev request cap exhausted (200)",
+    "repetition": "same YouTube content posted 40 times over 91585ms"
+  },
+  "unit_tests": 68,
+  "failures": 0,
+  "lint": "passed",
+  "galaxy_test": "emptyNotificationHonorsPolicyAtDailyLimit passed 0.178s",
+  "api_calls_in_device_test": 0,
+  "installed": true,
+  "user_rules": "unchanged",
+  "daily_cap": 200,
+  "limitations": [
+    "existing history not reclassified",
+    "weather requiring Jev still remains review until daily cap resets",
+    "new weather live API check not run"
+  ]
+}

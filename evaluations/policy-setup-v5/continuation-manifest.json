@@ -1,0 +1,6 @@
+{
+  "source_sha256": "23ecf5e1075cd1a3e0f585fcda92d7842eb097fc55d16b348e54bd9de6b68feb",
+  "minimum_start_interval_seconds": 8,
+  "retry_condition": "only http_429:rate_limit_exceeded, one extra attempt; original record retained",
+  "configuration_changes": "none; only evaluation transport pacing"
+}

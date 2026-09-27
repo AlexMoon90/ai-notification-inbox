@@ -1,0 +1,201 @@
+{
+  "totals": {
+    "cases": 128,
+    "valid": 128,
+    "category_correct": 121,
+    "labeled": 126,
+    "tp": 48,
+    "tn": 71,
+    "fp": 4,
+    "fn": 3,
+    "review": 12
+  },
+  "policies": {
+    "meetings-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 2,
+      "tn": 6,
+      "fp": 0,
+      "fn": 0,
+      "review": 1
+    },
+    "meetings-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 7,
+      "labeled": 8,
+      "tp": 6,
+      "tn": 2,
+      "fp": 0,
+      "fn": 0,
+      "review": 0
+    },
+    "payments-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 6,
+      "labeled": 8,
+      "tp": 1,
+      "tn": 6,
+      "fp": 0,
+      "fn": 1,
+      "review": 1
+    },
+    "payments-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 6,
+      "labeled": 8,
+      "tp": 4,
+      "tn": 3,
+      "fp": 0,
+      "fn": 1,
+      "review": 3
+    },
+    "promotions-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 3,
+      "tn": 5,
+      "fp": 0,
+      "fn": 0,
+      "review": 1
+    },
+    "promotions-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 4,
+      "tn": 3,
+      "fp": 0,
+      "fn": 1,
+      "review": 2
+    },
+    "conversation_scope-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 7,
+      "tp": 2,
+      "tn": 4,
+      "fp": 1,
+      "fn": 0,
+      "review": 0
+    },
+    "conversation_scope-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 7,
+      "tp": 2,
+      "tn": 5,
+      "fp": 0,
+      "fn": 0,
+      "review": 0
+    },
+    "priority_sender-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 5,
+      "tn": 3,
+      "fp": 0,
+      "fn": 0,
+      "review": 0
+    },
+    "priority_sender-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 2,
+      "tn": 6,
+      "fp": 0,
+      "fn": 0,
+      "review": 0
+    },
+    "mentions-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 7,
+      "labeled": 8,
+      "tp": 4,
+      "tn": 4,
+      "fp": 0,
+      "fn": 0,
+      "review": 2
+    },
+    "mentions-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 7,
+      "labeled": 8,
+      "tp": 3,
+      "tn": 4,
+      "fp": 1,
+      "fn": 0,
+      "review": 1
+    },
+    "completion-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 4,
+      "tn": 3,
+      "fp": 1,
+      "fn": 0,
+      "review": 1
+    },
+    "completion-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 2,
+      "tn": 6,
+      "fp": 0,
+      "fn": 0,
+      "review": 0
+    },
+    "room_scope-A": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 2,
+      "tn": 6,
+      "fp": 0,
+      "fn": 0,
+      "review": 0
+    },
+    "room_scope-B": {
+      "cases": 8,
+      "valid": 8,
+      "category_correct": 8,
+      "labeled": 8,
+      "tp": 2,
+      "tn": 5,
+      "fp": 1,
+      "fn": 0,
+      "review": 0
+    }
+  },
+  "policy_flip_pairs": 31,
+  "policy_flip_both_correct": 29,
+  "usage": {
+    "input_tokens": 172688,
+    "output_tokens": 16506
+  },
+  "estimated_usd": 0.007252896000000001,
+  "http_attempts": 128,
+  "p50_ms": 661.935,
+  "p95_ms": 792.33
+}

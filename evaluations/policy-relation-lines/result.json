@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-24",
+  "change": "Icon-edge anchors and visible relation lines",
+  "targeted_native_render_test": "passed (1)",
+  "debug_build": "passed",
+  "android_test_build": "passed",
+  "lint": "passed",
+  "galaxy_test": {
+    "name": "relationNavigationAndConfirmedReset",
+    "result": "passed",
+    "seconds": 56.957
+  },
+  "api_calls": 0,
+  "actual_user_policy": "preserved",
+  "visual_inspection": [
+    "native-preview.png",
+    "galaxy-overview.png",
+    "galaxy-app.png",
+    "galaxy-focus.png"
+  ],
+  "apk_sha256": "25fc7425dd4b2c9223eab0085f19be8efe3158404758b9a04f9a2b34b2a6b6ac",
+  "phase_gate": "unchanged"
+}

@@ -1,0 +1,434 @@
+[
+  {
+    "id": "mt-001-behavior-01",
+    "setting_id": "mt-001",
+    "gold_instruction": "In Slack, notify only when a message explicitly asks Avery, the user, by name to approve something.",
+    "notification": {
+      "app": "Slack",
+      "title": "Review channel",
+      "text": "Avery, please approve the revised expense request."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-001-behavior-02",
+    "setting_id": "mt-001",
+    "gold_instruction": "In Slack, notify only when a message explicitly asks Avery, the user, by name to approve something.",
+    "notification": {
+      "app": "Slack",
+      "title": "Release channel",
+      "text": "Approval needed from Avery: please approve this release."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-001-behavior-03",
+    "setting_id": "mt-001",
+    "gold_instruction": "In Slack, notify only when a message explicitly asks Avery, the user, by name to approve something.",
+    "notification": {
+      "app": "Slack",
+      "title": "Review channel",
+      "text": "Blair, please approve this request. Avery does not need to act."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-001-behavior-04",
+    "setting_id": "mt-001",
+    "gold_instruction": "In Slack, notify only when a message explicitly asks Avery, the user, by name to approve something.",
+    "notification": {
+      "app": "Slack",
+      "title": "Review channel",
+      "text": "Avery approved the request yesterday. No further approval is needed."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-002-behavior-01",
+    "setting_id": "mt-002",
+    "gold_instruction": "ESPN에서 달빛여우의 경기가 종료된 최종 결과를 알려준다. 승리와 패배 모두 포함하고 경기 중 점수는 제외한다.",
+    "notification": {
+      "app": "ESPN",
+      "title": "경기 결과",
+      "text": "경기 종료: 달빛여우 3 대 1 바다늑대. 달빛여우 승리."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-002-behavior-02",
+    "setting_id": "mt-002",
+    "gold_instruction": "ESPN에서 달빛여우의 경기가 종료된 최종 결과를 알려준다. 승리와 패배 모두 포함하고 경기 중 점수는 제외한다.",
+    "notification": {
+      "app": "ESPN",
+      "title": "경기 결과",
+      "text": "최종 결과: 달빛여우가 숲사슴에 0 대 2로 패했습니다."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-002-behavior-03",
+    "setting_id": "mt-002",
+    "gold_instruction": "ESPN에서 달빛여우의 경기가 종료된 최종 결과를 알려준다. 승리와 패배 모두 포함하고 경기 중 점수는 제외한다.",
+    "notification": {
+      "app": "ESPN",
+      "title": "경기 속보",
+      "text": "달빛여우가 전반 종료 시점에 2 대 0으로 앞서고 있습니다. 후반전이 남았습니다."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-002-behavior-04",
+    "setting_id": "mt-002",
+    "gold_instruction": "ESPN에서 달빛여우의 경기가 종료된 최종 결과를 알려준다. 승리와 패배 모두 포함하고 경기 중 점수는 제외한다.",
+    "notification": {
+      "app": "ESPN",
+      "title": "경기 결과",
+      "text": "경기 종료: 숲사슴 1 대 0 바다늑대. 달빛여우 경기는 내일입니다."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-003-behavior-01",
+    "setting_id": "mt-003",
+    "gold_instruction": "For Gmail, notify only about messages explicitly requiring the user to pay an overdue bill. Exclude payment receipts and advertising.",
+    "notification": {
+      "app": "Gmail",
+      "title": "Utility bill",
+      "text": "Your bill is overdue. Please pay your outstanding balance now."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-003-behavior-02",
+    "setting_id": "mt-003",
+    "gold_instruction": "For Gmail, notify only about messages explicitly requiring the user to pay an overdue bill. Exclude payment receipts and advertising.",
+    "notification": {
+      "app": "Gmail",
+      "title": "Payment reminder",
+      "text": "Your bill payment is past due. You must pay the remaining balance."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-003-behavior-03",
+    "setting_id": "mt-003",
+    "gold_instruction": "For Gmail, notify only about messages explicitly requiring the user to pay an overdue bill. Exclude payment receipts and advertising.",
+    "notification": {
+      "app": "Gmail",
+      "title": "Payment receipt",
+      "text": "We received your overdue bill payment. Nothing remains to be paid."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-003-behavior-04",
+    "setting_id": "mt-003",
+    "gold_instruction": "For Gmail, notify only about messages explicitly requiring the user to pay an overdue bill. Exclude payment receipts and advertising.",
+    "notification": {
+      "app": "Gmail",
+      "title": "Sponsored offer",
+      "text": "Try our budgeting course and learn how overdue bills work. Advertisement; no payment is due from you."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-004-behavior-01",
+    "setting_id": "mt-004",
+    "gold_instruction": "YouTube에서 알림 본문에 별빛실험실이라는 채널 이름이 명시되고 해당 채널의 새 영상 업로드를 알리는 경우만 알려준다. 라이브 방송과 댓글 답글은 제외한다.",
+    "notification": {
+      "app": "YouTube",
+      "title": "새 동영상",
+      "text": "별빛실험실이 새 영상 소리의 원리를 업로드했습니다."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-004-behavior-02",
+    "setting_id": "mt-004",
+    "gold_instruction": "YouTube에서 알림 본문에 별빛실험실이라는 채널 이름이 명시되고 해당 채널의 새 영상 업로드를 알리는 경우만 알려준다. 라이브 방송과 댓글 답글은 제외한다.",
+    "notification": {
+      "app": "YouTube",
+      "title": "업로드 안내",
+      "text": "별빛실험실의 새 동영상 작은 전구 실험이 게시됐습니다."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-004-behavior-03",
+    "setting_id": "mt-004",
+    "gold_instruction": "YouTube에서 알림 본문에 별빛실험실이라는 채널 이름이 명시되고 해당 채널의 새 영상 업로드를 알리는 경우만 알려준다. 라이브 방송과 댓글 답글은 제외한다.",
+    "notification": {
+      "app": "YouTube",
+      "title": "실시간 방송",
+      "text": "별빛실험실이 지금 라이브 방송 중입니다."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-004-behavior-04",
+    "setting_id": "mt-004",
+    "gold_instruction": "YouTube에서 알림 본문에 별빛실험실이라는 채널 이름이 명시되고 해당 채널의 새 영상 업로드를 알리는 경우만 알려준다. 라이브 방송과 댓글 답글은 제외한다.",
+    "notification": {
+      "app": "YouTube",
+      "title": "댓글 알림",
+      "text": "별빛실험실이 회원님의 댓글에 답글을 남겼습니다."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-005-behavior-01",
+    "setting_id": "mt-005",
+    "gold_instruction": "Teams에서 알림 본문에 오늘까지 사용자 Quinn의 승인이 필요하다고 명시된 메시지만 알려준다.",
+    "notification": {
+      "app": "Microsoft Teams",
+      "title": "Budget review",
+      "text": "Quinn, your approval is required by today. 오늘까지 승인해 주세요."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-005-behavior-02",
+    "setting_id": "mt-005",
+    "gold_instruction": "Teams에서 알림 본문에 오늘까지 사용자 Quinn의 승인이 필요하다고 명시된 메시지만 알려준다.",
+    "notification": {
+      "app": "Microsoft Teams",
+      "title": "출시 검토",
+      "text": "Quinn님, 오늘 안에 이 출시안에 대한 승인이 필요합니다."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-005-behavior-03",
+    "setting_id": "mt-005",
+    "gold_instruction": "Teams에서 알림 본문에 오늘까지 사용자 Quinn의 승인이 필요하다고 명시된 메시지만 알려준다.",
+    "notification": {
+      "app": "Microsoft Teams",
+      "title": "Budget review",
+      "text": "Quinn, approval is required tomorrow, not today."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-005-behavior-04",
+    "setting_id": "mt-005",
+    "gold_instruction": "Teams에서 알림 본문에 오늘까지 사용자 Quinn의 승인이 필요하다고 명시된 메시지만 알려준다.",
+    "notification": {
+      "app": "Microsoft Teams",
+      "title": "Budget review",
+      "text": "Morgan must approve this today. Quinn does not need to approve anything."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-006-behavior-01",
+    "setting_id": "mt-006",
+    "gold_instruction": "WhatsApp에서 사용자가 선택한 독서모임 대화 book-cedar(표시 이름: 가상 독서모임 Cedar)의 일정 변경만 알려준다.",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "가상 독서모임 Cedar",
+      "text": "독서모임 시작 시간이 오후 2시에서 4시로 바뀌었습니다."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-006-behavior-02",
+    "setting_id": "mt-006",
+    "gold_instruction": "WhatsApp에서 사용자가 선택한 독서모임 대화 book-cedar(표시 이름: 가상 독서모임 Cedar)의 일정 변경만 알려준다.",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "가상 독서모임 Cedar",
+      "text": "토요일 모임을 일요일로 변경했습니다."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-006-behavior-03",
+    "setting_id": "mt-006",
+    "gold_instruction": "WhatsApp에서 사용자가 선택한 독서모임 대화 book-cedar(표시 이름: 가상 독서모임 Cedar)의 일정 변경만 알려준다.",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "가상 독서모임 Cedar",
+      "text": "이번에 읽은 책의 주인공에 대한 감상을 나눠요."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-006-behavior-04",
+    "setting_id": "mt-006",
+    "gold_instruction": "WhatsApp에서 사용자가 선택한 독서모임 대화 book-cedar(표시 이름: 가상 독서모임 Cedar)의 일정 변경만 알려준다.",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "가상 산책모임 Pine",
+      "text": "산책 모임을 토요일에서 일요일로 변경했습니다."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-007-behavior-01",
+    "setting_id": "mt-007",
+    "gold_instruction": "In WhatsApp, notify only about explicit requests for the user to reply in the selected project group project-orbit (display name: Project Orbit).",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "Project Orbit",
+      "text": "Please reply to this message with your availability for the review."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-007-behavior-02",
+    "setting_id": "mt-007",
+    "gold_instruction": "In WhatsApp, notify only about explicit requests for the user to reply in the selected project group project-orbit (display name: Project Orbit).",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "Project Orbit",
+      "text": "We need your response: can you confirm whether you agree?"
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-007-behavior-03",
+    "setting_id": "mt-007",
+    "gold_instruction": "In WhatsApp, notify only about explicit requests for the user to reply in the selected project group project-orbit (display name: Project Orbit).",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "Project Orbit",
+      "text": "No response is needed from you. This is an update for information only."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-007-behavior-04",
+    "setting_id": "mt-007",
+    "gold_instruction": "In WhatsApp, notify only about explicit requests for the user to reply in the selected project group project-orbit (display name: Project Orbit).",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "Garden Moss",
+      "text": "Please reply to this message with your availability."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-008-behavior-01",
+    "setting_id": "mt-008",
+    "gold_instruction": "Notify only about Gmail messages explicitly saying the user’s bill is overdue, and YouTube new video uploads from River Workshop. Exclude YouTube live streams and comment replies. River Workshop replaces the previous Cedar Science channel.",
+    "notification": {
+      "app": "Gmail",
+      "title": "Bill notice",
+      "text": "Your bill is overdue."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-008-behavior-02",
+    "setting_id": "mt-008",
+    "gold_instruction": "Notify only about Gmail messages explicitly saying the user’s bill is overdue, and YouTube new video uploads from River Workshop. Exclude YouTube live streams and comment replies. River Workshop replaces the previous Cedar Science channel.",
+    "notification": {
+      "app": "YouTube",
+      "title": "New video",
+      "text": "River Workshop uploaded a new video: Building a small table."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-008-behavior-03",
+    "setting_id": "mt-008",
+    "gold_instruction": "Notify only about Gmail messages explicitly saying the user’s bill is overdue, and YouTube new video uploads from River Workshop. Exclude YouTube live streams and comment replies. River Workshop replaces the previous Cedar Science channel.",
+    "notification": {
+      "app": "YouTube",
+      "title": "New video",
+      "text": "Cedar Science uploaded a new video: Simple circuits."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-008-behavior-04",
+    "setting_id": "mt-008",
+    "gold_instruction": "Notify only about Gmail messages explicitly saying the user’s bill is overdue, and YouTube new video uploads from River Workshop. Exclude YouTube live streams and comment replies. River Workshop replaces the previous Cedar Science channel.",
+    "notification": {
+      "app": "YouTube",
+      "title": "Live notification",
+      "text": "River Workshop is live now: Questions and answers."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-009-behavior-01",
+    "setting_id": "mt-009",
+    "gold_instruction": "WhatsApp에서 발신자 표시가 유나인 모든 메시지를 알려준다. 기존 기준인 Google Calendar의 시작 시간 변경 알림도 계속 알려준다.",
+    "notification": {
+      "app": "Google Calendar",
+      "title": "일정 변경",
+      "text": "회의 시작 시간이 오후 1시에서 오후 2시로 변경됐습니다."
+    },
+    "expected": true,
+    "high_risk": true
+  },
+  {
+    "id": "mt-009-behavior-02",
+    "setting_id": "mt-009",
+    "gold_instruction": "WhatsApp에서 발신자 표시가 유나인 모든 메시지를 알려준다. 기존 기준인 Google Calendar의 시작 시간 변경 알림도 계속 알려준다.",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "유나",
+      "text": "오늘 산책길에서 꽃을 봤어."
+    },
+    "expected": true,
+    "high_risk": false
+  },
+  {
+    "id": "mt-009-behavior-03",
+    "setting_id": "mt-009",
+    "gold_instruction": "WhatsApp에서 발신자 표시가 유나인 모든 메시지를 알려준다. 기존 기준인 Google Calendar의 시작 시간 변경 알림도 계속 알려준다.",
+    "notification": {
+      "app": "WhatsApp",
+      "title": "다온",
+      "text": "오늘 산책길에서 꽃을 봤어."
+    },
+    "expected": false,
+    "high_risk": false
+  },
+  {
+    "id": "mt-009-behavior-04",
+    "setting_id": "mt-009",
+    "gold_instruction": "WhatsApp에서 발신자 표시가 유나인 모든 메시지를 알려준다. 기존 기준인 Google Calendar의 시작 시간 변경 알림도 계속 알려준다.",
+    "notification": {
+      "app": "Google Calendar",
+      "title": "일정 변경",
+      "text": "회의 장소만 2층 회의실로 바뀌었으며 시작 시간은 그대로입니다."
+    },
+    "expected": false,
+    "high_risk": false
+  }
+]

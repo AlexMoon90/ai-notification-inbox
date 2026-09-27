@@ -1,0 +1,394 @@
+{
+  "groups": {
+    "gold": {
+      "expected": 36,
+      "positive": 18,
+      "valid": 36,
+      "correct_05": 34,
+      "positive_notified": 13,
+      "negative_notified": 0
+    },
+    "normalized": {
+      "expected": 36,
+      "positive": 18,
+      "valid": 36,
+      "correct_05": 34,
+      "positive_notified": 17,
+      "negative_notified": 0
+    }
+  },
+  "usage": {
+    "calls": 72,
+    "tokens": {
+      "input_tokens": 37158,
+      "output_tokens": 1512,
+      "cached_tokens": 0
+    },
+    "estimated_usd_known_usage": 0.0015606360000000002,
+    "unknown_cost_calls": 0,
+    "p50_ms": 496.41999999999996,
+    "p95_ms": 618.56
+  },
+  "details": [
+    {
+      "id": "mt-001-behavior-01/gold",
+      "expected": true,
+      "p": 0.95
+    },
+    {
+      "id": "mt-001-behavior-01/normalized",
+      "expected": true,
+      "p": 0.93
+    },
+    {
+      "id": "mt-001-behavior-02/gold",
+      "expected": true,
+      "p": 0.91
+    },
+    {
+      "id": "mt-001-behavior-02/normalized",
+      "expected": true,
+      "p": 0.76
+    },
+    {
+      "id": "mt-001-behavior-03/gold",
+      "expected": false,
+      "p": 0.07
+    },
+    {
+      "id": "mt-001-behavior-03/normalized",
+      "expected": false,
+      "p": 0.06
+    },
+    {
+      "id": "mt-001-behavior-04/gold",
+      "expected": false,
+      "p": 0.05
+    },
+    {
+      "id": "mt-001-behavior-04/normalized",
+      "expected": false,
+      "p": 0.04
+    },
+    {
+      "id": "mt-002-behavior-01/gold",
+      "expected": true,
+      "p": 0.29
+    },
+    {
+      "id": "mt-002-behavior-01/normalized",
+      "expected": true,
+      "p": 0.96
+    },
+    {
+      "id": "mt-002-behavior-02/gold",
+      "expected": true,
+      "p": 0.29
+    },
+    {
+      "id": "mt-002-behavior-02/normalized",
+      "expected": true,
+      "p": 0.96
+    },
+    {
+      "id": "mt-002-behavior-03/gold",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-002-behavior-03/normalized",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-002-behavior-04/gold",
+      "expected": false,
+      "p": 0.04
+    },
+    {
+      "id": "mt-002-behavior-04/normalized",
+      "expected": false,
+      "p": 0.07
+    },
+    {
+      "id": "mt-003-behavior-01/gold",
+      "expected": true,
+      "p": 0.81
+    },
+    {
+      "id": "mt-003-behavior-01/normalized",
+      "expected": true,
+      "p": 0.9
+    },
+    {
+      "id": "mt-003-behavior-02/gold",
+      "expected": true,
+      "p": 0.92
+    },
+    {
+      "id": "mt-003-behavior-02/normalized",
+      "expected": true,
+      "p": 0.9
+    },
+    {
+      "id": "mt-003-behavior-03/gold",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-003-behavior-03/normalized",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-003-behavior-04/gold",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-003-behavior-04/normalized",
+      "expected": false,
+      "p": 0.02
+    },
+    {
+      "id": "mt-004-behavior-01/gold",
+      "expected": true,
+      "p": 0.95
+    },
+    {
+      "id": "mt-004-behavior-01/normalized",
+      "expected": true,
+      "p": 0.92
+    },
+    {
+      "id": "mt-004-behavior-02/gold",
+      "expected": true,
+      "p": 0.95
+    },
+    {
+      "id": "mt-004-behavior-02/normalized",
+      "expected": true,
+      "p": 0.94
+    },
+    {
+      "id": "mt-004-behavior-03/gold",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-004-behavior-03/normalized",
+      "expected": false,
+      "p": 0.04
+    },
+    {
+      "id": "mt-004-behavior-04/gold",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-004-behavior-04/normalized",
+      "expected": false,
+      "p": 0.04
+    },
+    {
+      "id": "mt-005-behavior-01/gold",
+      "expected": true,
+      "p": 0.79
+    },
+    {
+      "id": "mt-005-behavior-01/normalized",
+      "expected": true,
+      "p": 0.87
+    },
+    {
+      "id": "mt-005-behavior-02/gold",
+      "expected": true,
+      "p": 0.76
+    },
+    {
+      "id": "mt-005-behavior-02/normalized",
+      "expected": true,
+      "p": 0.84
+    },
+    {
+      "id": "mt-005-behavior-03/gold",
+      "expected": false,
+      "p": 0.05
+    },
+    {
+      "id": "mt-005-behavior-03/normalized",
+      "expected": false,
+      "p": 0.06
+    },
+    {
+      "id": "mt-005-behavior-04/gold",
+      "expected": false,
+      "p": 0.04
+    },
+    {
+      "id": "mt-005-behavior-04/normalized",
+      "expected": false,
+      "p": 0.06
+    },
+    {
+      "id": "mt-006-behavior-01/gold",
+      "expected": true,
+      "p": 0.94
+    },
+    {
+      "id": "mt-006-behavior-01/normalized",
+      "expected": true,
+      "p": 0.94
+    },
+    {
+      "id": "mt-006-behavior-02/gold",
+      "expected": true,
+      "p": 0.92
+    },
+    {
+      "id": "mt-006-behavior-02/normalized",
+      "expected": true,
+      "p": 0.93
+    },
+    {
+      "id": "mt-006-behavior-03/gold",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-006-behavior-03/normalized",
+      "expected": false,
+      "p": 0.05
+    },
+    {
+      "id": "mt-006-behavior-04/gold",
+      "expected": false,
+      "p": 0.02
+    },
+    {
+      "id": "mt-006-behavior-04/normalized",
+      "expected": false,
+      "p": 0.04
+    },
+    {
+      "id": "mt-007-behavior-01/gold",
+      "expected": true,
+      "p": 0.91
+    },
+    {
+      "id": "mt-007-behavior-01/normalized",
+      "expected": true,
+      "p": 0.89
+    },
+    {
+      "id": "mt-007-behavior-02/gold",
+      "expected": true,
+      "p": 0.88
+    },
+    {
+      "id": "mt-007-behavior-02/normalized",
+      "expected": true,
+      "p": 0.89
+    },
+    {
+      "id": "mt-007-behavior-03/gold",
+      "expected": false,
+      "p": 0.08
+    },
+    {
+      "id": "mt-007-behavior-03/normalized",
+      "expected": false,
+      "p": 0.08
+    },
+    {
+      "id": "mt-007-behavior-04/gold",
+      "expected": false,
+      "p": 0.27
+    },
+    {
+      "id": "mt-007-behavior-04/normalized",
+      "expected": false,
+      "p": 0.63
+    },
+    {
+      "id": "mt-008-behavior-01/gold",
+      "expected": true,
+      "p": 0.94
+    },
+    {
+      "id": "mt-008-behavior-01/normalized",
+      "expected": true,
+      "p": 0.94
+    },
+    {
+      "id": "mt-008-behavior-02/gold",
+      "expected": true,
+      "p": 0.94
+    },
+    {
+      "id": "mt-008-behavior-02/normalized",
+      "expected": true,
+      "p": 0.94
+    },
+    {
+      "id": "mt-008-behavior-03/gold",
+      "expected": false,
+      "p": 0.05
+    },
+    {
+      "id": "mt-008-behavior-03/normalized",
+      "expected": false,
+      "p": 0.07
+    },
+    {
+      "id": "mt-008-behavior-04/gold",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-008-behavior-04/normalized",
+      "expected": false,
+      "p": 0.03
+    },
+    {
+      "id": "mt-009-behavior-01/gold",
+      "expected": true,
+      "p": 0.89
+    },
+    {
+      "id": "mt-009-behavior-01/normalized",
+      "expected": true,
+      "p": 0.92
+    },
+    {
+      "id": "mt-009-behavior-02/gold",
+      "expected": true,
+      "p": 0.75
+    },
+    {
+      "id": "mt-009-behavior-02/normalized",
+      "expected": true,
+      "p": 0.95
+    },
+    {
+      "id": "mt-009-behavior-03/gold",
+      "expected": false,
+      "p": 0.37
+    },
+    {
+      "id": "mt-009-behavior-03/normalized",
+      "expected": false,
+      "p": 0.69
+    },
+    {
+      "id": "mt-009-behavior-04/gold",
+      "expected": false,
+      "p": 0.24
+    },
+    {
+      "id": "mt-009-behavior-04/normalized",
+      "expected": false,
+      "p": 0.14
+    }
+  ]
+}

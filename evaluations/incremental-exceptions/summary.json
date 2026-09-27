@@ -1,0 +1,15 @@
+{
+  "steps": 5,
+  "notifications": 25,
+  "exact_status_matches": 25,
+  "failures": [],
+  "user_policy_preserved": true,
+  "unit_tests": 83,
+  "api_calls": 26,
+  "estimated_usd": 0.007748244000000001,
+  "calls_by_purpose": {
+    "policy_editor": 5,
+    "policy_semantic_validator": 5,
+    "rule_match": 16
+  }
+}

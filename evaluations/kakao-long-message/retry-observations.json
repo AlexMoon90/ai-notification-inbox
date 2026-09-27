@@ -1,0 +1,18 @@
+{
+  "received_at_kst": "2026-09-23T19:38:42.622000+09:00",
+  "expected_utf16_length": 1369,
+  "observed_text_length": 500,
+  "observed_message_length": 500,
+  "big_text_present": false,
+  "start_marker": true,
+  "middle_marker": false,
+  "end_marker": false,
+  "whole_saved_value_is_contiguous_fixture_substring": true,
+  "is_first_500_characters": true,
+  "first_500_basis": "The saved500-character value is an exact substring of the fixture and contains the unique start marker at fixture offset0.",
+  "normalizer_source_has_no_truncation": true,
+  "active_requested_sender_notifications": 0,
+  "raw_active_comparison": "not_available",
+  "scope": "This real received saved snapshot only; not a universal500-character limit.",
+  "supersedes_prior_incomplete_send": "User reports this resend was complete; earlier sample not used to establish complete-send truncation."
+}

@@ -1,0 +1,19 @@
+{
+  "debug": {
+    "test-openai-key": true,
+    "test-jev-key": true,
+    "setup_config": true
+  },
+  "release": {
+    "test-openai-key": false,
+    "test-jev-key": false,
+    "setup_config": false
+  },
+  "unit_tests": {
+    "tests": 28,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "debug_apk_sha256": "5904a7b4f43f976ab186580b6439564ae2ada1f4c66be75eb5ab93ec5e7c0ab8"
+}

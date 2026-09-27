@@ -1,0 +1,644 @@
+[
+  {
+    "id": "clear",
+    "expected": {
+      "id": "clear",
+      "instruction": "모든 앱에서 광고는 조용히 처리하고 일정 변경은 알려줘.",
+      "status": "ready",
+      "contains": [
+        "광고",
+        "일정"
+      ]
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "광고를 조용히 처리하고 일정 변경은 알려주는 알림 기준을 설정하려면, 어느 대화방에 적용할지 선택이 필요합니다. 대상 대화방을 선택해 주세요.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "identity",
+            "kind": "conversation",
+            "prompt": "알림 기준을 적용할 대화방을 선택해 주세요.",
+            "reason": "대화방별로 알림 처리 방식을 다르게 설정할 수 있습니다.",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "대화방 선택 필요"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "대화방 선택 필요"
+      }
+    ],
+    "errors": [
+      "status",
+      "missing_term:광고",
+      "missing_term:일정"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8122,
+        "latency_ms": 5224.44,
+        "input_tokens": 1118,
+        "output_tokens": 219,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007976000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "vague",
+    "expected": {
+      "id": "vague",
+      "instruction": "모든 앱에서 중요한 것만 알려줘.",
+      "status": "needs_input",
+      "field": "meaning"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "'중요한 것'의 의미를 구체적으로 알려주세요. 예를 들어, 업무 관련 메시지, 가족/친구 대화, 특정 키워드 포함 메시지 등 어떤 기준으로 중요함을 판단할까요?",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "meaning",
+            "kind": "multiple",
+            "prompt": "'중요한 것'의 구체적인 의미를 선택해 주세요.",
+            "reason": "사용자의 '중요한 것' 기준을 명확히 해야 알림 기준을 정확히 설정할 수 있습니다.",
+            "options": [
+              {
+                "id": "work_related",
+                "label": "업무 관련 메시지",
+                "candidate_id": null
+              },
+              {
+                "id": "family_friends",
+                "label": "가족/친구 대화",
+                "candidate_id": null
+              },
+              {
+                "id": "specific_keywords",
+                "label": "특정 키워드 포함 메시지",
+                "candidate_id": null
+              },
+              {
+                "id": "urgent_words",
+                "label": "긴급한 단어 포함 메시지 (예: 긴급, ASAP)",
+                "candidate_id": null
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "중요한 것의 구체적 의미"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "사용자가 요청한 '중요한 것'의 구체적 의미를 확인하기 위한 질문"
+      }
+    ],
+    "errors": [],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8059,
+        "latency_ms": 5420.81,
+        "input_tokens": 1111,
+        "output_tokens": 268,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0008732000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "room",
+    "expected": {
+      "id": "room",
+      "instruction": "회사 단톡에서 일정 변경만 알려줘.",
+      "status": "needs_input",
+      "kind": "conversation",
+      "follow": "room"
+    },
+    "turns": [],
+    "errors": [
+      "unexpected_candidate"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8065,
+        "latency_ms": 4698.01,
+        "input_tokens": 1111,
+        "output_tokens": 211,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000782,
+        "error": "unexpected_candidate",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "missing_room",
+    "expected": {
+      "id": "missing_room",
+      "instruction": "회사 단톡에서 일정 변경만 알려줘.",
+      "empty": true,
+      "status": "waiting",
+      "follow": "refresh"
+    },
+    "turns": [
+      {
+        "status": "waiting",
+        "message": "회사 단톡방 후보가 없습니다. 대상 대화를 선택해 주세요.",
+        "questions": [],
+        "unresolved": [
+          "회사 단톡방 후보가 없습니다."
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "회사 단톡방에서 일정 변경 알림만 받는 기준 설정 요청, 대상 대화가 없어 대화 선택 대기 중"
+      }
+    ],
+    "errors": [
+      "unexpected_candidate"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 7482,
+        "latency_ms": 1533.79,
+        "input_tokens": 995,
+        "output_tokens": 85,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000534,
+        "error": null,
+        "api_attempts": 1
+      },
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8065,
+        "latency_ms": 4226.67,
+        "input_tokens": 1111,
+        "output_tokens": 208,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007772,
+        "error": "unexpected_candidate",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "participants",
+    "expected": {
+      "id": "participants",
+      "instruction": "민수가 참여하고 있는 모든 카카오톡 방의 알림만 알려줘.",
+      "status": "unsupported"
+    },
+    "turns": [],
+    "errors": [
+      "unexpected_candidate"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8122,
+        "latency_ms": 2772.96,
+        "input_tokens": 1118,
+        "output_tokens": 214,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007896000000000001,
+        "error": "unexpected_candidate",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "already_replied",
+    "expected": {
+      "id": "already_replied",
+      "instruction": "내가 이미 답변한 요청은 숨겨줘.",
+      "status": "unsupported"
+    },
+    "turns": [],
+    "errors": [
+      "invalid_question_state"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8059,
+        "latency_ms": 2393.03,
+        "input_tokens": 1113,
+        "output_tokens": 214,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007876000000000002,
+        "error": "invalid_question_state",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "temporary",
+    "expected": {
+      "id": "temporary",
+      "instruction": "이번 주만 모든 카카오톡 알림을 알려줘. 다음 주에는 이전 기준으로 돌아가.",
+      "status": "unsupported"
+    },
+    "turns": [],
+    "errors": [
+      "unexpected_candidate"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8168,
+        "latency_ms": 10353.78,
+        "input_tokens": 1123,
+        "output_tokens": 281,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0008988000000000001,
+        "error": "unexpected_candidate",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "conflict",
+    "expected": {
+      "id": "conflict",
+      "instruction": "카카오톡은 전부 숨겨줘. 카카오톡에서 내 이름 지훈이 나오면 무조건 알려줘. 둘 중 어느 기준이 우선인지는 아직 못 정했어.",
+      "status": "needs_input",
+      "field": "conflict",
+      "follow": "conflict"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "카카오톡 대화 전체를 숨기면서 '지훈' 이름이 나오면 알림을 받는 두 기준 중 우선순위를 정하지 않으셨습니다. 우선순위와 알림 대상 대화를 명확히 해야 합니다.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "single",
+            "prompt": "'카카오톡 전부 숨기기'와 '카카오톡에서 이름 지훈 나오면 알림' 중 어느 기준을 우선 적용할까요?",
+            "reason": "두 기준이 충돌할 수 있어 우선순위가 필요합니다.",
+            "options": [
+              {
+                "id": "hide_first",
+                "label": "카카오톡 전부 숨기기 우선",
+                "candidate_id": null
+              },
+              {
+                "id": "alert_first",
+                "label": "이름 지훈 알림 우선",
+                "candidate_id": null
+              },
+              {
+                "id": "no_priority",
+                "label": "우선순위 없이 모두 적용",
+                "candidate_id": null
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "field": "identity",
+            "kind": "text",
+            "prompt": "알림 대상 이름 '지훈'이 맞나요? 혹은 다른 이름이나 호칭도 포함할까요?",
+            "reason": "정확한 알림 대상 이름을 확인해야 합니다.",
+            "options": []
+          }
+        ],
+        "unresolved": [
+          "우선순위 미정",
+          "알림 대상 이름 미확인"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "사용자 요청에 따라 카카오톡 전체 숨김과 이름 '지훈' 알림 기준 우선순위 및 알림 대상 이름 확인 필요"
+      }
+    ],
+    "errors": [
+      "question_field",
+      "unconfirmed_candidate"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8290,
+        "latency_ms": 3756.2,
+        "input_tokens": 1142,
+        "output_tokens": 330,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009847999999999999,
+        "error": null,
+        "api_attempts": 1
+      },
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 10086,
+        "latency_ms": 2516.72,
+        "input_tokens": 1456,
+        "output_tokens": 151,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000824,
+        "error": "unconfirmed_candidate",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "modify",
+    "expected": {
+      "id": "modify",
+      "current": "모든 앱에서 일정 변경과 회비 요청을 알려준다.",
+      "instruction": "이제 회비 요청은 빼줘. 일정 변경은 계속 알려줘.",
+      "status": "ready",
+      "contains": [
+        "일정",
+        "회비"
+      ],
+      "change": "modify"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "회비 요청을 제외할 대상을 지정해 주세요. 일정 변경 알림은 계속 받으시려면 대상도 알려 주세요.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "conversation",
+            "prompt": "회비 요청 알림에서 제외할 대화를 선택해 주세요.",
+            "reason": "회비 요청 제외 대상을 명확히 해야 정확한 알림 설정이 가능함",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "field": "scope",
+            "kind": "conversation",
+            "prompt": "일정 변경 알림을 계속 받을 대화를 선택해 주세요.",
+            "reason": "일정 변경 알림 대상 대화를 지정해야 함",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "회비 요청 제외 대상 대화 미지정",
+          "일정 변경 알림 대상 대화 미지정"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "modify",
+        "change_summary": "회비 요청 제외 및 일정 변경 알림 유지 대상 대화 지정 필요"
+      }
+    ],
+    "errors": [
+      "status",
+      "missing_term:일정",
+      "missing_term:회비"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8220,
+        "latency_ms": 4183.74,
+        "input_tokens": 1132,
+        "output_tokens": 361,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0010304000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "name",
+    "expected": {
+      "id": "name",
+      "instruction": "모든 앱에서 내 이름이 직접 언급되면 알려줘.",
+      "status": "needs_input",
+      "kind": "text",
+      "follow": "name"
+    },
+    "turns": [],
+    "errors": [
+      "unexpected_candidate"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8091,
+        "latency_ms": 4320.28,
+        "input_tokens": 1116,
+        "output_tokens": 311,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000944,
+        "error": "unexpected_candidate",
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "exception",
+    "expected": {
+      "id": "exception",
+      "instruction": "모든 앱에서 광고는 조용히 처리하되 광고에 실제 내 계정의 보안 경고가 함께 있으면 알려줘.",
+      "status": "ready",
+      "contains": [
+        "광고",
+        "보안"
+      ]
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "광고와 보안 경고를 구분하기 위해, 보안 경고가 포함된 알림을 어떤 기준으로 식별할지 구체적으로 알려주세요. 예를 들어, 특정 키워드, 발신자, 또는 대화방을 지정할 수 있습니다.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "multiple",
+            "prompt": "보안 경고가 포함된 광고 알림을 알려주기 위해 어떤 범위를 적용할까요?",
+            "reason": "보안 경고 식별 기준을 명확히 해야 정확한 알림 설정이 가능하기 때문입니다.",
+            "options": [
+              {
+                "id": "keyword",
+                "label": "특정 키워드 포함 여부로 식별",
+                "candidate_id": null
+              },
+              {
+                "id": "sender",
+                "label": "특정 발신자(예: 은행, 보안 서비스)로 식별",
+                "candidate_id": null
+              },
+              {
+                "id": "conversation",
+                "label": "특정 대화방에서만 식별",
+                "candidate_id": null
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "보안 경고 식별 기준"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "보안 경고 포함 광고 알림 식별 기준 필요"
+      }
+    ],
+    "errors": [
+      "status",
+      "missing_term:광고",
+      "missing_term:보안"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8212,
+        "latency_ms": 3838.02,
+        "input_tokens": 1131,
+        "output_tokens": 256,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000862,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "candidate_injection",
+    "expected": {
+      "id": "candidate_injection",
+      "instruction": "회사 단톡에서 일정 변경만 알려줘.",
+      "inject": true,
+      "status": "needs_input",
+      "kind": "conversation"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "회사 단톡방이 여러 개 있습니다. 일정 변경 알림을 받을 단톡방을 선택해 주세요.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "identity",
+            "kind": "conversation",
+            "prompt": "회사 단톡방 중 일정 변경 알림을 받을 방을 선택하세요.",
+            "reason": "사용자가 '회사 단톡'이라고만 했으나 여러 후보가 있어 정확한 방을 지정해야 합니다.",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "q1"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "회사 단톡방 중 일정 변경 알림을 받을 방을 선택하는 질문 추가"
+      }
+    ],
+    "errors": [],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "request_bytes": 8140,
+        "latency_ms": 2151.32,
+        "input_tokens": 1121,
+        "output_tokens": 216,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000794,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  }
+]

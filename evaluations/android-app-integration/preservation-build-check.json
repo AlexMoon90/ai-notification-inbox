@@ -1,0 +1,12 @@
+{
+  "unit_tests": {
+    "tests": 57,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "debug_build": true,
+  "lint": true,
+  "apk_sha256": "0bcfe224577670cc5cfc888edbb88d134527ea018b435ea831efd55ec0e5d58b",
+  "build_source_matches_workspace": true
+}

@@ -1,0 +1,24 @@
+
+com.ainotification.inbox.StructuredPolicyDeviceTest:INSTRUMENTATION_STATUS: case_result=0 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=2 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=3 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=4 expected_hide=false actual=review
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=5 expected_hide=false actual=review
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: api_calls=6
+INSTRUMENTATION_STATUS: estimated_usd=1.8513600000000002E-4
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+.
+
+Time: 2.684
+
+OK (1 test)
+
+

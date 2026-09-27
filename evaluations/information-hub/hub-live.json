@@ -1,0 +1,206 @@
+{
+  "cases": [
+    {
+      "expected": "RESERVATION",
+      "events": [
+        "RESERVATION"
+      ]
+    },
+    {
+      "expected": "DELIVERY",
+      "events": [
+        "DELIVERY"
+      ]
+    },
+    {
+      "expected": "PAYMENT",
+      "events": [
+        "PAYMENT"
+      ]
+    },
+    {
+      "expected": "REFUND",
+      "events": [
+        "ORDER",
+        "REFUND"
+      ]
+    },
+    {
+      "expected": "SOCIAL_ACTIVITY",
+      "events": [
+        "SOCIAL_ACTIVITY"
+      ]
+    },
+    {
+      "expected": "TRAVEL",
+      "events": [
+        "RESERVATION",
+        "TRAVEL"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "hub_classification",
+      "time": 1790480869980,
+      "request_bytes": 4135,
+      "input_tokens": 1024,
+      "output_tokens": 240,
+      "estimated_usd": 4.3008000000000006E-5,
+      "judgments": {
+        "RESERVATION": 0.97,
+        "DELIVERY": 0.02,
+        "PAYMENT": 0.02,
+        "MONEY_RECEIVED": 0.02,
+        "ORDER": 0.32,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.06,
+        "REPLY_REQUIRED": 0.03,
+        "SCHEDULE_CHANGE": 0.06,
+        "MEETING_CONFIRMED": 0.02,
+        "AI_TASK_COMPLETED": 0.04,
+        "AI_INPUT_REQUIRED": 0.02
+      },
+      "ok": true,
+      "latency_ms": 481
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "hub_classification",
+      "time": 1790480870471,
+      "request_bytes": 4114,
+      "input_tokens": 1004,
+      "output_tokens": 240,
+      "estimated_usd": 4.2168E-5,
+      "judgments": {
+        "RESERVATION": 0.13,
+        "DELIVERY": 0.98,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.84,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.05,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.02,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "ok": true,
+      "latency_ms": 198
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "hub_classification",
+      "time": 1790480870681,
+      "request_bytes": 4115,
+      "input_tokens": 1018,
+      "output_tokens": 240,
+      "estimated_usd": 4.2756E-5,
+      "judgments": {
+        "RESERVATION": 0.21,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.91,
+        "MONEY_RECEIVED": 0.39,
+        "ORDER": 0.88,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.02,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.02
+      },
+      "ok": true,
+      "latency_ms": 246
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "hub_classification",
+      "time": 1790480870942,
+      "request_bytes": 4110,
+      "input_tokens": 1008,
+      "output_tokens": 240,
+      "estimated_usd": 4.2336E-5,
+      "judgments": {
+        "RESERVATION": 0.18,
+        "DELIVERY": 0.03,
+        "PAYMENT": 0.43,
+        "MONEY_RECEIVED": 0.26,
+        "ORDER": 0.96,
+        "REFUND": 0.98,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.02,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "ok": true,
+      "latency_ms": 241
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "hub_classification",
+      "time": 1790480871200,
+      "request_bytes": 4082,
+      "input_tokens": 999,
+      "output_tokens": 240,
+      "estimated_usd": 4.195800000000001E-5,
+      "judgments": {
+        "RESERVATION": 0.01,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.01,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.95,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "ok": true,
+      "latency_ms": 288
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "hub_classification",
+      "time": 1790480871501,
+      "request_bytes": 4142,
+      "input_tokens": 1021,
+      "output_tokens": 240,
+      "estimated_usd": 4.288200000000001E-5,
+      "judgments": {
+        "RESERVATION": 0.92,
+        "DELIVERY": 0.02,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.29,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.96,
+        "REPLY_REQUIRED": 0.19,
+        "SCHEDULE_CHANGE": 0.02,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.02
+      },
+      "ok": true,
+      "latency_ms": 296
+    }
+  ]
+}

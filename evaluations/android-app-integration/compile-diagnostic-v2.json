@@ -1,0 +1,53 @@
+[
+  {
+    "case": "bound_payment",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.83
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.54
+      }
+    },
+    "usage": {
+      "input_tokens": 538,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "all_apps",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.68
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.19
+      }
+    },
+    "usage": {
+      "input_tokens": 507,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "unsupported_history",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.04
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.68
+      }
+    },
+    "usage": {
+      "input_tokens": 525,
+      "output_tokens": 39
+    }
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "answers": {
+    "supported": {
+      "type": "noul",
+      "noul": 0.36
+    },
+    "needs_conversation": {
+      "type": "noul",
+      "noul": 0.57
+    }
+  },
+  "usage": {
+    "input_tokens": 450,
+    "output_tokens": 39
+  }
+}

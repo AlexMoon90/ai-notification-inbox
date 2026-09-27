@@ -1,0 +1,31 @@
+{
+  "settings": {
+    "completed": 40,
+    "valid": 40,
+    "status_correct": 40
+  },
+  "multiturn": {
+    "completed": 10,
+    "automated_pass": 10,
+    "initial_status_correct": 10,
+    "final_status_correct": 10
+  },
+  "fresh": {
+    "completed": 8,
+    "automated_pass": 8,
+    "final_status_correct": 8
+  },
+  "usage": {
+    "calls": 86,
+    "tokens": {
+      "input_tokens": 144545,
+      "output_tokens": 16588,
+      "cached_tokens": 114828
+    },
+    "estimated_usd_known_usage": 0.02814556,
+    "unknown_cost_calls": 0,
+    "p50_ms": 2999.71,
+    "p95_ms": 5398.67
+  },
+  "stopped_on_service_error": false
+}

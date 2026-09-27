@@ -1,0 +1,99 @@
+{
+  "promotion": {
+    "status": "outside",
+    "action": "HIDE",
+    "matched_policy_ids": [
+      "new_1"
+    ],
+    "reason": "이런 광고는 앞으로 숨기기 기준을 적용했습니다.",
+    "decision_stage": "policy_resolution",
+    "contract_version": "predicate-choice-v2",
+    "policy_trace": [
+      {
+        "rule_id": "new_1",
+        "priority": 3,
+        "matched": true,
+        "possible_actions": [
+          "HIDE"
+        ],
+        "exception_matches": []
+      }
+    ]
+  },
+  "metrics": [
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "context_recommendation",
+      "time": 1790351647179,
+      "request_bytes": 2955,
+      "input_tokens": 847,
+      "output_tokens": 208,
+      "estimated_usd": 3.5574E-5,
+      "judgments": {
+        "PROMOTION": 0.99,
+        "DELIVERY": 0.01,
+        "PAYMENT_REQUIRED": 0.39,
+        "MONEY_RECEIVED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "REPLY_REQUIRED": 0.07,
+        "SECURITY": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.02,
+        "CASUAL_CHAT": 0.04
+      },
+      "ok": true,
+      "latency_ms": 960
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790351648247,
+      "request_bytes": 1203,
+      "input_tokens": 549,
+      "output_tokens": 42,
+      "estimated_usd": 2.3058E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "MATCH": 1,
+            "UNKNOWN": 0,
+            "NO_MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 263
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790351648514,
+      "request_bytes": 1192,
+      "input_tokens": 542,
+      "output_tokens": 43,
+      "estimated_usd": 2.2764000000000004E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "MATCH": 0,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 242
+    }
+  ],
+  "openai_calls": 0
+}

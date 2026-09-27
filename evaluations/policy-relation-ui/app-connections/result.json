@@ -1,0 +1,26 @@
+{
+  "tests": {
+    "tests": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "passed",
+  "lint": "passed",
+  "device": "passed 63.804 seconds",
+  "api_calls_in_test": 0,
+  "apk_sha256": "95e1b41d1e17a1eb4a79ad8f4391d1452c9fa98784c5b8fa11b3169ec73a702e",
+  "checks": [
+    "app scope includes global and app-specific rules, excludes other apps",
+    "disabled global rules retained in graph projection",
+    "app icon in text spotlight opens complete app connections",
+    "common situations and individual instructions rendered together",
+    "instruction tap opens settings and existing detail",
+    "reset cancel/confirm persists in isolated fixture",
+    "actual user policy unchanged"
+  ],
+  "limits": [
+    "synthetic device fixture uses global rules and observed KakaoTalk icon; mixed app scopes checked in unit test",
+    "does not establish broader AI classification accuracy"
+  ]
+}

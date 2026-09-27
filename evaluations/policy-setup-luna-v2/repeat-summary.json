@@ -1,0 +1,16 @@
+{
+  "completed": 4,
+  "passed": 4,
+  "usage": {
+    "calls": 14,
+    "tokens": {
+      "input_tokens": 25323,
+      "output_tokens": 3326,
+      "cached_tokens": 21192
+    },
+    "estimated_usd_known_usage": 0.0052412399999999994,
+    "unknown_cost_calls": 0,
+    "p50_ms": 3843.27,
+    "p95_ms": 6634.36
+  }
+}

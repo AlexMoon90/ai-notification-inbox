@@ -1,0 +1,29 @@
+.env
+.env.*
+!.env.example
+.gradle/
+.kotlin/
+**/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+hs_err_pid*.log
+.local/
+__pycache__/
+
+# Local captures, generated outputs and private test binaries
+tmp/
+replay_pid*.log
+*.apk
+*.aab
+*.db
+*.db-wal
+*.db-shm
+*.jks
+*.keystore
+**/test-openai-key
+**/test-jev-key
+
+# Raw device UI hierarchies (may include notification text)
+evaluations/**/*.xml

@@ -1,0 +1,29 @@
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.StructuredPolicyDeviceTest:
+INSTRUMENTATION_STATUS: test=refreshStoredProposalWithoutApplying
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: active_policy_unchanged=true
+INSTRUMENTATION_STATUS: proposed_rule_count=0
+INSTRUMENTATION_STATUS: repair_count=0
+INSTRUMENTATION_STATUS: stored_proposal_status=clarification_required
+INSTRUMENTATION_STATUS: stored_proposal_validated=false
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=refreshStoredProposalWithoutApplying
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.002
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

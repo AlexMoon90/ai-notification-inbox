@@ -1,0 +1,52 @@
+{
+  "luna_settings": {
+    "calls": 40,
+    "tokens": {
+      "input_tokens": 52206,
+      "output_tokens": 6774,
+      "cached_tokens": 42276
+    },
+    "estimated_usd_known_usage": 0.010960319999999999,
+    "unknown_cost_calls": 0,
+    "p50_ms": 2512.2250000000004,
+    "p95_ms": 3702.81
+  },
+  "luna_multiturn": {
+    "calls": 27,
+    "tokens": {
+      "input_tokens": 40767,
+      "output_tokens": 5972,
+      "cached_tokens": 29801
+    },
+    "estimated_usd_known_usage": 0.009955620000000002,
+    "unknown_cost_calls": 0,
+    "p50_ms": 2714.32,
+    "p95_ms": 5427.73
+  },
+  "gpt41_settings": {
+    "calls": 40,
+    "tokens": {
+      "input_tokens": 52286,
+      "output_tokens": 7065,
+      "cached_tokens": 0
+    },
+    "estimated_usd_known_usage": 0.16109199999999999,
+    "unknown_cost_calls": 0,
+    "p50_ms": 1800.175,
+    "p95_ms": 3104.12
+  },
+  "gpt41_multiturn": {
+    "calls": 29,
+    "tokens": {
+      "input_tokens": 44421,
+      "output_tokens": 4865,
+      "cached_tokens": 9216
+    },
+    "estimated_usd_known_usage": 0.113938,
+    "unknown_cost_calls": 0,
+    "p50_ms": 1760.38,
+    "p95_ms": 2993.32
+  },
+  "luna_reasoning_tokens": 2891,
+  "luna_uncached_estimated_usd": 0.033889800000000005
+}

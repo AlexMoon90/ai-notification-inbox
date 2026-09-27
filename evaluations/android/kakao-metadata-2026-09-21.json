@@ -1,0 +1,12 @@
+{
+  "device": "Galaxy SM-S911N",
+  "android_sdk": 36,
+  "kakao_version": "26.8.2",
+  "method": "On-device instrumentation, active public notifications only; no message or name export",
+  "test_passed": true,
+  "active_notifications": [
+    {"kind": "notification_group_summary", "notification_key_token": "42bb1f1865e3a96f", "app_group_token": "615c693f3b1b822b", "system_group_token": "b962cbb37c2eef6e", "channel_token": "208e2d8bcb5ce503", "shortcut_token": null, "explicit_group_conversation_present": false, "messaging_style_present": false},
+    {"kind": "conversation_notification", "notification_key_token": "72982165d86f72f6", "notification_id_token": "b922def50214a833", "tag_token": "98e95165c1096aba", "shortcut_token": "98e95165c1096aba", "app_group_token": "615c693f3b1b822b", "system_group_token": "b962cbb37c2eef6e", "channel_token": "208e2d8bcb5ce503", "locus_token": null, "channel_conversation_token": null, "ranking_is_conversation": true, "explicit_group_conversation_present": true, "explicit_group_conversation": true, "messaging_style_present": true, "style_is_group_conversation": true, "conversation_title_present": false, "message_count": 2, "distinct_sender_count_in_visible_messages": 2, "sender_key_present_count": 2, "sender_uri_present_count": 0, "extra_count": 27, "non_android_extra_count": 5}
+  ],
+  "limitations": ["One active conversation notification; no controlled 1:1 sample yet", "Cross-arrival/reboot/version stability not established", "Tokens are salted digests, not actual Kakao identifiers"]
+}

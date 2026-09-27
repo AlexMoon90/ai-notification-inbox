@@ -1,0 +1,15 @@
+{
+  "app/src/main/java/com/ainotification/inbox/PolicyModel.kt": "3a71874a5022efe24bc23a6c06a0513fc949ea6719c2accdd4dea1576b9aa716",
+  "app/src/main/java/com/ainotification/inbox/PolicyController.kt": "64701ab4a3955760d64b65499c514dbb416be3cdc70b948647422bb9bb641344",
+  "app/src/main/java/com/ainotification/inbox/StructuredPolicyRuntime.kt": "29025f6d5d147b2610adfd2e26af1d96b282a6781a53dc66818f69947d53f0f9",
+  "app/src/main/java/com/ainotification/inbox/PolicyResolution.kt": "d67128aa152faa917bc9bc2f1fa05fb5c7b5f1b1cf837d49334ba5977f69c991",
+  "app/src/main/java/com/ainotification/inbox/JevEngine.kt": "287231f706dca0ace11b630aa2999a8ea1590122d42484213bb2ab26f81412ff",
+  "app/src/main/java/com/ainotification/inbox/NotificationObservation.kt": "079f87f620103e92e700117d4a56078d034fd5aa5ff100706b2717abe0132e32",
+  "app/src/main/java/com/ainotification/inbox/NotificationSelection.kt": "834e3f6bcb34e9e61fa851fa22a7efebfe7e77551a0957254a01d8b1fe5d7357",
+  "app/src/androidTest/java/com/ainotification/inbox/PolicyPipelineDeviceTest.kt": "3611b853680d7b648e638eff49da27c210012d711608a42f10b398da9a854383",
+  "app/src/main/java/com/ainotification/inbox/NotificationData.kt": "a8dd2b54c6441b583067189a00f795965387c77b4b1240b2ed4f11293117263e",
+  "app/src/main/java/com/ainotification/inbox/LongMessageReview.kt": "4e9bd2bec00c7720a22e67099100c3dcc1d1bd25643d885a178247b46dba42f6",
+  "app/src/test/java/com/ainotification/inbox/PolicyResolutionTest.kt": "ae62d2b88f890fa023f9e1cf7eefa90c0d1159a9918eb2a95da5bd84fcf26fa4",
+  "app/src/test/java/com/ainotification/inbox/StructuredRuntimeTest.kt": "e52206d81363fbb5d9ce5bd9f812c5ba39722d41ec2295a4dd304acf1ecb46f6",
+  "app/src/test/java/com/ainotification/inbox/RuleManagementTest.kt": "d671e1abb2ceceb5d9139edbb8b712606a0cd581167652e8223138ce00e21dfa"
+}

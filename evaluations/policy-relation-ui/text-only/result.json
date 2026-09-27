@@ -1,0 +1,21 @@
+{
+  "tests": {
+    "tests": 60,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "passed",
+  "lint": "passed",
+  "device": "passed, 44.227 seconds",
+  "apk_sha256": "dd703e30b7797df81f35fa7c3a70e50c30fce1229e5a9e5aeb7f6a29ff19ea68",
+  "checks": [
+    "right swipe widens left",
+    "left swipe widens right",
+    "gesture preserves policy",
+    "detail opens",
+    "reset cancel/confirm and Room reload",
+    "actual user policy unchanged"
+  ],
+  "test_api_calls": 0
+}

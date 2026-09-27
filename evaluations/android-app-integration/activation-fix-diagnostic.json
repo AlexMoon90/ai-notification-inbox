@@ -1,0 +1,87 @@
+[
+  {
+    "case": "reported_rule",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.88
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.1
+      }
+    },
+    "usage": {
+      "input_tokens": 662,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "unseen_history",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.15
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.65
+      }
+    },
+    "usage": {
+      "input_tokens": 620,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "external_action",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.05
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.35
+      }
+    },
+    "usage": {
+      "input_tokens": 611,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "unbound_room",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.81
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.64
+      }
+    },
+    "usage": {
+      "input_tokens": 603,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "bound_room",
+    "answers": {
+      "supported": {
+        "type": "noul",
+        "noul": 0.82
+      },
+      "needs_conversation": {
+        "type": "noul",
+        "noul": 0.66
+      }
+    },
+    "usage": {
+      "input_tokens": 621,
+      "output_tokens": 39
+    }
+  }
+]

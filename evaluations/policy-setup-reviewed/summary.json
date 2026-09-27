@@ -1,0 +1,19 @@
+{
+  "completed": 10,
+  "passed_automated_checks": 9,
+  "initial_status_correct": 10,
+  "final_status_correct": 10,
+  "usage": {
+    "calls": 29,
+    "tokens": {
+      "input_tokens": 44421,
+      "output_tokens": 4865,
+      "cached_tokens": 9216
+    },
+    "estimated_usd_known_usage": 0.113938,
+    "unknown_cost_calls": 0,
+    "p50_ms": 1760.38,
+    "p95_ms": 2993.32
+  },
+  "caveat": "Exact-word checks are not semantic equivalence. Requires independent review and downstream notification probes."
+}

@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-25",
+  "diagnosis": {
+    "promotion_probability": 0.99,
+    "generic_readability_probability": 0.63,
+    "result": "review instead of outside"
+  },
+  "fix": "PROMOTION-specific evidence question; thresholds unchanged",
+  "unit_tests": 70,
+  "build_lint": "passed",
+  "actual_jev_cases": 6,
+  "passed": 6,
+  "estimated_usd": 0.000119952,
+  "galaxy_installed": true,
+  "existing_user_policy": "unchanged",
+  "existing_history": "not reclassified"
+}

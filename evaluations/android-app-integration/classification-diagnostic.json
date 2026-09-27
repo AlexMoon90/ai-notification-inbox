@@ -1,0 +1,53 @@
+[
+  {
+    "case": "payment",
+    "answers": {
+      "matches": {
+        "type": "noul",
+        "noul": 0.92
+      },
+      "sufficient": {
+        "type": "noul",
+        "noul": 0.85
+      }
+    },
+    "usage": {
+      "input_tokens": 558,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "advert",
+    "answers": {
+      "matches": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "sufficient": {
+        "type": "noul",
+        "noul": 0.91
+      }
+    },
+    "usage": {
+      "input_tokens": 563,
+      "output_tokens": 39
+    }
+  },
+  {
+    "case": "completed",
+    "answers": {
+      "matches": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "sufficient": {
+        "type": "noul",
+        "noul": 0.89
+      }
+    },
+    "usage": {
+      "input_tokens": 555,
+      "output_tokens": 39
+    }
+  }
+]

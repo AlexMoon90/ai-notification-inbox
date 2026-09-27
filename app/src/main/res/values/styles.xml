@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.Inbox" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorAccent">#315DAD</item>
+    </style>
+</resources>

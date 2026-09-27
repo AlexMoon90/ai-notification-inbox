@@ -1,0 +1,49 @@
+
+com.ainotification.inbox.StructuredPolicyDeviceTest:
+Error in reviewDialogKeepsQuestionsAndDiffAwayFromGraph(com.ainotification.inbox.StructuredPolicyDeviceTest):
+java.lang.IllegalStateException: Missing control: policy_relation_map
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.find(StructuredPolicyDeviceTest.kt:41)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$find(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:300)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1$1.invoke(StructuredPolicyDeviceTest.kt:15)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1$1.invoke(StructuredPolicyDeviceTest.kt:10)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.fixture(StructuredPolicyDeviceTest.kt:51)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$fixture(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1.invokeSuspend(StructuredPolicyDeviceTest.kt:276)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.reviewDialogKeepsQuestionsAndDiffAwayFromGraph(StructuredPolicyDeviceTest.kt:276)
+
+
+Time: 34.764
+There was 1 failure:
+1) reviewDialogKeepsQuestionsAndDiffAwayFromGraph(com.ainotification.inbox.StructuredPolicyDeviceTest)
+java.lang.IllegalStateException: Missing control: policy_relation_map
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.find(StructuredPolicyDeviceTest.kt:41)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$find(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:300)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1$1.invoke(StructuredPolicyDeviceTest.kt:15)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1$1.invoke(StructuredPolicyDeviceTest.kt:10)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.fixture(StructuredPolicyDeviceTest.kt:51)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$fixture(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$reviewDialogKeepsQuestionsAndDiffAwayFromGraph$1.invokeSuspend(StructuredPolicyDeviceTest.kt:276)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.reviewDialogKeepsQuestionsAndDiffAwayFromGraph(StructuredPolicyDeviceTest.kt:276)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+

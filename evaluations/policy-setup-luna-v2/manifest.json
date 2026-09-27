@@ -1,0 +1,28 @@
+{
+  "model": "gpt-5.6-luna",
+  "reasoning": {
+    "effort": "low"
+  },
+  "temperature": "omitted",
+  "max_output_tokens": 2200,
+  "store": false,
+  "strict_json_schema": true,
+  "attempts_per_request": 1,
+  "pricing_per_million": {
+    "input": 0.2,
+    "cached_input": 0.02,
+    "output": 1.2
+  },
+  "sources": {
+    "dataset.json": "68565c1c5bd2e56762df3c3736abcf683c57174276d73a55da026fe7fe7588ff",
+    "multiturn.json": "f4aff6d95190f333da5da3bf469772fd1056e8b1c651a8fd241aa6454670a553",
+    "fresh.json": "dbec7bcd267d9e47af3e79337aa85ef3f6f3413e196379e9f71c06b3b76d7ca6",
+    "evaluate_policy_setup_luna_v2.py": "0850f6d8923139738d49cdce6d7b36001d315f8639fa4e884c091a4e2f1133ea",
+    "policy_setup_luna_v2.py": "88bb04ec438e29f7daed2ac15df9b1c23e7aa58cca05c7c031dd3303b4bef528",
+    "policy_setup_reliable.py": "d2a3d161a80ef439d842d22952e49d4623121405a636d5a79928a705da4e27c1",
+    "policy_setup_v5.py": "69c4258d45b20d83d1ee236df3edae8bb3dc3328c58912222fee9d82f7071f4c",
+    "policy_setup_v4.py": "92d5c3c0158936101bd74191f418d62e427e097937caa60ef11948fba8f0b43e",
+    "policy_setup.py": "fb97404cc6d505d73224f0d1e56f81b4ab252c51ceaaa2581797b8bc8f82bc15"
+  },
+  "note": "40+10 exposed regression fixtures plus8 newly authored cases frozen before calls; observable-state prompt added to both clarification and review. No default model replacement. Output limit retained; incomplete outputs count as failures."
+}

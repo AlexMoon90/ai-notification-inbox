@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-23",
+  "root_cause": "successful API response rejected by semantic capability gate; generic message conflated semantic rejection and network failure",
+  "instruction_unchanged": true,
+  "activation_threshold_unchanged": true,
+  "unit_tests": 30,
+  "unit_failures": 0,
+  "debug_build_and_lint": "passed",
+  "release_key_exclusion": "passed",
+  "synthetic_device_regression": "passed",
+  "synthetic_statuses": [
+    "match",
+    "review",
+    "review",
+    "review"
+  ],
+  "saved_rule_ui_activation": "passed",
+  "ui_path": [
+    "criteria_tab",
+    "existing_draft",
+    "activate_rule",
+    "confirm_activation",
+    "pause_button_visible"
+  ],
+  "requested_rule_active_and_persisted": true,
+  "reviewed_draft_unchanged": true,
+  "earlier_ui_test_failure": "confirmation dialog did not inherit resource test tags; fixed dialog semantics, no API activation attempted in that run",
+  "quality_gate": "unchanged; no broad accuracy claim"
+}

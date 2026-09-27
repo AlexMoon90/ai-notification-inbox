@@ -1,0 +1,107 @@
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.StructuredPolicyDeviceTest:
+INSTRUMENTATION_STATUS: test=preservedMeetingExceptionAndStructuredPendingUi
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: repair_count=0
+INSTRUMENTATION_STATUS: synthetic_preservation_result={"status":"clarification_required","message":"적용 전에 뜻을 확인할게요.","question":"‘보안’ 조건에 로그인 알림도 포함되는 것으로 처리할까요?","options":[],"uncertain":false,"rules":[{"id":"new_1","name":"모든 앱의 중요 공지 및 AI 상태 표시","enabled":true,"scope":{"type":"ALL_APPS","apps":[],"conversation_ids":[],"sender_names":[],"relationship":"","source_type":""},"conditions":[{"type":"MEETING_CONFIRMED","value":"","negated":false},{"type":"SCHEDULE_CHANGE","value":"","negated":false},{"type":"SECURITY","value":"","negated":false},{"type":"AI_TASK_COMPLETED","value":"","negated":false},{"type":"AI_INPUT_REQUIRED","value":"","negated":false},{"type":"CONTENT","value":"약속 또는 미팅에 관련된 공지","negated":false}],"logic":"ANY","action":"SHOW","exceptions":[],"time":{"zone":"Asia\/Seoul","days":[],"start":"","end":"","from":"","until":""},"source_instruction":"모든 앱의 약속 확정, 일정 변경, 보안 및 로그인, AI 작업 완료와 입력 필요는 보여줘. Codex가 작업을 끝냈거나 내 입력을 기다릴 때 알려줘. OS 전체 알림 차단만 이관하지 않아. 약속 또는 미팅 관련 공지의 출처와 관계없는 허용 예외와 나머지 기존 기준은 유지해줘."},{"id":"new_2","name":"모든 앱의 광고·프로모션 숨김","enabled":true,"scope":{"type":"ALL_APPS","apps":[],"conversation_ids":[],"sender_names":[],"relationship":"","source_type":""},"conditions":[{"type":"PROMOTION","value":"","negated":false}],"logic":"ANY","action":"HIDE","exceptions":[{"id":"meeting_exception","conditions":[{"type":"CONTENT","value":"약속 또는 미팅에 관련된 공지","negated":false}],"logic":"ANY","action":"SHOW"}],"time":{"zone":"Asia\/Seoul","days":[],"start":"","end":"","from":"","until":""},"source_instruction":"모든 앱의 광고와 프로모션, 뉴스 속보는 숨겨줘. OS 전체 알림 차단만 이관하지 않아. 약속 또는 미팅 관련 공지의 출처와 관계없는 허용 예외와 나머지 기존 기준은 유지해줘."},{"id":"new_3","name":"모든 앱의 뉴스 속보 숨김","enabled":true,"scope":{"type":"ALL_APPS","apps":[],"conversation_ids":[],"sender_names":[],"relationship":"","source_type":""},"conditions":[{"type":"CONTENT","value":"뉴스 속보","negated":false}],"logic":"ANY","action":"HIDE","exceptions":[{"id":"meeting_exception","conditions":[{"type":"CONTENT","value":"약속 또는 미팅에 관련된 공지","negated":false}],"logic":"ANY","action":"SHOW"}],"time":{"zone":"Asia\/Seoul","days":[],"start":"","end":"","from":"","until":""},"source_instruction":"모든 앱의 광고와 프로모션, 뉴스 속보는 숨겨줘. OS 전체 알림 차단만 이관하지 않아. 약속 또는 미팅 관련 공지의 출처와 관계없는 허용 예외와 나머지 기존 기준은 유지해줘."}],"operations":[{"type":"ADD","id":"new_1"},{"type":"ADD","id":"new_2"},{"type":"ADD","id":"new_3"}]}
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[ready]> but was:<[clarification_required]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$preservedMeetingExceptionAndStructuredPendingUi$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:111)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.preservedMeetingExceptionAndStructuredPendingUi(StructuredPolicyDeviceTest.kt:102)
+
+INSTRUMENTATION_STATUS: stream=
+Error in preservedMeetingExceptionAndStructuredPendingUi(com.ainotification.inbox.StructuredPolicyDeviceTest):
+org.junit.ComparisonFailure: expected:<[ready]> but was:<[clarification_required]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$preservedMeetingExceptionAndStructuredPendingUi$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:111)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.preservedMeetingExceptionAndStructuredPendingUi(StructuredPolicyDeviceTest.kt:102)
+
+INSTRUMENTATION_STATUS: test=preservedMeetingExceptionAndStructuredPendingUi
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=groupChatRestrictionDoesNotBecomeAllCasualChat
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: api_calls=1
+INSTRUMENTATION_STATUS: estimated_usd=2.63E-4
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=groupChatRestrictionDoesNotBecomeAllCasualChat
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 24.319
+There was 1 failure:
+1) preservedMeetingExceptionAndStructuredPendingUi(com.ainotification.inbox.StructuredPolicyDeviceTest)
+org.junit.ComparisonFailure: expected:<[ready]> but was:<[clarification_required]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$preservedMeetingExceptionAndStructuredPendingUi$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:111)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.preservedMeetingExceptionAndStructuredPendingUi(StructuredPolicyDeviceTest.kt:102)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

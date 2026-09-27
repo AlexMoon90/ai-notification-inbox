@@ -1,0 +1,72 @@
+{
+  "usage": {
+    "calls": 8,
+    "tokens": {
+      "input_tokens": 4258,
+      "output_tokens": 168,
+      "cached_tokens": 0
+    },
+    "estimated_usd_known_usage": 0.000178836,
+    "unknown_cost_calls": 0,
+    "p50_ms": 485.335,
+    "p95_ms": 618.87
+  },
+  "results": [
+    {
+      "id": "time-and-description/gold",
+      "valid": true,
+      "p": 0.93,
+      "expected": true,
+      "action": "notify"
+    },
+    {
+      "id": "time-and-description/normalized",
+      "valid": true,
+      "p": 0.54,
+      "expected": true,
+      "action": "retain_for_review"
+    },
+    {
+      "id": "cancel-and-description/gold",
+      "valid": true,
+      "p": 0.96,
+      "expected": true,
+      "action": "notify"
+    },
+    {
+      "id": "cancel-and-description/normalized",
+      "valid": true,
+      "p": 0.76,
+      "expected": true,
+      "action": "retain_for_review"
+    },
+    {
+      "id": "time-and-place/gold",
+      "valid": true,
+      "p": 0.56,
+      "expected": true,
+      "action": "retain_for_review"
+    },
+    {
+      "id": "time-and-place/normalized",
+      "valid": true,
+      "p": 0.59,
+      "expected": true,
+      "action": "retain_for_review"
+    },
+    {
+      "id": "cancel-and-place/gold",
+      "valid": true,
+      "p": 0.82,
+      "expected": true,
+      "action": "notify"
+    },
+    {
+      "id": "cancel-and-place/normalized",
+      "valid": true,
+      "p": 0.88,
+      "expected": true,
+      "action": "notify"
+    }
+  ]
+}

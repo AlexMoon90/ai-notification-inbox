@@ -1,0 +1,26 @@
+{
+  "unit_tests": {
+    "tests": 100,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build_lint": "passed",
+  "installed": true,
+  "device_tests": {
+    "passed": 2,
+    "skipped": 0,
+    "seconds": 5.329
+  },
+  "synthetic_image_ui": "passed_preview_and_enlarge",
+  "kakao_real_image": "not_verified_no_active_kakao_notifications",
+  "preservation": {
+    "before_count": 9071,
+    "after_count": 9072,
+    "old_rows_preserved": true,
+    "policy_preserved": true,
+    "database_version_before": 3,
+    "database_version_after": 3
+  },
+  "image_ai_calls": 0
+}

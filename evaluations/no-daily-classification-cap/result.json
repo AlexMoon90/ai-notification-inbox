@@ -1,0 +1,18 @@
+{
+  "date": "2026-09-25",
+  "authorized_change": "Remove application daily Jev classification cap",
+  "unit_tests": 69,
+  "failures": 0,
+  "build_lint": "passed",
+  "galaxy_test": "dailyUsageDoesNotStopClassification passed 0.298s",
+  "tested_usage_counts": [
+    200,
+    1000,
+    10000
+  ],
+  "transport": "injected mock; device log api_calls=3 counts simulated transport calls",
+  "actual_external_test_calls": 0,
+  "installed": true,
+  "policy_preserved": true,
+  "historical_notifications_reclassified": false
+}

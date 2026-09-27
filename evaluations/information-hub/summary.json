@@ -1,0 +1,57 @@
+{
+  "unit_tests": {
+    "tests": 98,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build_lint": "passed",
+  "native_render": "3 screens inspected; Robolectric, not Galaxy",
+  "device_install": "passed",
+  "device_ui": "passed_synthetic_navigation_rooms_categories",
+  "db_migration": "v2 to v3 preservation and cascade passed in Robolectric",
+  "api": {
+    "initial": {
+      "passed": 6,
+      "total": 12
+    },
+    "revised": {
+      "passed": 12,
+      "total": 12
+    },
+    "holdout": {
+      "passed": 8,
+      "total": 10
+    },
+    "calls": 34,
+    "estimated_usd": 0.0014537039999999999,
+    "source": "synthetic only, desktop; Android integration pending"
+  },
+  "remaining": [
+    "Korean social comment below category threshold",
+    "Indirect meeting suggestion reply badge not detected",
+    "Conversation context tracking not implemented"
+  ],
+  "user_device_policy_changed": false,
+  "apk": "/tmp/inbox-preservation-build/app/build/outputs/apk/debug/app-debug.apk",
+  "device_tests": {
+    "tests": 2,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 10.429
+  },
+  "device_preservation": {
+    "before_count": 9061,
+    "after_count": 9070,
+    "old_rows_preserved": true,
+    "policy_preserved": true,
+    "database_version_before": 2,
+    "database_version_after": 3
+  },
+  "device_api": {
+    "cases": 6,
+    "passed": 6,
+    "calls": 6,
+    "estimated_usd": 0.00025510800000000004
+  }
+}

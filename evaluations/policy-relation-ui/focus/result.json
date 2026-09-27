@@ -1,0 +1,25 @@
+{
+  "tests": {
+    "tests": 60,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "passed",
+  "lint": "passed",
+  "device_first_version": "passed 45.441 seconds",
+  "device_final": "passed 46.68 seconds",
+  "api_calls_in_test": 0,
+  "apk_sha256": "e85f4e5ccf4894c057064b55c22a3e637e1ba331268773858f3635a737bee706",
+  "checks": [
+    "no initial spotlight",
+    "bidirectional drag preserves policy",
+    "first tap opens connection layer",
+    "observed KakaoTalk icon shown",
+    "no settings before second tap",
+    "second tap reveals settings",
+    "settings opens rule detail",
+    "reset cancel/confirm persists",
+    "actual user policy unchanged"
+  ]
+}

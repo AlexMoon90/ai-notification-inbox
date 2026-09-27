@@ -1,0 +1,126 @@
+Performing Streamed Install
+Success
+Performing Streamed Install
+Success
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.PolicyPipelineDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.PolicyPipelineDeviceTest:
+INSTRUMENTATION_STATUS: test=naturalLanguageThroughSavedPolicyAndLiveSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: case_result=0/0 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=0/1 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=0/2 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=0/3 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=0/4 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1/0 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1/1 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1/2 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1/3 expected_hide=false actual=review
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1/4 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=2/0 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=2/1 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=2/2 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=3/0 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=3/1 expected_hide=false actual=review
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=3/2 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=4/0 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=4/1 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=4/2 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.PolicyPipelineDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=naturalLanguageThroughSavedPolicyAndLiveSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.StructuredPolicyDeviceTest:
+INSTRUMENTATION_STATUS: test=actualJevGoogleSportsWithOtherHideRules
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: case_result=0 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=2 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=3 expected_hide=true actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=4 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=5 expected_hide=false actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: api_calls=6
+INSTRUMENTATION_STATUS: estimated_usd=2.4864E-4
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualJevGoogleSportsWithOtherHideRules
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualJevAdvertisingEvidenceRegression
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: case_result=0 expected=outside actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=1 expected=outside actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=2 expected=outside actual=outside
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=3 expected=match actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=4 expected=match actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: case_result=5 expected=match actual=match
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: api_calls=6
+INSTRUMENTATION_STATUS: estimated_usd=1.386E-4
+INSTRUMENTATION_STATUS: jev_compile_calls=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualJevAdvertisingEvidenceRegression
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 57.679
+
+OK (3 tests)
+
+
+INSTRUMENTATION_CODE: -1

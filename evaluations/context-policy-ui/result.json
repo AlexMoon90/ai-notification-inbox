@@ -1,0 +1,10 @@
+{
+  "unit_tests": 64,
+  "failures": 0,
+  "build_and_lint": "passed",
+  "galaxy": "relationNavigationAndConfirmedReset passed, 74.775s",
+  "api_calls": 0,
+  "verified": "app/rule context entry, input enables submit, cancel preserves rules, relationship navigation",
+  "not_verified": "new context path live OpenAI end-to-end; notification Timeline icon/device entry visual",
+  "user_policy": "preserved"
+}

@@ -1,0 +1,229 @@
+[
+  {
+    "id": "mt-001",
+    "instruction": "In Slack, notify me only when a message explicitly asks me by name to approve something. I have not supplied my name yet.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "My name in Slack messages is Avery.",
+    "answer_field": "identity",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "Slack",
+      "Avery",
+      "approv"
+    ],
+    "forbidden_terms": [
+      "Morgan"
+    ]
+  },
+  {
+    "id": "mt-002",
+    "instruction": "ESPN에서 내가 좋아하는 팀의 경기 종료 결과만 알려줘. 승리와 패배 모두 포함하고 경기 중 점수는 제외해. 좋아하는 팀 이름은 아직 말하지 않았어.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "좋아하는 팀은 가상 팀 달빛여우야.",
+    "answer_field": "identity",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "ESPN",
+      "달빛여우",
+      "결과"
+    ],
+    "forbidden_terms": [
+      "바다늑대"
+    ],
+    "answer_fields": [
+      "identity",
+      "scope"
+    ]
+  },
+  {
+    "id": "mt-003",
+    "instruction": "In Gmail, tell me about important messages. I have not defined important yet.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "By important, I mean only messages explicitly requiring me to pay an overdue bill. Exclude payment receipts and advertising.",
+    "answer_field": "meaning",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "Gmail",
+      "overdue"
+    ],
+    "forbidden_terms": [
+      "sports",
+      "YouTube"
+    ]
+  },
+  {
+    "id": "mt-004",
+    "instruction": "YouTube에서 내가 지정할 채널의 새 업로드만 알려줘. 라이브와 댓글 답글은 빼줘. 채널 이름은 아직 지정하지 않았어.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "채널 이름은 별빛실험실이야. 알림 본문에 그 이름이 명시된 경우로 한정해.",
+    "answer_field": "identity",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "YouTube",
+      "별빛실험실",
+      "업로드"
+    ],
+    "forbidden_terms": [
+      "달빛공방"
+    ],
+    "answer_fields": [
+      "identity",
+      "scope"
+    ]
+  },
+  {
+    "id": "mt-005",
+    "instruction": "Teams에서 urgent messages만 알려줘. urgent가 어떤 뜻인지는 아직 정하지 않았어.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "urgent는 알림 본문에 오늘까지 내 승인이 필요하다고 명시된 경우만이야. 내 이름은 Quinn이야.",
+    "answer_field": "meaning",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "Teams",
+      "Quinn",
+      "승인",
+      "오늘"
+    ],
+    "forbidden_terms": [
+      "내일"
+    ]
+  },
+  {
+    "id": "mt-006",
+    "instruction": "WhatsApp에서 내 독서모임 방의 일정 변경만 알려줘. 방을 아직 지정하지 않았으니 실제 후보에서 선택할게.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "waiting",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": "book-cedar",
+    "refreshed_candidates": [
+      {
+        "id": "book-cedar",
+        "label": "가상 독서모임 Cedar",
+        "preview": "다음 독서 모임 시간을 정해요."
+      },
+      {
+        "id": "walk-pine",
+        "label": "가상 산책모임 Pine",
+        "preview": "주말 산책 사진입니다."
+      }
+    ],
+    "final_status": "ready",
+    "required_terms": [
+      "WhatsApp",
+      "Cedar",
+      "일정"
+    ],
+    "forbidden_terms": [
+      "Pine"
+    ]
+  },
+  {
+    "id": "mt-007",
+    "instruction": "Only notify me about explicit requests for my reply in my project group on WhatsApp. I have not identified the group; let me select it from actual observed candidates.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "waiting",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": "project-orbit",
+    "refreshed_candidates": [
+      {
+        "id": "project-orbit",
+        "label": "Project Orbit",
+        "preview": "Please confirm your availability for the review."
+      },
+      {
+        "id": "garden-moss",
+        "label": "Garden Moss",
+        "preview": "New seedlings arrived."
+      }
+    ],
+    "final_status": "ready",
+    "required_terms": [
+      "WhatsApp",
+      "Orbit",
+      "reply"
+    ],
+    "forbidden_terms": [
+      "Moss"
+    ]
+  },
+  {
+    "id": "mt-008",
+    "instruction": "Keep the Gmail rule unchanged. For YouTube, replace Cedar Science with River Workshop; keep the new-upload-only restriction.",
+    "current_instruction": "Notify only about Gmail messages explicitly saying my bill is overdue, and YouTube new video uploads from Cedar Science. Exclude YouTube live streams and comment replies.",
+    "candidates": [],
+    "initial_status": "ready",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "Gmail",
+      "overdue",
+      "YouTube",
+      "River Workshop",
+      "upload"
+    ],
+    "forbidden_terms": []
+  },
+  {
+    "id": "mt-009",
+    "instruction": "WhatsApp에서 발신자 표시가 유나인 메시지는 전부 알려줘. 동시에 유나가 보낸 메시지는 하나도 알려주지 마. 두 조건 중 어느 것을 우선할지는 정하지 않았어.",
+    "current_instruction": "Google Calendar에서 시작 시간이 변경됐다는 알림을 알려준다.",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "유나가 보낸 메시지는 모두 알려주는 쪽으로 할게. 기존 Google Calendar 시작 시간 변경 기준은 유지해.",
+    "answer_field": "conflict",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "WhatsApp",
+      "유나",
+      "Google Calendar",
+      "시간"
+    ],
+    "forbidden_terms": [
+      "하나도 알려주지",
+      "유나가 보낸 메시지는 숨긴다"
+    ]
+  },
+  {
+    "id": "mt-010",
+    "instruction": "In WhatsApp, alert me only for groups with Taylor in the full membership list. Determine membership from the complete in-app member list even when Taylor has never produced any notification. Do not substitute a manual group selection.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "unsupported",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "unsupported",
+    "required_terms": [],
+    "forbidden_terms": []
+  }
+]

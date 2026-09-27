@@ -1,0 +1,83 @@
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.StructuredPolicyDeviceTest:
+INSTRUMENTATION_STATUS: test=structuredPolicyFixtureUi
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.StructuredPolicyDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Missing control: policy_scope_new_1
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.find(StructuredPolicyDeviceTest.kt:38)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$find(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:141)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invoke(StructuredPolicyDeviceTest.kt:13)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invoke(StructuredPolicyDeviceTest.kt:10)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.fixture(StructuredPolicyDeviceTest.kt:48)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$fixture(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1.invokeSuspend(StructuredPolicyDeviceTest.kt:134)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.structuredPolicyFixtureUi(StructuredPolicyDeviceTest.kt:134)
+
+INSTRUMENTATION_STATUS: stream=
+Error in structuredPolicyFixtureUi(com.ainotification.inbox.StructuredPolicyDeviceTest):
+java.lang.IllegalStateException: Missing control: policy_scope_new_1
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.find(StructuredPolicyDeviceTest.kt:38)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$find(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:141)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invoke(StructuredPolicyDeviceTest.kt:13)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invoke(StructuredPolicyDeviceTest.kt:10)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.fixture(StructuredPolicyDeviceTest.kt:48)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$fixture(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1.invokeSuspend(StructuredPolicyDeviceTest.kt:134)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.structuredPolicyFixtureUi(StructuredPolicyDeviceTest.kt:134)
+
+INSTRUMENTATION_STATUS: test=structuredPolicyFixtureUi
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 49.301
+There was 1 failure:
+1) structuredPolicyFixtureUi(com.ainotification.inbox.StructuredPolicyDeviceTest)
+java.lang.IllegalStateException: Missing control: policy_scope_new_1
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.find(StructuredPolicyDeviceTest.kt:38)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$find(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invokeSuspend(StructuredPolicyDeviceTest.kt:141)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invoke(StructuredPolicyDeviceTest.kt:13)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1$1.invoke(StructuredPolicyDeviceTest.kt:10)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.fixture(StructuredPolicyDeviceTest.kt:48)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.access$fixture(StructuredPolicyDeviceTest.kt:25)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest$structuredPolicyFixtureUi$1.invokeSuspend(StructuredPolicyDeviceTest.kt:134)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.StructuredPolicyDeviceTest.structuredPolicyFixtureUi(StructuredPolicyDeviceTest.kt:134)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

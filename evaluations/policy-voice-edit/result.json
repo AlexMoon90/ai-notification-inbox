@@ -1,0 +1,19 @@
+{
+  "unit_tests": {
+    "tests": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "passed",
+  "lint": "passed",
+  "device_final": "passed 2 tests, 42.378 seconds",
+  "first_device_run": "voice passed; addition/update passed; ambiguous reference incorrectly ready, then shared guide strengthened",
+  "real_microphone_ui": "Galaxy Google speech service opened automatically; cancel returns to editor",
+  "audio_transcription_accuracy": "not tested with actual speech",
+  "apk_sha256": "7fe852880448cfc19777a0c6571bb3e31a770da0c4a42fce777a56bb71cb8b5f",
+  "api_calls_final": 4,
+  "estimated_usd_final": 0.00327634,
+  "jev_compile_calls": 0,
+  "actual_user_policy": "unchanged, asserted by both tests"
+}

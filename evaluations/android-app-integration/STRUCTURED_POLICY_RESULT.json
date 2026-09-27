@@ -1,0 +1,71 @@
+{
+  "date": "2026-09-24",
+  "scope": "User-authorized private Android test app; Phase 0 overall remains incomplete",
+  "build": {
+    "debug": true,
+    "release": true,
+    "lintDebug": true
+  },
+  "unit_tests": {
+    "passed": 53,
+    "failed": 0,
+    "skipped": 0
+  },
+  "device": {
+    "model": "Galaxy S23",
+    "android": 16,
+    "installed": true,
+    "existing_user_policy_preserved": true
+  },
+  "device_verification": {
+    "latest_full_run": {
+      "tests": 5,
+      "passed": 4,
+      "failed": 1
+    },
+    "failed_test": "actualOpenAiJsonRiskValidationUiConfirmationAndJevClassification",
+    "failure": "Policy request returned generic connection/storage error before proposal. Exact exception unavailable; do not assert provider root cause.",
+    "targeted_retry": {
+      "same_input_and_model": true,
+      "passed": 1,
+      "failed": 0
+    },
+    "all_five_scenarios_have_passing_evidence": true,
+    "scenarios": [
+      "Real OpenAI strict JSON + semantic audit + user confirmation + Room restore + Jev advertisement/exception/unrelated classification",
+      "Unresolved company conversation asks clarification and does not apply",
+      "Onboarding steps + input restoration + actual OpenAI + final confirmation/completion saved",
+      "Existing installed user policy preserved and settings reachable",
+      "Atomic semantic question diagnostic (API response probe, not broad accuracy score)"
+    ]
+  },
+  "reported_successful_call_metrics_from_latest_suite_and_retry": {
+    "api_calls": 10,
+    "estimated_usd": 0.00163557,
+    "jev_compile_calls": 0,
+    "limitation": "Failed request and earlier development runs are not included in these totals. Configured pricing estimate, not billing verification."
+  },
+  "models": {
+    "policy_editor_and_semantic_validator": "gpt-5.6-luna",
+    "reasoning": "low",
+    "notification_matcher": "jev-1.13.0"
+  },
+  "limitations": [
+    "AI Watch context tracking unsupported",
+    "No original OS notification cancellation or additional push",
+    "Broad multilingual/app accuracy gates not rerun or passed",
+    "Ambiguous Korean guitar/other-equipment input retained as failed/uncertain evidence; final classification uses explicit musical instrument wording",
+    "Screenshots blocked by existing FLAG_SECURE; accessibility/state verified",
+    "System time zone/reboot/network recovery matrix and onboarding duration not device validated"
+  ],
+  "evidence": [
+    "build.txt",
+    "initial-device.txt",
+    "ambiguous-topic-device.txt",
+    "click-failure-device.txt",
+    "final-suite.txt",
+    "final-targeted-retry.txt",
+    "onboarding-confirmation.txt"
+  ],
+  "apk_check": "structured-policy-apk-check.json"
+}

@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-09-22T14:50:08.890960+00:00",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "scenario_count": 1,
+  "passed": 0,
+  "failed": [
+    "clear"
+  ],
+  "api_attempts": 1,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "estimated_usd_known_usage": 0,
+  "unknown_usage_attempts": 1,
+  "latency_p50_ms": 66.91,
+  "latency_p95_ms": 66.91,
+  "pricing_source": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+  "price_checked": "2026-09-22",
+  "grading_limit": "Structural and selected semantic checks only; full meaning preservation requires human review."
+}

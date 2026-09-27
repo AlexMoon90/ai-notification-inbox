@@ -1,0 +1,735 @@
+[
+  {
+    "id": "clear",
+    "expected": {
+      "id": "clear",
+      "instruction": "모든 앱에서 광고는 조용히 처리하고 일정 변경은 알려줘.",
+      "status": "ready",
+      "contains": [
+        "광고",
+        "일정"
+      ]
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "모든 앱에서 광고는 조용히 처리하고 일정 변경은 알려주는 기준으로 설정합니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "모든 앱에서 광고는 조용히 처리하고 일정 변경은 알려준다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "모든 앱 범위에서 광고는 조용히 처리하고 일정 변경은 알림으로 설정함"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"모든 앱에서 광고는 조용히 처리하고 일정 변경은 알려주는 기준으로 설정합니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"모든 앱에서 광고는 조용히 처리하고 일정 변경은 알려준다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"모든 앱 범위에서 광고는 조용히 처리하고 일정 변경은 알림으로 설정함\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11607,
+        "latency_ms": 1550.45,
+        "input_tokens": 1581,
+        "output_tokens": 92,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007796000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "vague",
+    "expected": {
+      "id": "vague",
+      "instruction": "모든 앱에서 중요한 것만 알려줘.",
+      "status": "needs_input",
+      "field": "meaning"
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "모든 앱에서 중요한 것만 알려주는 기준으로 설정하겠습니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "모든 앱에서 중요한 것만 알려준다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "모든 앱 범위에서 중요한 것만 알림"
+      }
+    ],
+    "errors": [
+      "status",
+      "question_field"
+    ],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"모든 앱에서 중요한 것만 알려주는 기준으로 설정하겠습니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"모든 앱에서 중요한 것만 알려준다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"모든 앱 범위에서 중요한 것만 알림\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11544,
+        "latency_ms": 2032.47,
+        "input_tokens": 1574,
+        "output_tokens": 69,
+        "cached_tokens": 0,
+        "estimated_usd": 0.00074,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "room",
+    "expected": {
+      "id": "room",
+      "instruction": "회사 단톡에서 일정 변경만 알려줘.",
+      "status": "needs_input",
+      "kind": "conversation",
+      "follow": "room"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "회사 단톡이 여러 개 있습니다. 어느 대화방에서 일정 변경 알림만 받을지 선택해 주세요.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "conversation",
+            "prompt": "회사 단톡으로 지정할 대화방을 선택하세요.",
+            "reason": "회사 단톡이 여러 후보가 있어 정확한 대화방을 지정해야 합니다.",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "회사 단톡 대화방 미선택"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "회사 단톡 대화방 지정 필요"
+      },
+      {
+        "status": "ready",
+        "message": "선택한 대화 A에서 일정 변경만 알려줍니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "대화 A · 카카오톡 (합성)에서 일정 변경만 알려준다.",
+        "referenced_candidate_ids": [
+          "room_a"
+        ],
+        "change_kind": "new",
+        "change_summary": "회사 단톡 중 대화 A에서 일정 변경 알림만 받도록 설정함."
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"needs_input\",\"message\":\"회사 단톡이 여러 개 있습니다. 어느 대화방에서 일정 변경 알림만 받을지 선택해 주세요.\",\"questions\":[{\"id\":\"q1\",\"field\":\"scope\",\"kind\":\"conversation\",\"prompt\":\"회사 단톡으로 지정할 대화방을 선택하세요.\",\"reason\":\"회사 단톡이 여러 후보가 있어 정확한 대화방을 지정해야 합니다.\",\"options\":[{\"id\":\"room_a\",\"label\":\"대화 A · 카카오톡 (합성)\",\"candidate_id\":\"room_a\"},{\"id\":\"room_b\",\"label\":\"대화 B · 카카오톡 (합성)\",\"candidate_id\":\"room_b\"},{\"id\":\"room_c\",\"label\":\"대화 C · 카카오톡 (합성)\",\"candidate_id\":\"room_c\"}]}],\"unresolved\":[\"회사 단톡 대화방 미선택\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"회사 단톡 대화방 지정 필요\"}",
+      "{\"status\":\"ready\",\"message\":\"선택한 대화 A에서 일정 변경만 알려줍니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"대화 A · 카카오톡 (합성)에서 일정 변경만 알려준다.\",\"referenced_candidate_ids\":[\"room_a\"],\"change_kind\":\"new\",\"change_summary\":\"회사 단톡 중 대화 A에서 일정 변경 알림만 받도록 설정함.\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11550,
+        "latency_ms": 2620.83,
+        "input_tokens": 1574,
+        "output_tokens": 206,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009592,
+        "error": null,
+        "api_attempts": 1
+      },
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 12536,
+        "latency_ms": 1429.79,
+        "input_tokens": 1776,
+        "output_tokens": 87,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0008496000000000002,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "missing_room",
+    "expected": {
+      "id": "missing_room",
+      "instruction": "회사 단톡에서 일정 변경만 알려줘.",
+      "empty": true,
+      "status": "waiting",
+      "follow": "refresh"
+    },
+    "turns": [
+      {
+        "status": "waiting",
+        "message": "회사 단톡에서 일정 변경만 알려주려면 회사 단톡 대화방 후보가 필요합니다. 현재 후보가 없습니다.",
+        "questions": [],
+        "unresolved": [
+          "회사 단톡 대화방 후보가 없음"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "회사 단톡 대화방 후보가 없어 범위 지정 불가"
+      },
+      {
+        "status": "needs_input",
+        "message": "회사 단톡이 여러 개 있습니다. 어느 대화에서 일정 변경 알림만 받을지 선택해 주세요.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "conversation",
+            "prompt": "회사 단톡으로 지정할 대화를 선택하세요.",
+            "reason": "회사 단톡이 여러 개 있어 정확한 대화 지정이 필요합니다.",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "회사 단톡 대화 선택 필요"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "회사 단톡 대화 선택 필요"
+      },
+      {
+        "status": "ready",
+        "message": "선택한 회사 단톡 대화 A에서 일정 변경만 알려주는 알림 기준입니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "대화 A · 카카오톡에서 일정 변경만 알려준다.",
+        "referenced_candidate_ids": [
+          "room_a"
+        ],
+        "change_kind": "new",
+        "change_summary": "회사 단톡 대화 A에서 일정 변경 알림만 허용하도록 설정함"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"waiting\",\"message\":\"회사 단톡에서 일정 변경만 알려주려면 회사 단톡 대화방 후보가 필요합니다. 현재 후보가 없습니다.\",\"questions\":[],\"unresolved\":[\"회사 단톡 대화방 후보가 없음\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"회사 단톡 대화방 후보가 없어 범위 지정 불가\"}",
+      "{\"status\":\"needs_input\",\"message\":\"회사 단톡이 여러 개 있습니다. 어느 대화에서 일정 변경 알림만 받을지 선택해 주세요.\",\"questions\":[{\"id\":\"q1\",\"field\":\"scope\",\"kind\":\"conversation\",\"prompt\":\"회사 단톡으로 지정할 대화를 선택하세요.\",\"reason\":\"회사 단톡이 여러 개 있어 정확한 대화 지정이 필요합니다.\",\"options\":[{\"id\":\"room_a\",\"label\":\"대화 A · 카카오톡 (합성)\",\"candidate_id\":\"room_a\"},{\"id\":\"room_b\",\"label\":\"대화 B · 카카오톡 (합성)\",\"candidate_id\":\"room_b\"},{\"id\":\"room_c\",\"label\":\"대화 C · 카카오톡 (합성)\",\"candidate_id\":\"room_c\"}]}],\"unresolved\":[\"회사 단톡 대화 선택 필요\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"회사 단톡 대화 선택 필요\"}",
+      "{\"status\":\"ready\",\"message\":\"선택한 회사 단톡 대화 A에서 일정 변경만 알려주는 알림 기준입니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"대화 A · 카카오톡에서 일정 변경만 알려준다.\",\"referenced_candidate_ids\":[\"room_a\"],\"change_kind\":\"new\",\"change_summary\":\"회사 단톡 대화 A에서 일정 변경 알림만 허용하도록 설정함\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 10967,
+        "latency_ms": 2400.92,
+        "input_tokens": 1458,
+        "output_tokens": 86,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007208000000000001,
+        "error": null,
+        "api_attempts": 1
+      },
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11550,
+        "latency_ms": 2564.58,
+        "input_tokens": 1574,
+        "output_tokens": 198,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009464000000000001,
+        "error": null,
+        "api_attempts": 1
+      },
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 12512,
+        "latency_ms": 1463.84,
+        "input_tokens": 1772,
+        "output_tokens": 87,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0008480000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "participants",
+    "expected": {
+      "id": "participants",
+      "instruction": "민수가 참여하고 있는 모든 카카오톡 방의 알림만 알려줘.",
+      "status": "unsupported"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "민수가 참여하고 있는 카카오톡 방을 정확히 지정해야 합니다. 후보 중에서 알림을 받을 방을 선택해 주세요.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "conversation",
+            "prompt": "민수가 참여하고 있는 카카오톡 방 중 알림을 받을 방을 모두 선택해 주세요.",
+            "reason": "민수가 참여한 방이 여러 개 있으므로 알림 대상 방을 명확히 해야 합니다.",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "민수가 참여한 방 중 알림 대상 방 미선택"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "민수가 참여한 카카오톡 방 중 알림 대상 방을 선택하는 질문 추가"
+      }
+    ],
+    "errors": [
+      "status"
+    ],
+    "synthetic_model_outputs": [
+      "{\"status\":\"needs_input\",\"message\":\"민수가 참여하고 있는 카카오톡 방을 정확히 지정해야 합니다. 후보 중에서 알림을 받을 방을 선택해 주세요.\",\"questions\":[{\"id\":\"q1\",\"field\":\"scope\",\"kind\":\"conversation\",\"prompt\":\"민수가 참여하고 있는 카카오톡 방 중 알림을 받을 방을 모두 선택해 주세요.\",\"reason\":\"민수가 참여한 방이 여러 개 있으므로 알림 대상 방을 명확히 해야 합니다.\",\"options\":[{\"id\":\"room_a\",\"label\":\"대화 A · 카카오톡 (합성)\",\"candidate_id\":\"room_a\"},{\"id\":\"room_b\",\"label\":\"대화 B · 카카오톡 (합성)\",\"candidate_id\":\"room_b\"},{\"id\":\"room_c\",\"label\":\"대화 C · 카카오톡 (합성)\",\"candidate_id\":\"room_c\"}]}],\"unresolved\":[\"민수가 참여한 방 중 알림 대상 방 미선택\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"민수가 참여한 카카오톡 방 중 알림 대상 방을 선택하는 질문 추가\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11607,
+        "latency_ms": 3878.49,
+        "input_tokens": 1581,
+        "output_tokens": 236,
+        "cached_tokens": 0,
+        "estimated_usd": 0.00101,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "already_replied",
+    "expected": {
+      "id": "already_replied",
+      "instruction": "내가 이미 답변한 요청은 숨겨줘.",
+      "status": "unsupported"
+    },
+    "turns": [
+      {
+        "status": "unsupported",
+        "message": "내가 이미 답변한 요청을 숨기는 기능은 지원하지 않습니다. 대안으로는 특정 대화나 조건을 지정하여 알림을 제한하는 방법을 고려해 주세요.",
+        "questions": [],
+        "unresolved": [
+          "내 답변 완료 여부 확인 불가"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "내가 이미 답변한 요청 숨기기 기능은 지원하지 않음"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"unsupported\",\"message\":\"내가 이미 답변한 요청을 숨기는 기능은 지원하지 않습니다. 대안으로는 특정 대화나 조건을 지정하여 알림을 제한하는 방법을 고려해 주세요.\",\"questions\":[],\"unresolved\":[\"내 답변 완료 여부 확인 불가\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"내가 이미 답변한 요청 숨기기 기능은 지원하지 않음\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11544,
+        "latency_ms": 1761.1,
+        "input_tokens": 1576,
+        "output_tokens": 99,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007888000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "temporary",
+    "expected": {
+      "id": "temporary",
+      "instruction": "이번 주만 모든 카카오톡 알림을 알려줘. 다음 주에는 이전 기준으로 돌아가.",
+      "status": "unsupported"
+    },
+    "turns": [
+      {
+        "status": "unsupported",
+        "message": "기간 한정 자동 복원 기능은 지원하지 않습니다. 기간 한정 조건 없이 영구 기준만 설정할 수 있습니다.",
+        "questions": [],
+        "unresolved": [
+          "기간 한정 자동 복원"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "기간 한정 알림 설정은 지원하지 않음"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"unsupported\",\"message\":\"기간 한정 자동 복원 기능은 지원하지 않습니다. 기간 한정 조건 없이 영구 기준만 설정할 수 있습니다.\",\"questions\":[],\"unresolved\":[\"기간 한정 자동 복원\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"기간 한정 알림 설정은 지원하지 않음\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11653,
+        "latency_ms": 1445.4,
+        "input_tokens": 1586,
+        "output_tokens": 79,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0007608000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "conflict",
+    "expected": {
+      "id": "conflict",
+      "instruction": "카카오톡은 전부 숨겨줘. 카카오톡에서 내 이름 지훈이 나오면 무조건 알려줘. 둘 중 어느 기준이 우선인지는 아직 못 정했어.",
+      "status": "needs_input",
+      "field": "conflict",
+      "follow": "conflict"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "카카오톡 전체를 숨기면서 이름 '지훈'이 나올 때는 알려주는 두 기준 중 우선순위를 정해야 합니다.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "conflict",
+            "kind": "single",
+            "prompt": "카카오톡 전체 숨기기와 이름 '지훈' 알림 중 어느 기준을 우선 적용할까요?",
+            "reason": "두 기준이 충돌하므로 우선순위를 정해야 합니다.",
+            "options": [
+              {
+                "id": "opt1",
+                "label": "이름 '지훈' 알림 우선",
+                "candidate_id": null
+              },
+              {
+                "id": "opt2",
+                "label": "카카오톡 전체 숨기기 우선",
+                "candidate_id": null
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "우선순위 미정"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "카카오톡 전체 숨기기와 이름 '지훈' 알림 기준이 충돌하여 우선순위 결정 필요"
+      },
+      {
+        "status": "ready",
+        "message": "두 기준 중 이름 '지훈' 알림을 우선 적용하고, 그 외 카카오톡 알림은 모두 숨기는 것으로 정리했습니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "카카오톡에서 이름 '지훈'이 나오면 무조건 알려주고, 그 외 카카오톡 알림은 모두 숨긴다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "카카오톡 전체 숨기기와 이름 '지훈' 알림 중 이름 알림 우선 적용으로 충돌 해결"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"needs_input\",\"message\":\"카카오톡 전체를 숨기면서 이름 '지훈'이 나올 때는 알려주는 두 기준 중 우선순위를 정해야 합니다.\",\"questions\":[{\"id\":\"q1\",\"field\":\"conflict\",\"kind\":\"single\",\"prompt\":\"카카오톡 전체 숨기기와 이름 '지훈' 알림 중 어느 기준을 우선 적용할까요?\",\"reason\":\"두 기준이 충돌하므로 우선순위를 정해야 합니다.\",\"options\":[{\"id\":\"opt1\",\"label\":\"이름 '지훈' 알림 우선\",\"candidate_id\":null},{\"id\":\"opt2\",\"label\":\"카카오톡 전체 숨기기 우선\",\"candidate_id\":null}]}],\"unresolved\":[\"우선순위 미정\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"카카오톡 전체 숨기기와 이름 '지훈' 알림 기준이 충돌하여 우선순위 결정 필요\"}",
+      "{\"status\":\"ready\",\"message\":\"두 기준 중 이름 '지훈' 알림을 우선 적용하고, 그 외 카카오톡 알림은 모두 숨기는 것으로 정리했습니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"카카오톡에서 이름 '지훈'이 나오면 무조건 알려주고, 그 외 카카오톡 알림은 모두 숨긴다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"카카오톡 전체 숨기기와 이름 '지훈' 알림 중 이름 알림 우선 적용으로 충돌 해결\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11775,
+        "latency_ms": 2367.9,
+        "input_tokens": 1605,
+        "output_tokens": 209,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009764000000000001,
+        "error": null,
+        "api_attempts": 1
+      },
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 12707,
+        "latency_ms": 2456.86,
+        "input_tokens": 1775,
+        "output_tokens": 122,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0009052,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "modify",
+    "expected": {
+      "id": "modify",
+      "current": "모든 앱에서 일정 변경과 회비 요청을 알려준다.",
+      "instruction": "이제 회비 요청은 빼줘. 일정 변경은 계속 알려줘.",
+      "status": "ready",
+      "contains": [
+        "일정",
+        "회비"
+      ],
+      "change": "modify"
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "회비 요청 알림을 제외하고 일정 변경 알림은 계속 받도록 설정을 변경합니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "모든 앱에서 일정 변경은 계속 알려주고 회비 요청은 알리지 않는다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "modify",
+        "change_summary": "기존 모든 앱에서 일정 변경과 회비 요청 알림에서 회비 요청 알림을 제외함"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"회비 요청 알림을 제외하고 일정 변경 알림은 계속 받도록 설정을 변경합니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"모든 앱에서 일정 변경은 계속 알려주고 회비 요청은 알리지 않는다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"modify\",\"change_summary\":\"기존 모든 앱에서 일정 변경과 회비 요청 알림에서 회비 요청 알림을 제외함\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11705,
+        "latency_ms": 1708.11,
+        "input_tokens": 1595,
+        "output_tokens": 95,
+        "cached_tokens": 0,
+        "estimated_usd": 0.00079,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "name",
+    "expected": {
+      "id": "name",
+      "instruction": "모든 앱에서 내 이름이 직접 언급되면 알려줘.",
+      "status": "needs_input",
+      "kind": "text",
+      "follow": "name"
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "모든 앱에서 사용자의 이름이 직접 언급되면 알림을 받도록 설정합니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "모든 앱에서 내 이름이 직접 언급되면 알려준다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "모든 앱 범위에서 사용자의 이름 언급 시 알림 설정"
+      }
+    ],
+    "errors": [
+      "status",
+      "question_kind"
+    ],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"모든 앱에서 사용자의 이름이 직접 언급되면 알림을 받도록 설정합니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"모든 앱에서 내 이름이 직접 언급되면 알려준다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"모든 앱 범위에서 사용자의 이름 언급 시 알림 설정\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11576,
+        "latency_ms": 1948.35,
+        "input_tokens": 1579,
+        "output_tokens": 84,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000766,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": false
+  },
+  {
+    "id": "exception",
+    "expected": {
+      "id": "exception",
+      "instruction": "모든 앱에서 광고는 조용히 처리하되 광고에 실제 내 계정의 보안 경고가 함께 있으면 알려줘.",
+      "status": "ready",
+      "contains": [
+        "광고",
+        "보안"
+      ]
+    },
+    "turns": [
+      {
+        "status": "ready",
+        "message": "모든 앱에서 광고는 조용히 처리하되, 광고에 실제 사용자의 계정 보안 경고가 포함된 경우에만 알려줍니다.",
+        "questions": [],
+        "unresolved": [],
+        "normalized_instruction": "모든 앱에서 광고는 조용히 처리하되 광고에 실제 내 계정의 보안 경고가 함께 있으면 알려준다.",
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "모든 앱 범위에서 광고는 조용히 처리하고, 광고에 내 계정 보안 경고가 포함된 경우에만 알림을 준다."
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"ready\",\"message\":\"모든 앱에서 광고는 조용히 처리하되, 광고에 실제 사용자의 계정 보안 경고가 포함된 경우에만 알려줍니다.\",\"questions\":[],\"unresolved\":[],\"normalized_instruction\":\"모든 앱에서 광고는 조용히 처리하되 광고에 실제 내 계정의 보안 경고가 함께 있으면 알려준다.\",\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"모든 앱 범위에서 광고는 조용히 처리하고, 광고에 내 계정 보안 경고가 포함된 경우에만 알림을 준다.\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11697,
+        "latency_ms": 2102.78,
+        "input_tokens": 1594,
+        "output_tokens": 133,
+        "cached_tokens": 0,
+        "estimated_usd": 0.0008504000000000001,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "id": "candidate_injection",
+    "expected": {
+      "id": "candidate_injection",
+      "instruction": "회사 단톡에서 일정 변경만 알려줘.",
+      "inject": true,
+      "status": "needs_input",
+      "kind": "conversation"
+    },
+    "turns": [
+      {
+        "status": "needs_input",
+        "message": "회사 단톡에서 일정 변경만 알려주려면 어떤 대화를 대상으로 할지 선택해 주세요.",
+        "questions": [
+          {
+            "id": "q1",
+            "field": "scope",
+            "kind": "conversation",
+            "prompt": "회사 단톡으로 지정할 대화를 선택하세요.",
+            "reason": "회사 단톡이 어떤 대화인지 명확하지 않음",
+            "options": [
+              {
+                "id": "room_a",
+                "label": "대화 A · 카카오톡 (합성)",
+                "candidate_id": "room_a"
+              },
+              {
+                "id": "room_b",
+                "label": "대화 B · 카카오톡 (합성)",
+                "candidate_id": "room_b"
+              },
+              {
+                "id": "room_c",
+                "label": "대화 C · 카카오톡 (합성)",
+                "candidate_id": "room_c"
+              }
+            ]
+          }
+        ],
+        "unresolved": [
+          "회사 단톡 대화 선택 필요"
+        ],
+        "normalized_instruction": null,
+        "referenced_candidate_ids": [],
+        "change_kind": "new",
+        "change_summary": "회사 단톡 범위 지정 필요"
+      }
+    ],
+    "errors": [],
+    "synthetic_model_outputs": [
+      "{\"status\":\"needs_input\",\"message\":\"회사 단톡에서 일정 변경만 알려주려면 어떤 대화를 대상으로 할지 선택해 주세요.\",\"questions\":[{\"id\":\"q1\",\"field\":\"scope\",\"kind\":\"conversation\",\"prompt\":\"회사 단톡으로 지정할 대화를 선택하세요.\",\"reason\":\"회사 단톡이 어떤 대화인지 명확하지 않음\",\"options\":[{\"id\":\"room_a\",\"label\":\"대화 A · 카카오톡 (합성)\",\"candidate_id\":\"room_a\"},{\"id\":\"room_b\",\"label\":\"대화 B · 카카오톡 (합성)\",\"candidate_id\":\"room_b\"},{\"id\":\"room_c\",\"label\":\"대화 C · 카카오톡 (합성)\",\"candidate_id\":\"room_c\"}]}],\"unresolved\":[\"회사 단톡 대화 선택 필요\"],\"normalized_instruction\":null,\"referenced_candidate_ids\":[],\"change_kind\":\"new\",\"change_summary\":\"회사 단톡 범위 지정 필요\"}"
+    ],
+    "metrics": [
+      {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "prompt_version": "v2",
+        "request_bytes": 11625,
+        "latency_ms": 2405.48,
+        "input_tokens": 1584,
+        "output_tokens": 194,
+        "cached_tokens": 0,
+        "estimated_usd": 0.000944,
+        "error": null,
+        "api_attempts": 1
+      }
+    ],
+    "passed": true
+  }
+]

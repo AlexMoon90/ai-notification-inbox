@@ -1,0 +1,198 @@
+[
+  {
+    "id": "fresh-01",
+    "instruction": "In Teams, notify me of deadline changes in my work chat. I will select which chat from the observed candidates.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "waiting",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": "room-east",
+    "refreshed_candidates": [
+      {
+        "id": "room-north",
+        "label": "North Desk",
+        "preview": "Release moved to Friday."
+      },
+      {
+        "id": "room-east",
+        "label": "East Desk",
+        "preview": "Please reply about the meeting."
+      }
+    ],
+    "final_status": "ready",
+    "required_terms": [
+      "Teams",
+      "East Desk"
+    ],
+    "forbidden_terms": []
+  },
+  {
+    "id": "fresh-02",
+    "instruction": "카카오톡에서 내가 고른 방의 결제 요청만 알려줘. 방은 후보에서 선택할게.",
+    "current_instruction": "",
+    "candidates": [
+      {
+        "id": "room-north",
+        "label": "North Desk",
+        "preview": "Release moved to Friday."
+      },
+      {
+        "id": "room-east",
+        "label": "East Desk",
+        "preview": "Please reply about the meeting."
+      }
+    ],
+    "initial_status": "needs_input",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": "room-north",
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "카카오톡",
+      "North Desk",
+      "결제"
+    ],
+    "forbidden_terms": []
+  },
+  {
+    "id": "fresh-03",
+    "instruction": "Notify me about all Slack notifications from sender display name Ellis, and never notify me about messages from Ellis. I have not chosen which rule wins.",
+    "current_instruction": "",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "Allow every Slack notification with sender display name Ellis.",
+    "answer_field": "conflict",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "Slack",
+      "Ellis"
+    ],
+    "forbidden_terms": []
+  },
+  {
+    "id": "fresh-04",
+    "instruction": "Teams에서 발신자 표시가 다솔이면 모두 알려줘. 동시에 다솔 메시지는 모두 제외해. 우선순위는 아직 없어.",
+    "current_instruction": "Gmail에서 내 청구서 납부 기한 변경은 알려줘.",
+    "candidates": [],
+    "initial_status": "needs_input",
+    "answer_text": "다솔 메시지는 제외하는 쪽으로 해줘. Gmail 기준은 그대로 유지해.",
+    "answer_field": "conflict",
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "Teams",
+      "다솔",
+      "Gmail"
+    ],
+    "forbidden_terms": []
+  },
+  {
+    "id": "fresh-05",
+    "instruction": "Across all WhatsApp chats, notify me when the text explicitly requests my approval. Do not restrict this to a selected chat.",
+    "current_instruction": "",
+    "candidates": [
+      {
+        "id": "room-north",
+        "label": "North Desk",
+        "preview": "Release moved to Friday."
+      },
+      {
+        "id": "room-east",
+        "label": "East Desk",
+        "preview": "Please reply about the meeting."
+      }
+    ],
+    "initial_status": "ready",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "WhatsApp"
+    ],
+    "forbidden_terms": []
+  },
+  {
+    "id": "fresh-06",
+    "instruction": "카카오톡 전체에서 배송 주소를 수정하라는 요청만 알려줘. 특정 방으로 제한하지 마.",
+    "current_instruction": "",
+    "candidates": [
+      {
+        "id": "room-north",
+        "label": "North Desk",
+        "preview": "Release moved to Friday."
+      },
+      {
+        "id": "room-east",
+        "label": "East Desk",
+        "preview": "Please reply about the meeting."
+      }
+    ],
+    "initial_status": "ready",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "ready",
+    "required_terms": [
+      "카카오톡"
+    ],
+    "forbidden_terms": []
+  },
+  {
+    "id": "fresh-07",
+    "instruction": "Use the complete hidden membership list to find every Teams chat containing Jordan, including chats never seen in notifications. Manual selection is not acceptable.",
+    "current_instruction": "",
+    "candidates": [
+      {
+        "id": "room-north",
+        "label": "North Desk",
+        "preview": "Release moved to Friday."
+      },
+      {
+        "id": "room-east",
+        "label": "East Desk",
+        "preview": "Please reply about the meeting."
+      }
+    ],
+    "initial_status": "unsupported",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "unsupported",
+    "required_terms": [],
+    "forbidden_terms": []
+  },
+  {
+    "id": "fresh-08",
+    "instruction": "Slack에서 알림에 표시되지 않은 읽음 상태를 확인해서 내가 아직 안 읽은 메시지만 알려줘. 다른 기준으로 대체하지 마.",
+    "current_instruction": "",
+    "candidates": [
+      {
+        "id": "room-north",
+        "label": "North Desk",
+        "preview": "Release moved to Friday."
+      },
+      {
+        "id": "room-east",
+        "label": "East Desk",
+        "preview": "Please reply about the meeting."
+      }
+    ],
+    "initial_status": "unsupported",
+    "answer_text": null,
+    "answer_field": null,
+    "select_candidate_id": null,
+    "refreshed_candidates": null,
+    "final_status": "unsupported",
+    "required_terms": [],
+    "forbidden_terms": []
+  }
+]

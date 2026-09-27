@@ -1,0 +1,2896 @@
+{
+  "steps": [
+    {
+      "instruction": "문자 메시지 앱의 알림은 전부 숨겨줘. Gmail 기준은 그대로 유지해.",
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "문자 메시지 앱의 모든 알림을 숨기는 새 규칙을 추가합니다. 기존 Gmail 보안 알림 표시 규칙은 그대로 유지합니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Gmail 보안 표시",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.gm"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "SECURITY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Gmail 보안 알림을 보여줘"
+              },
+              {
+                "id": "new_2",
+                "name": "문자 메시지 전체 숨김",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.apps.messaging"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "ANY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘"
+              }
+            ],
+            "operations": [
+              {
+                "type": "ADD",
+                "id": "new_2"
+              }
+            ]
+          }
+        }
+      ],
+      "observations": [
+        {
+          "text": "[은행] 입금 100,000원. 급여가 계좌에 입금되었습니다.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2add916f-dd02-43bb-8136-220ca47dfe8d",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315889795
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2add916f-dd02-43bb-8136-220ca47dfe8d",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315889802
+          }
+        },
+        {
+          "text": "자동차세 납부 안내: 자동차세 50,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2add916f-dd02-43bb-8136-220ca47dfe8d",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315889807
+          }
+        },
+        {
+          "text": "(광고) 오늘만 운동화 50% 할인. 지금 구매하세요!",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2add916f-dd02-43bb-8136-220ca47dfe8d",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315889813
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 납부해 주세요.",
+          "package": "com.google.android.gm",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": null,
+                "possible_actions": [
+                  "SHOW",
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2add916f-dd02-43bb-8136-220ca47dfe8d",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315889820
+          }
+        }
+      ],
+      "proposal": {
+        "base_revision": "a628afb4-64c4-4ae8-811c-205f9b739842",
+        "history": [
+          {
+            "role": "user",
+            "text": "문자 메시지 앱의 알림은 전부 숨겨줘. Gmail 기준은 그대로 유지해."
+          }
+        ],
+        "before": [
+          {
+            "id": "new_1",
+            "name": "Gmail 보안 표시",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.gm"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "SECURITY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "SHOW",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Gmail 보안 알림을 보여줘"
+          }
+        ],
+        "validated": true,
+        "migration": false,
+        "legacy_instruction": "",
+        "risks": [
+          "알림 표시 감소"
+        ],
+        "audit": {
+          "valid": true,
+          "issues": [],
+          "needs_user_clarification": false,
+          "clarification_question": ""
+        },
+        "hash": "7dd943fb8b6b063cb758f4d1b4fa058104f4fb0530af928ff0f5f8eeef9ef6f7",
+        "repair_count": 0,
+        "result": {
+          "status": "ready",
+          "message": "문자 메시지 앱의 모든 알림을 숨기는 새 규칙을 추가합니다. 기존 Gmail 보안 알림 표시 규칙은 그대로 유지합니다.",
+          "question": "",
+          "options": [],
+          "uncertain": false,
+          "rules": [
+            {
+              "id": "new_1",
+              "name": "Gmail 보안 표시",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.gm"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "SECURITY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "SHOW",
+              "exceptions": [],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "Gmail 보안 알림을 보여줘"
+            },
+            {
+              "id": "new_2",
+              "name": "문자 메시지 전체 숨김",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.apps.messaging"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "ANY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "HIDE",
+              "exceptions": [],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘"
+            }
+          ],
+          "operations": [
+            {
+              "type": "ADD",
+              "id": "new_2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "instruction": "문자 메시지에서 은행 입금 알림은 보여줘.",
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "문자 메시지 앱의 전체 숨김 기준에 ‘은행 입금 알림’ 예외를 추가합니다. 은행 입금 알림은 표시되고, 그 외 문자 메시지 알림은 계속 숨겨집니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Gmail 보안 표시",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.gm"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "SECURITY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Gmail 보안 알림을 보여줘"
+              },
+              {
+                "id": "new_2",
+                "name": "문자 메시지 전체 숨김",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.apps.messaging"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "ANY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [
+                  {
+                    "id": "bank_deposit_exception",
+                    "conditions": [
+                      {
+                        "type": "MONEY_RECEIVED",
+                        "value": "은행 입금",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  }
+                ],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘. 문자 메시지에서 은행 입금 알림은 보여줘."
+              }
+            ],
+            "operations": [
+              {
+                "type": "UPDATE",
+                "id": "new_2"
+              }
+            ]
+          }
+        }
+      ],
+      "observations": [
+        {
+          "text": "[은행] 입금 100,000원. 급여가 계좌에 입금되었습니다.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  true
+                ]
+              }
+            ],
+            "policy_id": "b2db5b4c-7610-446a-8dde-ca3ef0b4e803",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315899520
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "b2db5b4c-7610-446a-8dde-ca3ef0b4e803",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315899838
+          }
+        },
+        {
+          "text": "자동차세 납부 안내: 자동차세 50,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "b2db5b4c-7610-446a-8dde-ca3ef0b4e803",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315900268
+          }
+        },
+        {
+          "text": "(광고) 오늘만 운동화 50% 할인. 지금 구매하세요!",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "b2db5b4c-7610-446a-8dde-ca3ef0b4e803",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315900641
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 납부해 주세요.",
+          "package": "com.google.android.gm",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": null,
+                "possible_actions": [
+                  "SHOW",
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "b2db5b4c-7610-446a-8dde-ca3ef0b4e803",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315900690
+          }
+        }
+      ],
+      "proposal": {
+        "base_revision": "2add916f-dd02-43bb-8136-220ca47dfe8d",
+        "history": [
+          {
+            "role": "user",
+            "text": "문자 메시지에서 은행 입금 알림은 보여줘."
+          }
+        ],
+        "before": [
+          {
+            "id": "new_1",
+            "name": "Gmail 보안 표시",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.gm"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "SECURITY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "SHOW",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Gmail 보안 알림을 보여줘"
+          },
+          {
+            "id": "new_2",
+            "name": "문자 메시지 전체 숨김",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.apps.messaging"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "ANY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "HIDE",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘"
+          }
+        ],
+        "validated": true,
+        "migration": false,
+        "legacy_instruction": "",
+        "risks": [
+          "알림 표시 감소",
+          "예외 변경",
+          "기존 의미 변경"
+        ],
+        "audit": {
+          "valid": true,
+          "issues": [],
+          "needs_user_clarification": false,
+          "clarification_question": ""
+        },
+        "hash": "379af397132795f4432235cf433a3c8b3cab69cdda4e1555e5af7d6ad6b36e21",
+        "repair_count": 0,
+        "result": {
+          "status": "ready",
+          "message": "문자 메시지 앱의 전체 숨김 기준에 ‘은행 입금 알림’ 예외를 추가합니다. 은행 입금 알림은 표시되고, 그 외 문자 메시지 알림은 계속 숨겨집니다.",
+          "question": "",
+          "options": [],
+          "uncertain": false,
+          "rules": [
+            {
+              "id": "new_1",
+              "name": "Gmail 보안 표시",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.gm"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "SECURITY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "SHOW",
+              "exceptions": [],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "Gmail 보안 알림을 보여줘"
+            },
+            {
+              "id": "new_2",
+              "name": "문자 메시지 전체 숨김",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.apps.messaging"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "ANY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "HIDE",
+              "exceptions": [
+                {
+                  "id": "bank_deposit_exception",
+                  "conditions": [
+                    {
+                      "type": "MONEY_RECEIVED",
+                      "value": "은행 입금",
+                      "negated": false
+                    }
+                  ],
+                  "logic": "ALL",
+                  "action": "SHOW"
+                }
+              ],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘. 문자 메시지에서 은행 입금 알림은 보여줘."
+            }
+          ],
+          "operations": [
+            {
+              "type": "UPDATE",
+              "id": "new_2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "instruction": "문자 메시지에서 세금 납부 안내도 보여줘.",
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "문자 메시지 전체 숨김 규칙에 ‘세금 납부 안내’를 보여주는 예외를 추가했습니다. 기존 은행 입금 예외는 유지됩니다. 아직 저장되지는 않았습니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Gmail 보안 표시",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.gm"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "SECURITY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Gmail 보안 알림을 보여줘"
+              },
+              {
+                "id": "new_2",
+                "name": "문자 메시지 전체 숨김",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.apps.messaging"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "ANY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [
+                  {
+                    "id": "bank_deposit_exception",
+                    "conditions": [
+                      {
+                        "type": "MONEY_RECEIVED",
+                        "value": "은행 입금",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  },
+                  {
+                    "id": "tax_payment_exception",
+                    "conditions": [
+                      {
+                        "type": "PAYMENT_REQUIRED",
+                        "value": "세금 납부 안내",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  }
+                ],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘. 문자 메시지에서 은행 입금 알림은 보여줘. 문자 메시지에서 세금 납부 안내도 보여줘."
+              }
+            ],
+            "operations": [
+              {
+                "type": "UPDATE",
+                "id": "new_2"
+              }
+            ]
+          }
+        }
+      ],
+      "observations": [
+        {
+          "text": "[은행] 입금 100,000원. 급여가 계좌에 입금되었습니다.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  true,
+                  false
+                ]
+              }
+            ],
+            "policy_id": "2375041e-c2a2-4bd5-9c50-d49afb8410e9",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315908578
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  false,
+                  true
+                ]
+              }
+            ],
+            "policy_id": "2375041e-c2a2-4bd5-9c50-d49afb8410e9",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315909051
+          }
+        },
+        {
+          "text": "자동차세 납부 안내: 자동차세 50,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  false,
+                  true
+                ]
+              }
+            ],
+            "policy_id": "2375041e-c2a2-4bd5-9c50-d49afb8410e9",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315909510
+          }
+        },
+        {
+          "text": "(광고) 오늘만 운동화 50% 할인. 지금 구매하세요!",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "policy_id": "2375041e-c2a2-4bd5-9c50-d49afb8410e9",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315909936
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 납부해 주세요.",
+          "package": "com.google.android.gm",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": null,
+                "possible_actions": [
+                  "SHOW",
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2375041e-c2a2-4bd5-9c50-d49afb8410e9",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315910063
+          }
+        }
+      ],
+      "proposal": {
+        "base_revision": "b2db5b4c-7610-446a-8dde-ca3ef0b4e803",
+        "history": [
+          {
+            "role": "user",
+            "text": "문자 메시지에서 세금 납부 안내도 보여줘."
+          }
+        ],
+        "before": [
+          {
+            "id": "new_1",
+            "name": "Gmail 보안 표시",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.gm"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "SECURITY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "SHOW",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Gmail 보안 알림을 보여줘"
+          },
+          {
+            "id": "new_2",
+            "name": "문자 메시지 전체 숨김",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.apps.messaging"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "ANY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "HIDE",
+            "exceptions": [
+              {
+                "id": "bank_deposit_exception",
+                "conditions": [
+                  {
+                    "type": "MONEY_RECEIVED",
+                    "value": "은행 입금",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW"
+              }
+            ],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘. 문자 메시지에서 은행 입금 알림은 보여줘."
+          }
+        ],
+        "validated": true,
+        "migration": false,
+        "legacy_instruction": "",
+        "risks": [
+          "알림 표시 감소",
+          "예외 변경",
+          "기존 의미 변경"
+        ],
+        "audit": {
+          "valid": true,
+          "issues": [],
+          "needs_user_clarification": false,
+          "clarification_question": ""
+        },
+        "hash": "a60ef781eb3e15ee8386372c49e7988f4b49f51a1c985e772ff54d57f919a5dc",
+        "repair_count": 0,
+        "result": {
+          "status": "ready",
+          "message": "문자 메시지 전체 숨김 규칙에 ‘세금 납부 안내’를 보여주는 예외를 추가했습니다. 기존 은행 입금 예외는 유지됩니다. 아직 저장되지는 않았습니다.",
+          "question": "",
+          "options": [],
+          "uncertain": false,
+          "rules": [
+            {
+              "id": "new_1",
+              "name": "Gmail 보안 표시",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.gm"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "SECURITY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "SHOW",
+              "exceptions": [],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "Gmail 보안 알림을 보여줘"
+            },
+            {
+              "id": "new_2",
+              "name": "문자 메시지 전체 숨김",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.apps.messaging"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "ANY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "HIDE",
+              "exceptions": [
+                {
+                  "id": "bank_deposit_exception",
+                  "conditions": [
+                    {
+                      "type": "MONEY_RECEIVED",
+                      "value": "은행 입금",
+                      "negated": false
+                    }
+                  ],
+                  "logic": "ALL",
+                  "action": "SHOW"
+                },
+                {
+                  "id": "tax_payment_exception",
+                  "conditions": [
+                    {
+                      "type": "PAYMENT_REQUIRED",
+                      "value": "세금 납부 안내",
+                      "negated": false
+                    }
+                  ],
+                  "logic": "ALL",
+                  "action": "SHOW"
+                }
+              ],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘. 문자 메시지에서 은행 입금 알림은 보여줘. 문자 메시지에서 세금 납부 안내도 보여줘."
+            }
+          ],
+          "operations": [
+            {
+              "type": "UPDATE",
+              "id": "new_2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "instruction": "문자의 세금 납부 예외를 재산세 납부 안내만 보여주는 것으로 바꿔줘. 은행 입금 예외는 유지해.",
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "문자 메시지 전체 숨김 규칙에서 세금 납부 예외만 ‘재산세 납부 안내’로 변경하고, 은행 입금 예외는 유지합니다. 변경을 확인해 주세요.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Gmail 보안 표시",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.gm"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "SECURITY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Gmail 보안 알림을 보여줘"
+              },
+              {
+                "id": "new_2",
+                "name": "문자 메시지 전체 숨김",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.apps.messaging"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "ANY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [
+                  {
+                    "id": "bank_deposit_exception",
+                    "conditions": [
+                      {
+                        "type": "MONEY_RECEIVED",
+                        "value": "은행 입금",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  },
+                  {
+                    "id": "tax_payment_exception",
+                    "conditions": [
+                      {
+                        "type": "PAYMENT_REQUIRED",
+                        "value": "재산세 납부 안내",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  }
+                ],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "문자의 세금 납부 예외를 재산세 납부 안내만 보여주는 것으로 바꿔줘. 은행 입금 예외는 유지해."
+              }
+            ],
+            "operations": [
+              {
+                "type": "UPDATE",
+                "id": "new_2"
+              }
+            ]
+          }
+        }
+      ],
+      "observations": [
+        {
+          "text": "[은행] 입금 100,000원. 급여가 계좌에 입금되었습니다.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  true,
+                  false
+                ]
+              }
+            ],
+            "policy_id": "8e209ffe-8b10-4fe6-9776-3859ea66b8e1",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315917018
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  false,
+                  true
+                ]
+              }
+            ],
+            "policy_id": "8e209ffe-8b10-4fe6-9776-3859ea66b8e1",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315917526
+          }
+        },
+        {
+          "text": "자동차세 납부 안내: 자동차세 50,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "policy_id": "8e209ffe-8b10-4fe6-9776-3859ea66b8e1",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315917936
+          }
+        },
+        {
+          "text": "(광고) 오늘만 운동화 50% 할인. 지금 구매하세요!",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false,
+                  false
+                ]
+              }
+            ],
+            "policy_id": "8e209ffe-8b10-4fe6-9776-3859ea66b8e1",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315918377
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 납부해 주세요.",
+          "package": "com.google.android.gm",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": null,
+                "possible_actions": [
+                  "SHOW",
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "8e209ffe-8b10-4fe6-9776-3859ea66b8e1",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315918426
+          }
+        }
+      ],
+      "proposal": {
+        "base_revision": "2375041e-c2a2-4bd5-9c50-d49afb8410e9",
+        "history": [
+          {
+            "role": "user",
+            "text": "문자의 세금 납부 예외를 재산세 납부 안내만 보여주는 것으로 바꿔줘. 은행 입금 예외는 유지해."
+          }
+        ],
+        "before": [
+          {
+            "id": "new_1",
+            "name": "Gmail 보안 표시",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.gm"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "SECURITY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "SHOW",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Gmail 보안 알림을 보여줘"
+          },
+          {
+            "id": "new_2",
+            "name": "문자 메시지 전체 숨김",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.apps.messaging"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "ANY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "HIDE",
+            "exceptions": [
+              {
+                "id": "bank_deposit_exception",
+                "conditions": [
+                  {
+                    "type": "MONEY_RECEIVED",
+                    "value": "은행 입금",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW"
+              },
+              {
+                "id": "tax_payment_exception",
+                "conditions": [
+                  {
+                    "type": "PAYMENT_REQUIRED",
+                    "value": "세금 납부 안내",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW"
+              }
+            ],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "문자 메시지 앱의 알림은 전부 숨겨줘. 문자 메시지에서 은행 입금 알림은 보여줘. 문자 메시지에서 세금 납부 안내도 보여줘."
+          }
+        ],
+        "validated": true,
+        "migration": false,
+        "legacy_instruction": "",
+        "risks": [
+          "알림 표시 감소",
+          "예외 변경",
+          "기존 의미 변경"
+        ],
+        "audit": {
+          "valid": true,
+          "issues": [],
+          "needs_user_clarification": false,
+          "clarification_question": ""
+        },
+        "hash": "91b6d9f8937c3f3e8aa633639000a73b9e985163a7b71d239bb7a0d5746abc2b",
+        "repair_count": 0,
+        "result": {
+          "status": "ready",
+          "message": "문자 메시지 전체 숨김 규칙에서 세금 납부 예외만 ‘재산세 납부 안내’로 변경하고, 은행 입금 예외는 유지합니다. 변경을 확인해 주세요.",
+          "question": "",
+          "options": [],
+          "uncertain": false,
+          "rules": [
+            {
+              "id": "new_1",
+              "name": "Gmail 보안 표시",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.gm"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "SECURITY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "SHOW",
+              "exceptions": [],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "Gmail 보안 알림을 보여줘"
+            },
+            {
+              "id": "new_2",
+              "name": "문자 메시지 전체 숨김",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.apps.messaging"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "ANY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "HIDE",
+              "exceptions": [
+                {
+                  "id": "bank_deposit_exception",
+                  "conditions": [
+                    {
+                      "type": "MONEY_RECEIVED",
+                      "value": "은행 입금",
+                      "negated": false
+                    }
+                  ],
+                  "logic": "ALL",
+                  "action": "SHOW"
+                },
+                {
+                  "id": "tax_payment_exception",
+                  "conditions": [
+                    {
+                      "type": "PAYMENT_REQUIRED",
+                      "value": "재산세 납부 안내",
+                      "negated": false
+                    }
+                  ],
+                  "logic": "ALL",
+                  "action": "SHOW"
+                }
+              ],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "문자의 세금 납부 예외를 재산세 납부 안내만 보여주는 것으로 바꿔줘. 은행 입금 예외는 유지해."
+            }
+          ],
+          "operations": [
+            {
+              "type": "UPDATE",
+              "id": "new_2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "instruction": "문자의 은행 입금 표시 예외는 삭제해줘. 전체 숨김과 재산세 납부 예외는 유지해.",
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "은행 입금 표시 예외만 삭제하고, 문자 전체 숨김 및 재산세 납부 예외는 유지합니다. 저장 전 확인이 필요합니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Gmail 보안 표시",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.gm"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "SECURITY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Gmail 보안 알림을 보여줘"
+              },
+              {
+                "id": "new_2",
+                "name": "문자 메시지 전체 숨김",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.apps.messaging"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "ANY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [
+                  {
+                    "id": "tax_payment_exception",
+                    "conditions": [
+                      {
+                        "type": "PAYMENT_REQUIRED",
+                        "value": "재산세 납부 안내",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  }
+                ],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "문자의 은행 입금 표시 예외는 삭제해줘. 전체 숨김과 재산세 납부 예외는 유지해."
+              }
+            ],
+            "operations": [
+              {
+                "type": "UPDATE",
+                "id": "new_2"
+              }
+            ]
+          }
+        }
+      ],
+      "observations": [
+        {
+          "text": "[은행] 입금 100,000원. 급여가 계좌에 입금되었습니다.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "d76036e8-b770-4a7e-bc6d-4ec96c58c330",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315925313
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  true
+                ]
+              }
+            ],
+            "policy_id": "d76036e8-b770-4a7e-bc6d-4ec96c58c330",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315925826
+          }
+        },
+        {
+          "text": "자동차세 납부 안내: 자동차세 50,000원을 9월 30일까지 납부해 주세요.",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "d76036e8-b770-4a7e-bc6d-4ec96c58c330",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315926243
+          }
+        },
+        {
+          "text": "(광고) 오늘만 운동화 50% 할인. 지금 구매하세요!",
+          "package": "com.google.android.apps.messaging",
+          "expected": "outside",
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_2"
+            ],
+            "reason": "문자 메시지 전체 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "d76036e8-b770-4a7e-bc6d-4ec96c58c330",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315926752
+          }
+        },
+        {
+          "text": "재산세 납부 안내: 재산세 150,000원을 납부해 주세요.",
+          "package": "com.google.android.gm",
+          "expected": "match",
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": null,
+                "possible_actions": [
+                  "SHOW",
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "d76036e8-b770-4a7e-bc6d-4ec96c58c330",
+            "instruction": "Gmail 보안 표시 → SHOW\n문자 메시지 전체 숨김 → HIDE",
+            "time": 1790315926847
+          }
+        }
+      ],
+      "proposal": {
+        "base_revision": "8e209ffe-8b10-4fe6-9776-3859ea66b8e1",
+        "history": [
+          {
+            "role": "user",
+            "text": "문자의 은행 입금 표시 예외는 삭제해줘. 전체 숨김과 재산세 납부 예외는 유지해."
+          }
+        ],
+        "before": [
+          {
+            "id": "new_1",
+            "name": "Gmail 보안 표시",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.gm"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "SECURITY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "SHOW",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Gmail 보안 알림을 보여줘"
+          },
+          {
+            "id": "new_2",
+            "name": "문자 메시지 전체 숨김",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.apps.messaging"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "ANY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "HIDE",
+            "exceptions": [
+              {
+                "id": "bank_deposit_exception",
+                "conditions": [
+                  {
+                    "type": "MONEY_RECEIVED",
+                    "value": "은행 입금",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW"
+              },
+              {
+                "id": "tax_payment_exception",
+                "conditions": [
+                  {
+                    "type": "PAYMENT_REQUIRED",
+                    "value": "재산세 납부 안내",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW"
+              }
+            ],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "문자의 세금 납부 예외를 재산세 납부 안내만 보여주는 것으로 바꿔줘. 은행 입금 예외는 유지해."
+          }
+        ],
+        "validated": true,
+        "migration": false,
+        "legacy_instruction": "",
+        "risks": [
+          "알림 표시 감소",
+          "예외 변경",
+          "기존 의미 변경"
+        ],
+        "audit": {
+          "valid": true,
+          "issues": [],
+          "needs_user_clarification": false,
+          "clarification_question": ""
+        },
+        "hash": "c3181636ac7faca06a6e16f3345ed333b6b17c4d29a864a2dfaaf7137b8d3288",
+        "repair_count": 0,
+        "result": {
+          "status": "ready",
+          "message": "은행 입금 표시 예외만 삭제하고, 문자 전체 숨김 및 재산세 납부 예외는 유지합니다. 저장 전 확인이 필요합니다.",
+          "question": "",
+          "options": [],
+          "uncertain": false,
+          "rules": [
+            {
+              "id": "new_1",
+              "name": "Gmail 보안 표시",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.gm"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "SECURITY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "SHOW",
+              "exceptions": [],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "Gmail 보안 알림을 보여줘"
+            },
+            {
+              "id": "new_2",
+              "name": "문자 메시지 전체 숨김",
+              "enabled": true,
+              "scope": {
+                "type": "SPECIFIC_APP",
+                "apps": [
+                  "com.google.android.apps.messaging"
+                ],
+                "conversation_ids": [],
+                "sender_names": [],
+                "relationship": "",
+                "source_type": ""
+              },
+              "conditions": [
+                {
+                  "type": "ANY",
+                  "value": "",
+                  "negated": false
+                }
+              ],
+              "logic": "ALL",
+              "action": "HIDE",
+              "exceptions": [
+                {
+                  "id": "tax_payment_exception",
+                  "conditions": [
+                    {
+                      "type": "PAYMENT_REQUIRED",
+                      "value": "재산세 납부 안내",
+                      "negated": false
+                    }
+                  ],
+                  "logic": "ALL",
+                  "action": "SHOW"
+                }
+              ],
+              "time": {
+                "zone": "Asia\/Seoul",
+                "days": [],
+                "start": "",
+                "end": "",
+                "from": "",
+                "until": ""
+              },
+              "source_instruction": "문자의 은행 입금 표시 예외는 삭제해줘. 전체 숨김과 재산세 납부 예외는 유지해."
+            }
+          ],
+          "operations": [
+            {
+              "type": "UPDATE",
+              "id": "new_2"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "failures": [],
+  "metrics": [
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 19699,
+      "api_attempts": 1,
+      "input_tokens": 3915,
+      "output_tokens": 341,
+      "cached_tokens": 0,
+      "estimated_usd": 0.0011922,
+      "ok": true,
+      "latency_ms": 5320.98557
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 14249,
+      "api_attempts": 1,
+      "input_tokens": 2729,
+      "output_tokens": 58,
+      "cached_tokens": 0,
+      "estimated_usd": 6.154000000000001E-4,
+      "ok": true,
+      "latency_ms": 2038.809791
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 20251,
+      "api_attempts": 1,
+      "input_tokens": 4035,
+      "output_tokens": 469,
+      "cached_tokens": 0,
+      "estimated_usd": 0.0013698,
+      "ok": true,
+      "latency_ms": 4750.312759
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 15051,
+      "api_attempts": 1,
+      "input_tokens": 2903,
+      "output_tokens": 93,
+      "cached_tokens": 1615,
+      "estimated_usd": 4.015E-4,
+      "ok": true,
+      "latency_ms": 3532.58729
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 20476,
+      "api_attempts": 1,
+      "input_tokens": 4088,
+      "output_tokens": 487,
+      "cached_tokens": 3055,
+      "estimated_usd": 8.521000000000001E-4,
+      "ok": true,
+      "latency_ms": 4855.12156
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 15509,
+      "api_attempts": 1,
+      "input_tokens": 3008,
+      "output_tokens": 102,
+      "cached_tokens": 1615,
+      "estimated_usd": 4.333E-4,
+      "ok": true,
+      "latency_ms": 2313.958541
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 20781,
+      "api_attempts": 1,
+      "input_tokens": 4162,
+      "output_tokens": 470,
+      "cached_tokens": 3055,
+      "estimated_usd": 8.465E-4,
+      "ok": true,
+      "latency_ms": 4614.074061
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 15779,
+      "api_attempts": 1,
+      "input_tokens": 3077,
+      "output_tokens": 86,
+      "cached_tokens": 1615,
+      "estimated_usd": 4.2790000000000005E-4,
+      "ok": true,
+      "latency_ms": 1598.75052
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 20726,
+      "api_attempts": 1,
+      "input_tokens": 4150,
+      "output_tokens": 405,
+      "cached_tokens": 3055,
+      "estimated_usd": 7.661E-4,
+      "ok": true,
+      "latency_ms": 4133.643228
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 15537,
+      "api_attempts": 1,
+      "input_tokens": 3021,
+      "output_tokens": 66,
+      "cached_tokens": 1615,
+      "estimated_usd": 3.927E-4,
+      "ok": true,
+      "latency_ms": 2022.589635
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315898451,
+      "request_bytes": 1176,
+      "input_tokens": 551,
+      "output_tokens": 44,
+      "estimated_usd": 2.3142000000000003E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "UNKNOWN": 0,
+            "MATCH": 1
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 1056
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315899597,
+      "request_bytes": 1192,
+      "input_tokens": 555,
+      "output_tokens": 45,
+      "estimated_usd": 2.3310000000000002E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 226
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315899941,
+      "request_bytes": 1197,
+      "input_tokens": 556,
+      "output_tokens": 45,
+      "estimated_usd": 2.3352E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "MATCH": 0,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 316
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315900383,
+      "request_bytes": 1170,
+      "input_tokens": 545,
+      "output_tokens": 45,
+      "estimated_usd": 2.289E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "MATCH": 0,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 246
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315908311,
+      "request_bytes": 2178,
+      "input_tokens": 779,
+      "output_tokens": 86,
+      "estimated_usd": 3.2718E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "MATCH": 1,
+            "UNKNOWN": 0
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "MATCH": 0,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 257
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315908766,
+      "request_bytes": 2194,
+      "input_tokens": 783,
+      "output_tokens": 86,
+      "estimated_usd": 3.2886E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "MATCH": 0,
+            "UNKNOWN": 0.01,
+            "NO_MATCH": 0.99
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "MATCH": 1,
+            "NO_MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 274
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315909215,
+      "request_bytes": 2199,
+      "input_tokens": 784,
+      "output_tokens": 86,
+      "estimated_usd": 3.292800000000001E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 0.01,
+            "MATCH": 0.99
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 277
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315909661,
+      "request_bytes": 2172,
+      "input_tokens": 773,
+      "output_tokens": 87,
+      "estimated_usd": 3.2466000000000004E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "MATCH": 0,
+            "NO_MATCH": 1,
+            "UNKNOWN": 0
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "MATCH": 0,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 266
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315916669,
+      "request_bytes": 2181,
+      "input_tokens": 780,
+      "output_tokens": 86,
+      "estimated_usd": 3.2760000000000005E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 0,
+            "MATCH": 1
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 331
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315917221,
+      "request_bytes": 2197,
+      "input_tokens": 784,
+      "output_tokens": 86,
+      "estimated_usd": 3.292800000000001E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "NO_MATCH": 0.99,
+            "UNKNOWN": 0.01,
+            "MATCH": 0
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "UNKNOWN": 0,
+            "MATCH": 1
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 292
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315917662,
+      "request_bytes": 2202,
+      "input_tokens": 785,
+      "output_tokens": 87,
+      "estimated_usd": 3.297E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "MATCH": 0,
+            "NO_MATCH": 1,
+            "UNKNOWN": 0
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.93,
+          "probabilities": {
+            "MATCH": 0.04,
+            "NO_MATCH": 0.96,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 265
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315918124,
+      "request_bytes": 2175,
+      "input_tokens": 774,
+      "output_tokens": 87,
+      "estimated_usd": 3.2508E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        },
+        "r0e1c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 242
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315925054,
+      "request_bytes": 1249,
+      "input_tokens": 570,
+      "output_tokens": 45,
+      "estimated_usd": 2.394E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "MATCH": 0,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 237
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315925498,
+      "request_bytes": 1265,
+      "input_tokens": 574,
+      "output_tokens": 44,
+      "estimated_usd": 2.4108E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 0,
+            "MATCH": 1
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 305
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315925980,
+      "request_bytes": 1270,
+      "input_tokens": 575,
+      "output_tokens": 45,
+      "estimated_usd": 2.415E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.92,
+          "probabilities": {
+            "NO_MATCH": 0.95,
+            "MATCH": 0.05,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 244
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790315926442,
+      "request_bytes": 1243,
+      "input_tokens": 564,
+      "output_tokens": 45,
+      "estimated_usd": 2.3688E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "MATCH": 0,
+            "NO_MATCH": 1
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 301
+    }
+  ],
+  "user_policy_preserved": true
+}

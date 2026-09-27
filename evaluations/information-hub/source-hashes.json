@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/com/ainotification/inbox/HubClassifier.kt": "22484ee544b5f2e1e406f06b912891245bf6873195ae1aff4a19cd859e4b210b",
+  "app/src/main/java/com/ainotification/inbox/HubProjection.kt": "b92b020ee2727d66ce91c214334d286aa8059a995c5ce38db531dbe17dc149c1",
+  "app/src/main/java/com/ainotification/inbox/HubData.kt": "70fd3d7fdcff29b997920bdb9e004e8792779de0a9a0333ae3f73a244be4ed13",
+  "app/src/main/java/com/ainotification/inbox/HubUi.kt": "9a3788a895a23abe638bdd6769405c34a72b23cee283d619aba86e44fddcba5a",
+  "app/src/main/java/com/ainotification/inbox/NotificationData.kt": "6544410f2787c6bddeed541c7a14a8c55a8ac182995fc7d6e86e0189ecd8e1eb",
+  "app/src/main/java/com/ainotification/inbox/NotificationNormalizer.kt": "4861332c90264f919dbd0feb0cfac421134d56a0cdfb34110331ea55d743a50b",
+  "app/src/main/java/com/ainotification/inbox/InboxNotificationListener.kt": "4fb173b2912d892e359c3c5c29a7545ac532c61c2e40c5003dba97089446977c"
+}

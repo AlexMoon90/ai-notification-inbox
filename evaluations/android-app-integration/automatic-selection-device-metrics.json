@@ -1,0 +1,190 @@
+[
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "compile",
+    "time": 1790172654099,
+    "request_bytes": 994,
+    "input_tokens": 450,
+    "output_tokens": 39,
+    "estimated_usd": 1.8900000000000002e-05,
+    "ok": true,
+    "latency_ms": 671
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "compile",
+    "time": 1790172877670,
+    "request_bytes": 1469,
+    "input_tokens": 538,
+    "output_tokens": 39,
+    "estimated_usd": 2.2596e-05,
+    "judgments": {
+      "supported": 0.8,
+      "needs_conversation": 0.53
+    },
+    "ok": true,
+    "latency_ms": 625
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790172878392,
+    "request_bytes": 1422,
+    "input_tokens": 559,
+    "output_tokens": 39,
+    "estimated_usd": 2.3478e-05,
+    "judgments": {
+      "matches": 0.92,
+      "sufficient": 0.85
+    },
+    "ok": true,
+    "latency_ms": 416
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "compile",
+    "time": 1790173079240,
+    "request_bytes": 1469,
+    "input_tokens": 538,
+    "output_tokens": 39,
+    "estimated_usd": 2.2596e-05,
+    "judgments": {
+      "supported": 0.81,
+      "needs_conversation": 0.56
+    },
+    "ok": true,
+    "latency_ms": 691
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790173079976,
+    "request_bytes": 1422,
+    "input_tokens": 559,
+    "output_tokens": 39,
+    "estimated_usd": 2.3478e-05,
+    "judgments": {
+      "matches": 0.91,
+      "sufficient": 0.86
+    },
+    "ok": true,
+    "latency_ms": 348
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790173080404,
+    "request_bytes": 1421,
+    "input_tokens": 564,
+    "output_tokens": 39,
+    "estimated_usd": 2.3688e-05,
+    "judgments": {
+      "matches": 0.03,
+      "sufficient": 0.9
+    },
+    "ok": true,
+    "latency_ms": 542
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790173081039,
+    "request_bytes": 1424,
+    "input_tokens": 556,
+    "output_tokens": 39,
+    "estimated_usd": 2.3352e-05,
+    "judgments": {
+      "matches": 0.03,
+      "sufficient": 0.89
+    },
+    "ok": true,
+    "latency_ms": 419
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790173081567,
+    "request_bytes": 3615,
+    "input_tokens": 954,
+    "output_tokens": 39,
+    "estimated_usd": 4.0068e-05,
+    "judgments": {
+      "matches": 0.2,
+      "sufficient": 0.47
+    },
+    "ok": true,
+    "latency_ms": 401
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "compile",
+    "time": 1790173256332,
+    "request_bytes": 1469,
+    "input_tokens": 538,
+    "output_tokens": 39,
+    "estimated_usd": 2.2596e-05,
+    "judgments": {
+      "supported": 0.85,
+      "needs_conversation": 0.57
+    },
+    "ok": true,
+    "latency_ms": 743
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790173257154,
+    "request_bytes": 1422,
+    "input_tokens": 559,
+    "output_tokens": 39,
+    "estimated_usd": 2.3478e-05,
+    "judgments": {
+      "matches": 0.91,
+      "sufficient": 0.85
+    },
+    "ok": true,
+    "latency_ms": 433
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790173257704,
+    "request_bytes": 1421,
+    "input_tokens": 564,
+    "output_tokens": 39,
+    "estimated_usd": 2.3688e-05,
+    "judgments": {
+      "matches": 0.03,
+      "sufficient": 0.92
+    },
+    "ok": true,
+    "latency_ms": 398
+  },
+  {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "purpose": "classify",
+    "time": 1790173258237,
+    "request_bytes": 1424,
+    "input_tokens": 556,
+    "output_tokens": 39,
+    "estimated_usd": 2.3352e-05,
+    "judgments": {
+      "matches": 0.03,
+      "sufficient": 0.88
+    },
+    "ok": true,
+    "latency_ms": 372
+  }
+]

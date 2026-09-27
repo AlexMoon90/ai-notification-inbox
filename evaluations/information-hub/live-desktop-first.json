@@ -1,0 +1,385 @@
+{
+  "source_sha256": "0334043a477e442f6e23a73fd4660441a6532fd4327bb006aca098e1d908bdbc",
+  "cases": [
+    {
+      "id": 0,
+      "required": [
+        "RESERVATION"
+      ],
+      "forbidden": [],
+      "predicted": [
+        "MEETING_CONFIRMED"
+      ],
+      "passed": false,
+      "scores": {
+        "RESERVATION": 0.94,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.02,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.3,
+        "REFUND": 0.02,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.02,
+        "REPLY_REQUIRED": 0.03,
+        "SCHEDULE_CHANGE": 0.13,
+        "MEETING_CONFIRMED": 0.95,
+        "AI_TASK_COMPLETED": 0.04,
+        "AI_INPUT_REQUIRED": 0.02
+      },
+      "usage": {
+        "input_tokens": 1037,
+        "output_tokens": 240
+      },
+      "latency_ms": 364
+    },
+    {
+      "id": 1,
+      "required": [
+        "DELIVERY"
+      ],
+      "forbidden": [],
+      "predicted": [
+        "DELIVERY"
+      ],
+      "passed": true,
+      "scores": {
+        "RESERVATION": 0.19,
+        "DELIVERY": 0.96,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.66,
+        "REFUND": 0.02,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.02,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "usage": {
+        "input_tokens": 1017,
+        "output_tokens": 240
+      },
+      "latency_ms": 352
+    },
+    {
+      "id": 2,
+      "required": [
+        "PAYMENT"
+      ],
+      "forbidden": [],
+      "predicted": [],
+      "passed": false,
+      "scores": {
+        "RESERVATION": 0.17,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.9,
+        "MONEY_RECEIVED": 0.31,
+        "ORDER": 0.81,
+        "REFUND": 0.02,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "usage": {
+        "input_tokens": 1031,
+        "output_tokens": 240
+      },
+      "latency_ms": 267
+    },
+    {
+      "id": 3,
+      "required": [
+        "REFUND"
+      ],
+      "forbidden": [],
+      "predicted": [
+        "ORDER"
+      ],
+      "passed": false,
+      "scores": {
+        "RESERVATION": 0.22,
+        "DELIVERY": 0.03,
+        "PAYMENT": 0.32,
+        "MONEY_RECEIVED": 0.12,
+        "ORDER": 0.95,
+        "REFUND": 0.86,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "usage": {
+        "input_tokens": 1021,
+        "output_tokens": 240
+      },
+      "latency_ms": 227
+    },
+    {
+      "id": 4,
+      "required": [
+        "SOCIAL_ACTIVITY"
+      ],
+      "forbidden": [],
+      "predicted": [],
+      "passed": false,
+      "scores": {
+        "RESERVATION": 0.01,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.01,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.92,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "usage": {
+        "input_tokens": 1012,
+        "output_tokens": 240
+      },
+      "latency_ms": 294
+    },
+    {
+      "id": 5,
+      "required": [
+        "TRAVEL"
+      ],
+      "forbidden": [],
+      "predicted": [],
+      "passed": false,
+      "scores": {
+        "RESERVATION": 0.84,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.37,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.92,
+        "REPLY_REQUIRED": 0.19,
+        "SCHEDULE_CHANGE": 0.03,
+        "MEETING_CONFIRMED": 0.17,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.03
+      },
+      "usage": {
+        "input_tokens": 1034,
+        "output_tokens": 240
+      },
+      "latency_ms": 278
+    },
+    {
+      "id": 6,
+      "required": [],
+      "forbidden": [
+        "AI_INPUT_REQUIRED",
+        "AI_TASK_COMPLETED",
+        "DELIVERY",
+        "MEETING_CONFIRMED",
+        "MONEY_RECEIVED",
+        "ORDER",
+        "PAYMENT",
+        "REFUND",
+        "REPLY_REQUIRED",
+        "RESERVATION",
+        "SCHEDULE_CHANGE",
+        "SOCIAL_ACTIVITY",
+        "TRAVEL"
+      ],
+      "predicted": [],
+      "passed": true,
+      "scores": {
+        "RESERVATION": 0.02,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.02,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.03,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.02,
+        "TRAVEL": 0.02,
+        "REPLY_REQUIRED": 0.15,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.02,
+        "AI_INPUT_REQUIRED": 0.02
+      },
+      "usage": {
+        "input_tokens": 1034,
+        "output_tokens": 240
+      },
+      "latency_ms": 303
+    },
+    {
+      "id": 7,
+      "required": [],
+      "forbidden": [
+        "MEETING_CONFIRMED",
+        "REPLY_REQUIRED",
+        "SOCIAL_ACTIVITY"
+      ],
+      "predicted": [],
+      "passed": true,
+      "scores": {
+        "RESERVATION": 0.01,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.01,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.02,
+        "TRAVEL": 0.02,
+        "REPLY_REQUIRED": 0.03,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.01,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "usage": {
+        "input_tokens": 1019,
+        "output_tokens": 240
+      },
+      "latency_ms": 243
+    },
+    {
+      "id": 8,
+      "required": [
+        "REPLY_REQUIRED"
+      ],
+      "forbidden": [
+        "MEETING_CONFIRMED"
+      ],
+      "predicted": [
+        "REPLY_REQUIRED"
+      ],
+      "passed": true,
+      "scores": {
+        "RESERVATION": 0.04,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.01,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.04,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.96,
+        "SCHEDULE_CHANGE": 0.02,
+        "MEETING_CONFIRMED": 0.02,
+        "AI_TASK_COMPLETED": 0.01,
+        "AI_INPUT_REQUIRED": 0.06
+      },
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 240
+      },
+      "latency_ms": 305
+    },
+    {
+      "id": 9,
+      "required": [
+        "MONEY_RECEIVED"
+      ],
+      "forbidden": [],
+      "predicted": [],
+      "passed": false,
+      "scores": {
+        "RESERVATION": 0.02,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.67,
+        "MONEY_RECEIVED": 0.94,
+        "ORDER": 0.05,
+        "REFUND": 0.05,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.02,
+        "SCHEDULE_CHANGE": 0.01,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.01,
+        "AI_INPUT_REQUIRED": 0.01
+      },
+      "usage": {
+        "input_tokens": 1032,
+        "output_tokens": 240
+      },
+      "latency_ms": 240
+    },
+    {
+      "id": 10,
+      "required": [
+        "AI_TASK_COMPLETED"
+      ],
+      "forbidden": [],
+      "predicted": [
+        "AI_TASK_COMPLETED"
+      ],
+      "passed": true,
+      "scores": {
+        "RESERVATION": 0.03,
+        "DELIVERY": 0.02,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.02,
+        "REFUND": 0.01,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.06,
+        "SCHEDULE_CHANGE": 0.02,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.98,
+        "AI_INPUT_REQUIRED": 0.19
+      },
+      "usage": {
+        "input_tokens": 1022,
+        "output_tokens": 240
+      },
+      "latency_ms": 243
+    },
+    {
+      "id": 11,
+      "required": [
+        "AI_INPUT_REQUIRED"
+      ],
+      "forbidden": [],
+      "predicted": [
+        "AI_INPUT_REQUIRED"
+      ],
+      "passed": true,
+      "scores": {
+        "RESERVATION": 0.02,
+        "DELIVERY": 0.01,
+        "PAYMENT": 0.01,
+        "MONEY_RECEIVED": 0.01,
+        "ORDER": 0.02,
+        "REFUND": 0.02,
+        "SOCIAL_ACTIVITY": 0.01,
+        "TRAVEL": 0.01,
+        "REPLY_REQUIRED": 0.31,
+        "SCHEDULE_CHANGE": 0.02,
+        "MEETING_CONFIRMED": 0.01,
+        "AI_TASK_COMPLETED": 0.03,
+        "AI_INPUT_REQUIRED": 0.98
+      },
+      "usage": {
+        "input_tokens": 1020,
+        "output_tokens": 240
+      },
+      "latency_ms": 268
+    }
+  ],
+  "environment": "desktop_python_actual_android_questions",
+  "threshold": 0.95,
+  "passed": 6,
+  "estimated_usd": 0.000516768
+}

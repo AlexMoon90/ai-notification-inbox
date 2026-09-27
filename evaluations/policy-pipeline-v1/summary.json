@@ -1,0 +1,42 @@
+{
+  "unit_tests": 83,
+  "exhaustive_resolution_combinations": 8019,
+  "device_instrumentation_tests": 3,
+  "pipeline_instructions": 6,
+  "pipeline_notifications": 19,
+  "pipeline_hide_outcome_failures": 0,
+  "pipeline_status_counts": {
+    "outside": 8,
+    "match": 9,
+    "review": 2
+  },
+  "pipeline_expected_unknown_review": 1,
+  "pipeline_extra_review_ai_approval": 1,
+  "separate_live_regression_notifications": 12,
+  "real_user_policy_preserved": true,
+  "pipeline_models": [
+    "gpt-5.6-luna",
+    "jev-1.13.0"
+  ],
+  "pipeline_api_calls": 27,
+  "pipeline_estimated_usd": 0.006492349999999999,
+  "first_run_failures": [
+    "1/1 expected_hide=true actual=review",
+    "1/2 expected_hide=true actual=review",
+    "2/0 expected_hide=true actual=review",
+    "3/0 expected_hide=true actual=review"
+  ],
+  "choice_first_run_failures": [
+    "0: 연결 또는 저장에 실패했습니다. 기존 기준은 유지됩니다. 다시 시도해 주세요.",
+    "4: 연결 또는 저장에 실패했습니다. 기존 기준은 유지됩니다. 다시 시도해 주세요."
+  ],
+  "limitations": [
+    "Single small synthetic end-to-end corpus; not product accuracy or reliability gate",
+    "Two requests in earlier run failed after editor success; original exact field unavailable",
+    "One clear AI approval remains review, still visible",
+    "Actual Google incoming push after final installation not observed",
+    "Multi-turn edits/time/sender/room/holdout not covered by this live suite"
+  ],
+  "pipeline_exact_desired_status_passes": 18,
+  "pipeline_exact_desired_status_total": 19
+}

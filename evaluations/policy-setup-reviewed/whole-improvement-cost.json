@@ -1,0 +1,91 @@
+{
+  "parts": {
+    "v4_settings": {
+      "calls": 40,
+      "tokens": {
+        "input_tokens": 52286,
+        "output_tokens": 6012,
+        "cached_tokens": 0
+      },
+      "estimated_usd_known_usage": 0.0305336,
+      "unknown_cost_calls": 0,
+      "p50_ms": 1816.925,
+      "p95_ms": 3147.95
+    },
+    "v4_multiturn": {
+      "calls": 16,
+      "tokens": {
+        "input_tokens": 21949,
+        "output_tokens": 2481,
+        "cached_tokens": 0
+      },
+      "estimated_usd_known_usage": 0.012749200000000002,
+      "unknown_cost_calls": 0,
+      "p50_ms": 1966.825,
+      "p95_ms": 3283.16
+    },
+    "v5_settings_all_attempts": {
+      "calls": 43,
+      "tokens": {
+        "input_tokens": 52286,
+        "output_tokens": 7065,
+        "cached_tokens": 0
+      },
+      "estimated_usd_known_usage": 0.16109199999999999,
+      "unknown_cost_calls": 3,
+      "p50_ms": 1779.0,
+      "p95_ms": 3104.12
+    },
+    "v5_multiturn": {
+      "calls": 18,
+      "tokens": {
+        "input_tokens": 25044,
+        "output_tokens": 3670,
+        "cached_tokens": 0
+      },
+      "estimated_usd_known_usage": 0.079448,
+      "unknown_cost_calls": 0,
+      "p50_ms": 1752.935,
+      "p95_ms": 2951.3
+    },
+    "v5_jev": {
+      "calls": 384,
+      "tokens": {
+        "input_tokens": 195799,
+        "output_tokens": 8064,
+        "cached_tokens": 0
+      },
+      "estimated_usd_known_usage": 0.008223558,
+      "unknown_cost_calls": 0,
+      "p50_ms": 502.655,
+      "p95_ms": 610.9
+    },
+    "reviewed_multiturn": {
+      "calls": 29,
+      "tokens": {
+        "input_tokens": 44421,
+        "output_tokens": 4865,
+        "cached_tokens": 9216
+      },
+      "estimated_usd_known_usage": 0.113938,
+      "unknown_cost_calls": 0,
+      "p50_ms": 1760.38,
+      "p95_ms": 2993.32
+    },
+    "reviewed_jev": {
+      "calls": 72,
+      "tokens": {
+        "input_tokens": 37158,
+        "output_tokens": 1512,
+        "cached_tokens": 0
+      },
+      "estimated_usd_known_usage": 0.0015606360000000002,
+      "unknown_cost_calls": 0,
+      "p50_ms": 496.41999999999996,
+      "p95_ms": 618.56
+    }
+  },
+  "total_calls": 602,
+  "known_estimated_usd": 0.407544994,
+  "unknown_cost_calls": 3
+}

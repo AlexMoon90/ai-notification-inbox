@@ -1,0 +1,1894 @@
+{
+  "fixture_version": "pipeline-v1",
+  "cases": [
+    {
+      "index": 0,
+      "instruction": "구글 앱의 스포츠 소식과 날씨 정보는 숨겨줘. 다른 알림은 그대로 보여줘.",
+      "observations": [
+        {
+          "package": "com.google.android.googlequicksearchbox",
+          "title": "Arsenal 2 - 1 Chelsea",
+          "text": "Full time",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "Google 스포츠·날씨 알림 숨기기 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "0aa6f011-ca35-4ea2-833a-e810b0c3845f",
+            "instruction": "Google 스포츠·날씨 알림 숨기기 → HIDE",
+            "time": 1790313809083
+          }
+        },
+        {
+          "package": "com.google.android.googlequicksearchbox",
+          "title": "서울 20도",
+          "text": "맑음. 내일 비가 옵니다.",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "Google 스포츠·날씨 알림 숨기기 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "0aa6f011-ca35-4ea2-833a-e810b0c3845f",
+            "instruction": "Google 스포츠·날씨 알림 숨기기 → HIDE",
+            "time": 1790313809396
+          }
+        },
+        {
+          "package": "com.google.android.googlequicksearchbox",
+          "title": "Arsenal 3 - 0 Chelsea · Full time",
+          "text": "",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "Google 스포츠·날씨 알림 숨기기 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "0aa6f011-ca35-4ea2-833a-e810b0c3845f",
+            "instruction": "Google 스포츠·날씨 알림 숨기기 → HIDE",
+            "time": 1790313809724
+          }
+        },
+        {
+          "package": "com.google.android.googlequicksearchbox",
+          "title": "계정 보안 경고",
+          "text": "새 기기에서 로그인했습니다. 본인이 아니라면 비밀번호를 변경하세요.",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": false,
+                "possible_actions": [
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "0aa6f011-ca35-4ea2-833a-e810b0c3845f",
+            "instruction": "Google 스포츠·날씨 알림 숨기기 → HIDE",
+            "time": 1790313810100
+          }
+        },
+        {
+          "package": "com.google.android.gm",
+          "title": "Sports newsletter",
+          "text": "Arsenal 2 - 1 Chelsea, full time",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "적용되는 제외 기준이 없어 표시합니다.",
+            "policy_id": "0aa6f011-ca35-4ea2-833a-e810b0c3845f",
+            "instruction": "Google 스포츠·날씨 알림 숨기기 → HIDE",
+            "time": 1790313810203
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "Google 앱에서 스포츠 소식 또는 날씨 정보에 해당하는 알림을 숨깁니다. 그 외 알림은 계속 표시됩니다. 적용 전 확인해 주세요.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Google 스포츠·날씨 알림 숨기기",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.googlequicksearchbox"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "CONTENT",
+                    "value": "스포츠 소식",
+                    "negated": false
+                  },
+                  {
+                    "type": "CONTENT",
+                    "value": "날씨 정보",
+                    "negated": false
+                  }
+                ],
+                "logic": "ANY",
+                "action": "HIDE",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "구글 앱의 스포츠 소식과 날씨 정보는 숨겨줘. 다른 알림은 그대로 보여줘."
+              }
+            ],
+            "operations": [
+              {
+                "type": "ADD",
+                "id": "new_1"
+              }
+            ]
+          }
+        }
+      ],
+      "proposal": {
+        "status": "ready",
+        "message": "Google 앱에서 스포츠 소식 또는 날씨 정보에 해당하는 알림을 숨깁니다. 그 외 알림은 계속 표시됩니다. 적용 전 확인해 주세요.",
+        "question": "",
+        "options": [],
+        "uncertain": false,
+        "rules": [
+          {
+            "id": "new_1",
+            "name": "Google 스포츠·날씨 알림 숨기기",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.googlequicksearchbox"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "CONTENT",
+                "value": "스포츠 소식",
+                "negated": false
+              },
+              {
+                "type": "CONTENT",
+                "value": "날씨 정보",
+                "negated": false
+              }
+            ],
+            "logic": "ANY",
+            "action": "HIDE",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "구글 앱의 스포츠 소식과 날씨 정보는 숨겨줘. 다른 알림은 그대로 보여줘."
+          }
+        ],
+        "operations": [
+          {
+            "type": "ADD",
+            "id": "new_1"
+          }
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "instruction": "Gmail에서는 세금 납부를 요구하는 알림만 보여줘. 다른 Gmail 알림은 숨겨줘. 다른 앱에는 적용하지 마.",
+      "observations": [
+        {
+          "package": "com.google.android.gm",
+          "title": "Tax payment due",
+          "text": "Please pay your property tax by October 10.",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "Gmail 알림 숨기기 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  true
+                ]
+              }
+            ],
+            "policy_id": "496febc7-d045-486e-bdec-4140878e7fbb",
+            "instruction": "Gmail 알림 숨기기 → HIDE",
+            "time": 1790313818908
+          }
+        },
+        {
+          "package": "com.google.android.gm",
+          "title": "Tax payment receipt",
+          "text": "Your property tax payment has been received. Nothing further is due.",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "Gmail 알림 숨기기 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "496febc7-d045-486e-bdec-4140878e7fbb",
+            "instruction": "Gmail 알림 숨기기 → HIDE",
+            "time": 1790313819529
+          }
+        },
+        {
+          "package": "com.google.android.gm",
+          "title": "Team lunch",
+          "text": "Lunch tomorrow at noon",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "Gmail 알림 숨기기 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "496febc7-d045-486e-bdec-4140878e7fbb",
+            "instruction": "Gmail 알림 숨기기 → HIDE",
+            "time": 1790313819938
+          }
+        },
+        {
+          "package": "com.google.android.gm",
+          "title": "Alex",
+          "text": "그거 오늘까지 처리해 주세요. 자세한 내용은 첨부 문서를 봐 주세요.",
+          "expected_hide": false,
+          "actual": {
+            "status": "review",
+            "reason": "조건 또는 예외를 확실히 판단하지 못해 표시합니다. 원문을 확인해 주세요.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE",
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  null
+                ]
+              }
+            ],
+            "policy_id": "496febc7-d045-486e-bdec-4140878e7fbb",
+            "instruction": "Gmail 알림 숨기기 → HIDE",
+            "time": 1790313820352
+          }
+        },
+        {
+          "package": "com.Slack",
+          "title": "Team lunch",
+          "text": "Lunch tomorrow at noon",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "적용되는 제외 기준이 없어 표시합니다.",
+            "policy_id": "496febc7-d045-486e-bdec-4140878e7fbb",
+            "instruction": "Gmail 알림 숨기기 → HIDE",
+            "time": 1790313820431
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "Gmail에만 적용되며, Gmail 알림은 기본적으로 숨기고 세금 납부를 요구하는 알림만 표시하도록 구성했습니다. 다른 앱에는 적용하지 않습니다. 아직 저장되지 않았으므로 확인이 필요합니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Gmail 알림 숨기기",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.gm"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "ANY",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ANY",
+                "action": "HIDE",
+                "exceptions": [
+                  {
+                    "id": "tax_payment_only",
+                    "conditions": [
+                      {
+                        "type": "PAYMENT_REQUIRED",
+                        "value": "세금 납부를 요구하는 알림",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  }
+                ],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Gmail에서는 세금 납부를 요구하는 알림만 보여줘. 다른 Gmail 알림은 숨겨줘. 다른 앱에는 적용하지 마."
+              }
+            ],
+            "operations": [
+              {
+                "type": "ADD",
+                "id": "new_1"
+              }
+            ]
+          }
+        }
+      ],
+      "proposal": {
+        "status": "ready",
+        "message": "Gmail에만 적용되며, Gmail 알림은 기본적으로 숨기고 세금 납부를 요구하는 알림만 표시하도록 구성했습니다. 다른 앱에는 적용하지 않습니다. 아직 저장되지 않았으므로 확인이 필요합니다.",
+        "question": "",
+        "options": [],
+        "uncertain": false,
+        "rules": [
+          {
+            "id": "new_1",
+            "name": "Gmail 알림 숨기기",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.gm"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "ANY",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ANY",
+            "action": "HIDE",
+            "exceptions": [
+              {
+                "id": "tax_payment_only",
+                "conditions": [
+                  {
+                    "type": "PAYMENT_REQUIRED",
+                    "value": "세금 납부를 요구하는 알림",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW"
+              }
+            ],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Gmail에서는 세금 납부를 요구하는 알림만 보여줘. 다른 Gmail 알림은 숨겨줘. 다른 앱에는 적용하지 마."
+          }
+        ],
+        "operations": [
+          {
+            "type": "ADD",
+            "id": "new_1"
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "instruction": "모든 앱에서 광고는 숨겨줘. 단, 악기인 일렉기타와 기타 앰프 할인 광고는 보여줘.",
+      "observations": [
+        {
+          "package": "com.kakao.talk",
+          "title": "쇼핑",
+          "text": "(광고) 오늘만 사무용 의자 30% 할인",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "광고 숨김 — 일렉기타·기타 앰프 할인 광고 예외 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 1,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "137eab26-7ea8-4a68-b813-737301a4bb14",
+            "instruction": "광고 숨김 — 일렉기타·기타 앰프 할인 광고 예외 → HIDE",
+            "time": 1790313828333
+          }
+        },
+        {
+          "package": "com.google.android.gm",
+          "title": "Music sale",
+          "text": "Ad: electric guitars and guitar amplifiers 30% off today!",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "광고 숨김 — 일렉기타·기타 앰프 할인 광고 예외 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 1,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": [
+                  true
+                ]
+              }
+            ],
+            "policy_id": "137eab26-7ea8-4a68-b813-737301a4bb14",
+            "instruction": "광고 숨김 — 일렉기타·기타 앰프 할인 광고 예외 → HIDE",
+            "time": 1790313828798
+          }
+        },
+        {
+          "package": "com.kakao.talk",
+          "title": "배송 완료",
+          "text": "주문하신 상품을 문 앞에 배송했습니다.",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 1,
+                "matched": false,
+                "possible_actions": [
+                  "NO_MATCH"
+                ],
+                "exception_matches": [
+                  false
+                ]
+              }
+            ],
+            "policy_id": "137eab26-7ea8-4a68-b813-737301a4bb14",
+            "instruction": "광고 숨김 — 일렉기타·기타 앰프 할인 광고 예외 → HIDE",
+            "time": 1790313829185
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "모든 앱의 광고를 숨기되, 악기인 일렉기타 및 기타 앰프 할인 광고는 표시하도록 설정했습니다. 시스템 UI 및 Android 알림은 기본적으로 제외됩니다. 아직 저장되지는 않았습니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "광고 숨김 — 일렉기타·기타 앰프 할인 광고 예외",
+                "enabled": true,
+                "scope": {
+                  "type": "ALL_APPS",
+                  "apps": [],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "PROMOTION",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [
+                  {
+                    "id": "exception_1",
+                    "conditions": [
+                      {
+                        "type": "CONTENT",
+                        "value": "악기인 일렉기타 및 기타 앰프 할인 광고",
+                        "negated": false
+                      }
+                    ],
+                    "logic": "ALL",
+                    "action": "SHOW"
+                  }
+                ],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "모든 앱에서 광고는 숨겨줘. 단, 악기인 일렉기타와 기타 앰프 할인 광고는 보여줘."
+              }
+            ],
+            "operations": [
+              {
+                "type": "ADD",
+                "id": "new_1"
+              }
+            ]
+          }
+        }
+      ],
+      "proposal": {
+        "status": "ready",
+        "message": "모든 앱의 광고를 숨기되, 악기인 일렉기타 및 기타 앰프 할인 광고는 표시하도록 설정했습니다. 시스템 UI 및 Android 알림은 기본적으로 제외됩니다. 아직 저장되지는 않았습니다.",
+        "question": "",
+        "options": [],
+        "uncertain": false,
+        "rules": [
+          {
+            "id": "new_1",
+            "name": "광고 숨김 — 일렉기타·기타 앰프 할인 광고 예외",
+            "enabled": true,
+            "scope": {
+              "type": "ALL_APPS",
+              "apps": [],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "PROMOTION",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "HIDE",
+            "exceptions": [
+              {
+                "id": "exception_1",
+                "conditions": [
+                  {
+                    "type": "CONTENT",
+                    "value": "악기인 일렉기타 및 기타 앰프 할인 광고",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW"
+              }
+            ],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "모든 앱에서 광고는 숨겨줘. 단, 악기인 일렉기타와 기타 앰프 할인 광고는 보여줘."
+          }
+        ],
+        "operations": [
+          {
+            "type": "ADD",
+            "id": "new_1"
+          }
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "instruction": "Slack에서는 AI 작업이 완료된 알림은 숨겨줘. AI가 내 승인이나 입력을 요청하는 알림은 보여줘. 나머지는 그대로 둬.",
+      "observations": [
+        {
+          "package": "com.Slack",
+          "title": "AI assistant",
+          "text": "Task complete: your requested report is ready to download. No action needed.",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "Slack AI 작업 완료 알림 숨기기 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              },
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": false,
+                "possible_actions": [
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "64097a6b-e647-4c00-a1d7-37dd9f61c00c",
+            "instruction": "Slack AI 작업 완료 알림 숨기기 → HIDE\nSlack AI 승인·입력 요청 알림 표시 → SHOW",
+            "time": 1790313841227
+          }
+        },
+        {
+          "package": "com.Slack",
+          "title": "AI assistant",
+          "text": "Approval required: please approve deployment before I can continue.",
+          "expected_hide": false,
+          "actual": {
+            "status": "review",
+            "reason": "조건 또는 예외를 확실히 판단하지 못해 표시합니다. 원문을 확인해 주세요.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": null,
+                "possible_actions": [
+                  "HIDE",
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              },
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "SHOW"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "64097a6b-e647-4c00-a1d7-37dd9f61c00c",
+            "instruction": "Slack AI 작업 완료 알림 숨기기 → HIDE\nSlack AI 승인·입력 요청 알림 표시 → SHOW",
+            "time": 1790313841608
+          }
+        },
+        {
+          "package": "com.Slack",
+          "title": "AI assistant",
+          "text": "I have started the report and am still working on it.",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": false,
+                "possible_actions": [
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              },
+              {
+                "rule_id": "new_2",
+                "priority": 3,
+                "matched": false,
+                "possible_actions": [
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "64097a6b-e647-4c00-a1d7-37dd9f61c00c",
+            "instruction": "Slack AI 작업 완료 알림 숨기기 → HIDE\nSlack AI 승인·입력 요청 알림 표시 → SHOW",
+            "time": 1790313842135
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "Slack에서 AI 작업 완료 알림은 숨기고, AI가 승인이나 입력을 요청하는 알림은 표시하도록 설정했습니다. 그 외 알림은 변경하지 않습니다. 아직 저장되지는 않았습니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "Slack AI 작업 완료 알림 숨기기",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.Slack"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "AI_TASK_COMPLETED",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Slack에서는 AI 작업이 완료된 알림은 숨겨줘. AI가 내 승인이나 입력을 요청하는 알림은 보여줘. 나머지는 그대로 둬."
+              },
+              {
+                "id": "new_2",
+                "name": "Slack AI 승인·입력 요청 알림 표시",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.Slack"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "AI_INPUT_REQUIRED",
+                    "value": "",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "SHOW",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "Slack에서는 AI 작업이 완료된 알림은 숨겨줘. AI가 내 승인이나 입력을 요청하는 알림은 보여줘. 나머지는 그대로 둬."
+              }
+            ],
+            "operations": [
+              {
+                "type": "ADD",
+                "id": "new_1"
+              },
+              {
+                "type": "ADD",
+                "id": "new_2"
+              }
+            ]
+          }
+        }
+      ],
+      "proposal": {
+        "status": "ready",
+        "message": "Slack에서 AI 작업 완료 알림은 숨기고, AI가 승인이나 입력을 요청하는 알림은 표시하도록 설정했습니다. 그 외 알림은 변경하지 않습니다. 아직 저장되지는 않았습니다.",
+        "question": "",
+        "options": [],
+        "uncertain": false,
+        "rules": [
+          {
+            "id": "new_1",
+            "name": "Slack AI 작업 완료 알림 숨기기",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.Slack"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "AI_TASK_COMPLETED",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "HIDE",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Slack에서는 AI 작업이 완료된 알림은 숨겨줘. AI가 내 승인이나 입력을 요청하는 알림은 보여줘. 나머지는 그대로 둬."
+          },
+          {
+            "id": "new_2",
+            "name": "Slack AI 승인·입력 요청 알림 표시",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.Slack"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "AI_INPUT_REQUIRED",
+                "value": "",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "SHOW",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "Slack에서는 AI 작업이 완료된 알림은 숨겨줘. AI가 내 승인이나 입력을 요청하는 알림은 보여줘. 나머지는 그대로 둬."
+          }
+        ],
+        "operations": [
+          {
+            "type": "ADD",
+            "id": "new_1"
+          },
+          {
+            "type": "ADD",
+            "id": "new_2"
+          }
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "instruction": "YouTube에서는 천문학에 관한 영상 알림은 숨겨줘. 그 밖의 주제와 다른 앱 알림은 그대로 보여줘.",
+      "observations": [
+        {
+          "package": "com.google.android.youtube",
+          "title": "New video",
+          "text": "How black holes form: an astronomy lecture about stars and galaxies.",
+          "expected_hide": true,
+          "actual": {
+            "status": "outside",
+            "action": "HIDE",
+            "matched_policy_ids": [
+              "new_1"
+            ],
+            "reason": "YouTube 천문학 콘텐츠 알림 숨김 기준을 적용했습니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": true,
+                "possible_actions": [
+                  "HIDE"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2c6f0c89-4577-469b-aac5-b592aacfa6c6",
+            "instruction": "YouTube 천문학 콘텐츠 알림 숨김 → HIDE",
+            "time": 1790313849471
+          }
+        },
+        {
+          "package": "com.google.android.youtube",
+          "title": "새 영상",
+          "text": "집에서 만드는 김치찌개 요리법",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "해당하는 제외 조건이 없어 기본 표시합니다.",
+            "decision_stage": "policy_resolution",
+            "contract_version": "predicate-choice-v2",
+            "policy_trace": [
+              {
+                "rule_id": "new_1",
+                "priority": 3,
+                "matched": false,
+                "possible_actions": [
+                  "NO_MATCH"
+                ],
+                "exception_matches": []
+              }
+            ],
+            "policy_id": "2c6f0c89-4577-469b-aac5-b592aacfa6c6",
+            "instruction": "YouTube 천문학 콘텐츠 알림 숨김 → HIDE",
+            "time": 1790313849877
+          }
+        },
+        {
+          "package": "com.google.android.gm",
+          "title": "Astronomy lecture",
+          "text": "How black holes form",
+          "expected_hide": false,
+          "actual": {
+            "status": "match",
+            "action": "SHOW",
+            "matched_policy_ids": [],
+            "reason": "적용되는 제외 기준이 없어 표시합니다.",
+            "policy_id": "2c6f0c89-4577-469b-aac5-b592aacfa6c6",
+            "instruction": "YouTube 천문학 콘텐츠 알림 숨김 → HIDE",
+            "time": 1790313849967
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "ready",
+            "message": "YouTube에서 천문학 관련 콘텐츠 알림만 숨기고, 그 밖의 주제와 다른 앱 알림은 기본 동작대로 표시합니다. 아직 저장되지는 않았습니다.",
+            "question": "",
+            "options": [],
+            "uncertain": false,
+            "rules": [
+              {
+                "id": "new_1",
+                "name": "YouTube 천문학 콘텐츠 알림 숨김",
+                "enabled": true,
+                "scope": {
+                  "type": "SPECIFIC_APP",
+                  "apps": [
+                    "com.google.android.youtube"
+                  ],
+                  "conversation_ids": [],
+                  "sender_names": [],
+                  "relationship": "",
+                  "source_type": ""
+                },
+                "conditions": [
+                  {
+                    "type": "CONTENT",
+                    "value": "천문학에 관한 콘텐츠",
+                    "negated": false
+                  }
+                ],
+                "logic": "ALL",
+                "action": "HIDE",
+                "exceptions": [],
+                "time": {
+                  "zone": "Asia\/Seoul",
+                  "days": [],
+                  "start": "",
+                  "end": "",
+                  "from": "",
+                  "until": ""
+                },
+                "source_instruction": "YouTube에서는 천문학에 관한 영상 알림은 숨겨줘. 그 밖의 주제와 다른 앱 알림은 그대로 보여줘."
+              }
+            ],
+            "operations": [
+              {
+                "type": "ADD",
+                "id": "new_1"
+              }
+            ]
+          }
+        }
+      ],
+      "proposal": {
+        "status": "ready",
+        "message": "YouTube에서 천문학 관련 콘텐츠 알림만 숨기고, 그 밖의 주제와 다른 앱 알림은 기본 동작대로 표시합니다. 아직 저장되지는 않았습니다.",
+        "question": "",
+        "options": [],
+        "uncertain": false,
+        "rules": [
+          {
+            "id": "new_1",
+            "name": "YouTube 천문학 콘텐츠 알림 숨김",
+            "enabled": true,
+            "scope": {
+              "type": "SPECIFIC_APP",
+              "apps": [
+                "com.google.android.youtube"
+              ],
+              "conversation_ids": [],
+              "sender_names": [],
+              "relationship": "",
+              "source_type": ""
+            },
+            "conditions": [
+              {
+                "type": "CONTENT",
+                "value": "천문학에 관한 콘텐츠",
+                "negated": false
+              }
+            ],
+            "logic": "ALL",
+            "action": "HIDE",
+            "exceptions": [],
+            "time": {
+              "zone": "Asia\/Seoul",
+              "days": [],
+              "start": "",
+              "end": "",
+              "from": "",
+              "until": ""
+            },
+            "source_instruction": "YouTube에서는 천문학에 관한 영상 알림은 숨겨줘. 그 밖의 주제와 다른 앱 알림은 그대로 보여줘."
+          }
+        ],
+        "operations": [
+          {
+            "type": "ADD",
+            "id": "new_1"
+          }
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "instruction": "회사 단톡방 알림은 숨겨줘.",
+      "observations": [],
+      "diagnostics": [
+        {
+          "stage": "editor_output",
+          "value": {
+            "status": "clarification_required",
+            "message": "회사 단톡방을 숨기려면 실제 대화방을 선택해야 합니다. 현재 선택 가능한 대화방이 없어 이 기준은 아직 적용할 수 없습니다. 회사 대화방을 불러오거나 해당 대화방을 선택해 주세요. 이 요청은 부분 미리보기만 제공되며 적용되지 않았습니다.",
+            "question": "숨길 회사 단톡방을 실제 대화방 목록에서 선택해 주세요.",
+            "options": [],
+            "uncertain": true,
+            "rules": [],
+            "operations": []
+          }
+        }
+      ],
+      "proposal": {
+        "status": "clarification_required",
+        "message": "회사 단톡방을 숨기려면 실제 대화방을 선택해야 합니다. 현재 선택 가능한 대화방이 없어 이 기준은 아직 적용할 수 없습니다. 회사 대화방을 불러오거나 해당 대화방을 선택해 주세요. 이 요청은 부분 미리보기만 제공되며 적용되지 않았습니다.",
+        "question": "숨길 회사 단톡방을 실제 대화방 목록에서 선택해 주세요.",
+        "options": [],
+        "uncertain": true,
+        "rules": [],
+        "operations": []
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 18276,
+      "api_attempts": 1,
+      "input_tokens": 3641,
+      "output_tokens": 296,
+      "cached_tokens": 0,
+      "estimated_usd": 0.0010834,
+      "ok": true,
+      "latency_ms": 5286.417394
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 12471,
+      "api_attempts": 1,
+      "input_tokens": 2386,
+      "output_tokens": 90,
+      "cached_tokens": 1408,
+      "estimated_usd": 3.3176E-4,
+      "ok": true,
+      "latency_ms": 2335.817031
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313808014,
+      "request_bytes": 2045,
+      "input_tokens": 740,
+      "output_tokens": 82,
+      "estimated_usd": 3.108E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.94,
+          "probabilities": {
+            "NO_MATCH": 0.02,
+            "UNKNOWN": 0.02,
+            "MATCH": 0.96
+          }
+        },
+        "r0c1": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "UNKNOWN": 0,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 1062
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313809153,
+      "request_bytes": 2059,
+      "input_tokens": 746,
+      "output_tokens": 82,
+      "estimated_usd": 3.1332E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "MATCH": 0,
+            "NO_MATCH": 1,
+            "UNKNOWN": 0
+          }
+        },
+        "r0c1": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "MATCH": 0.99,
+            "UNKNOWN": 0.01
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 235
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313809474,
+      "request_bytes": 2049,
+      "input_tokens": 741,
+      "output_tokens": 82,
+      "estimated_usd": 3.1122000000000005E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.91,
+          "probabilities": {
+            "NO_MATCH": 0.03,
+            "UNKNOWN": 0.03,
+            "MATCH": 0.94
+          }
+        },
+        "r0c1": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "UNKNOWN": 0,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 242
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313809800,
+      "request_bytes": 2130,
+      "input_tokens": 766,
+      "output_tokens": 83,
+      "estimated_usd": 3.2172E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "UNKNOWN": 0,
+            "MATCH": 0
+          }
+        },
+        "r0c1": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "UNKNOWN": 0,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 297
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 18311,
+      "api_attempts": 1,
+      "input_tokens": 3650,
+      "output_tokens": 356,
+      "cached_tokens": 2832,
+      "estimated_usd": 6.474400000000001E-4,
+      "ok": true,
+      "latency_ms": 5872.237914
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 12618,
+      "api_attempts": 1,
+      "input_tokens": 2426,
+      "output_tokens": 68,
+      "cached_tokens": 1408,
+      "estimated_usd": 3.1336E-4,
+      "ok": true,
+      "latency_ms": 2219.868854
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313818605,
+      "request_bytes": 1221,
+      "input_tokens": 555,
+      "output_tokens": 44,
+      "estimated_usd": 2.3310000000000002E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.9,
+          "probabilities": {
+            "UNKNOWN": 0.01,
+            "MATCH": 0.93,
+            "NO_MATCH": 0.06
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 298
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313819052,
+      "request_bytes": 1250,
+      "input_tokens": 557,
+      "output_tokens": 45,
+      "estimated_usd": 2.3394000000000003E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 473
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313819581,
+      "request_bytes": 1195,
+      "input_tokens": 548,
+      "output_tokens": 45,
+      "estimated_usd": 2.3016E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "MATCH": 0,
+            "UNKNOWN": 0,
+            "NO_MATCH": 1
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 346
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313820039,
+      "request_bytes": 1259,
+      "input_tokens": 569,
+      "output_tokens": 45,
+      "estimated_usd": 2.3898000000000004E-5,
+      "judgments": {
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.56,
+          "probabilities": {
+            "NO_MATCH": 0.71,
+            "UNKNOWN": 0.29,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 302
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 18287,
+      "api_attempts": 1,
+      "input_tokens": 3647,
+      "output_tokens": 355,
+      "cached_tokens": 2832,
+      "estimated_usd": 6.4564E-4,
+      "ok": true,
+      "latency_ms": 4934.339269
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 12595,
+      "api_attempts": 1,
+      "input_tokens": 2429,
+      "output_tokens": 100,
+      "cached_tokens": 1408,
+      "estimated_usd": 3.5236E-4,
+      "ok": true,
+      "latency_ms": 2246.554999
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313827990,
+      "request_bytes": 2137,
+      "input_tokens": 760,
+      "output_tokens": 84,
+      "estimated_usd": 3.192E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "UNKNOWN": 0,
+            "MATCH": 1
+          }
+        },
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "UNKNOWN": 0,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 335
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313828430,
+      "request_bytes": 2152,
+      "input_tokens": 756,
+      "output_tokens": 83,
+      "estimated_usd": 3.1752000000000004E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "MATCH": 1,
+            "UNKNOWN": 0
+          }
+        },
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "MATCH": 1,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 359
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313828869,
+      "request_bytes": 2151,
+      "input_tokens": 760,
+      "output_tokens": 85,
+      "estimated_usd": 3.192E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        },
+        "r0e0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "NO_MATCH": 1,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 311
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 18330,
+      "api_attempts": 1,
+      "input_tokens": 3653,
+      "output_tokens": 616,
+      "cached_tokens": 2832,
+      "estimated_usd": 9.6004E-4,
+      "ok": true,
+      "latency_ms": 8548.184319
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 13178,
+      "api_attempts": 1,
+      "input_tokens": 2541,
+      "output_tokens": 118,
+      "cached_tokens": 1408,
+      "estimated_usd": 3.9636E-4,
+      "ok": true,
+      "latency_ms": 2624.711041
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313840816,
+      "request_bytes": 2079,
+      "input_tokens": 740,
+      "output_tokens": 82,
+      "estimated_usd": 3.108E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.98,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "MATCH": 0.99,
+            "UNKNOWN": 0.01
+          }
+        },
+        "r1c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "MATCH": 0,
+            "NO_MATCH": 1,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 409
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313841320,
+      "request_bytes": 2070,
+      "input_tokens": 736,
+      "output_tokens": 82,
+      "estimated_usd": 3.0912000000000005E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.83,
+          "probabilities": {
+            "NO_MATCH": 0.89,
+            "MATCH": 0,
+            "UNKNOWN": 0.11
+          }
+        },
+        "r1c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.94,
+          "probabilities": {
+            "NO_MATCH": 0.02,
+            "MATCH": 0.96,
+            "UNKNOWN": 0.02
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 266
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313841756,
+      "request_bytes": 2056,
+      "input_tokens": 737,
+      "output_tokens": 83,
+      "estimated_usd": 3.0954E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "MATCH": 0,
+            "UNKNOWN": 0
+          }
+        },
+        "r1c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "UNKNOWN": 0,
+            "MATCH": 0,
+            "NO_MATCH": 1
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 377
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 18304,
+      "api_attempts": 1,
+      "input_tokens": 3648,
+      "output_tokens": 281,
+      "cached_tokens": 2832,
+      "estimated_usd": 5.5704E-4,
+      "ok": true,
+      "latency_ms": 4619.751457
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_semantic_validator",
+      "reasoning_effort": "low",
+      "request_bytes": 12458,
+      "api_attempts": 1,
+      "input_tokens": 2384,
+      "output_tokens": 69,
+      "cached_tokens": 1408,
+      "estimated_usd": 3.0616000000000004E-4,
+      "ok": true,
+      "latency_ms": 2043.962343
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313849146,
+      "request_bytes": 1169,
+      "input_tokens": 533,
+      "output_tokens": 42,
+      "estimated_usd": 2.2386000000000002E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "MATCH",
+          "confidence": 0.99,
+          "probabilities": {
+            "NO_MATCH": 0,
+            "MATCH": 1,
+            "UNKNOWN": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 322
+    },
+    {
+      "provider": "typesafe",
+      "model": "jev-1.13.0",
+      "purpose": "rule_match",
+      "time": 1790313849566,
+      "request_bytes": 1144,
+      "input_tokens": 531,
+      "output_tokens": 43,
+      "estimated_usd": 2.2302000000000004E-5,
+      "judgments": {
+        "r0c0": {
+          "type": "choice",
+          "choice": "NO_MATCH",
+          "confidence": 1,
+          "probabilities": {
+            "NO_MATCH": 1,
+            "UNKNOWN": 0,
+            "MATCH": 0
+          }
+        }
+      },
+      "ok": true,
+      "latency_ms": 308
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "purpose": "policy_editor",
+      "reasoning_effort": "low",
+      "request_bytes": 18214,
+      "api_attempts": 1,
+      "input_tokens": 3628,
+      "output_tokens": 192,
+      "cached_tokens": 2832,
+      "estimated_usd": 4.4624E-4,
+      "ok": true,
+      "latency_ms": 3891.753071
+    }
+  ],
+  "failures": []
+}
