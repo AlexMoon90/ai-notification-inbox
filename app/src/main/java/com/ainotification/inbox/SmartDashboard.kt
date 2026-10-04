@@ -61,7 +61,7 @@ private data class SmartItem(val event:StructuredEvent,val money:MoneyEvent?,val
     val category=event.category
     val heading=money?.let{moneyHeading(it)} ?: event.title
     val changed=event.isChanged
-    val secondary=money?.let{listOfNotNull(it.provider).distinct().joinToString(" · ").takeIf{it.isNotBlank()}}
+    val secondary=money?.let{moneySourceLabel(it)}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -107,7 +107,9 @@ private data class SmartItem(val event:StructuredEvent,val money:MoneyEvent?,val
                         if(money.transactionType=="money_related_unknown")Text("거래 유형 확인 필요",fontSize=11.sp,color=ModernMuted)
                         else if(money.transactionAmount==null)Text("거래금액 확인 필요",fontSize=11.sp,color=ModernMuted)
                     }
-                    Text("${item.secondary?.let{"$it · "}.orEmpty()}${item.event.sourceApp} · ${if(item.money?.occurredAt!=null)"거래" else "수신"} ${formatTime(item.money?.occurredAt ?: item.event.observedAt)}",fontSize=11.sp,lineHeight=15.sp,color=ModernMuted,maxLines=1,overflow=TextOverflow.Ellipsis)
+                    val accountLine=item.money?.accountHint!=null
+                    if(accountLine)item.secondary?.let{Text(it,fontSize=11.sp,lineHeight=15.sp,color=ModernMuted,maxLines=2)}
+                    Text("${item.secondary?.takeUnless{accountLine}?.let{"$it · "}.orEmpty()}${item.event.sourceApp} · ${if(item.money?.occurredAt!=null)"거래" else "수신"} ${formatTime(item.money?.occurredAt ?: item.event.observedAt)}",fontSize=11.sp,lineHeight=15.sp,color=ModernMuted,maxLines=1,overflow=TextOverflow.Ellipsis)
                 }
                 if(item.event.sourceNotificationId !in seen)Text(if(item.changed)"변경" else "●",fontSize=11.sp,color=Color(0xff6963c8))
             }
@@ -125,7 +127,6 @@ private data class SmartItem(val event:StructuredEvent,val money:MoneyEvent?,val
                     money.balanceAfter?.let{balance->item{Text("거래 후 잔액  ${java.text.NumberFormat.getIntegerInstance(java.util.Locale.KOREAN).format(balance)}원",fontSize=14.sp)}}
                     detail.secondary?.let{value->item{Text(value,fontSize=16.sp)}}
                     money.paymentMethod?.let{value->item{Text("결제 수단 · $value")}}
-                    money.accountHint?.let{value->item{Text("계좌 · $value")}}
                     money.occurredAt?.let{value->item{Text("거래 시각 · ${formatTime(value)}")}}
                     if(money.extractionStatus!="complete")item{Text(if(money.transactionType=="money_related_unknown")"금융 정보는 확인됐지만 거래 유형 확인이 필요해요." else "거래금액을 확정하지 못했어요. 잔액을 거래금액으로 표시하지 않습니다.",color=ModernMuted)}
                 }

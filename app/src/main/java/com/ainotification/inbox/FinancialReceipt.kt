@@ -29,5 +29,5 @@ internal fun explicitFinancialReceipt(row:CapturedNotification,now:Long):MoneyEv
  val party=receiptParty(row,type)
  val merchant=party.takeIf{type !in listOf("deposit","withdrawal","transfer_in","transfer_out")}
  val counterparty=party.takeIf{merchant==null}
- return MoneyEvent("event:${row.snapshotId}",row.snapshotId,type,directionFor(type),amount.amount,balance?.amount,merchant,counterparty,receiptProvider(text),null,null,c.dates.singleOrNull()?.time,row.appLabel,1.0,1.0,"complete",true,now,now)
+ return MoneyEvent("event:${row.snapshotId}",row.snapshotId,type,directionFor(type),amount.amount,balance?.amount,merchant,counterparty,receiptProvider(text),null,receiptAccountHint(row),c.dates.singleOrNull()?.time,row.appLabel,1.0,1.0,"complete",true,now,now)
 }

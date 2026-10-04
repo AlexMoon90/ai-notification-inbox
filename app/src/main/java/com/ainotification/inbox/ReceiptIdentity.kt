@@ -64,3 +64,22 @@ internal class ReceiptSenders(context:android.content.Context) {
   return event.copy(provider=prefs.getString("$key:provider",null))
  }
 }
+
+/** Keep observed masking; never infer hidden digits or identify accounts by bank alone. */
+internal fun receiptAccountHint(row:CapturedNotification):String? {
+ val text=moneyCandidates(row).text
+ val token="([0-9*][0-9*\\-]{4,28}[0-9*])"
+ val patterns=listOf(
+  Regex("<[^>\\n]+>\\s*$token(?=\\s)"),
+  Regex("\\[(?:입금|출금)\\]\\s*[0-9,]+원\\s+$token\\s+잔액"),
+  Regex("계좌(?:번호)?\\s*[:：]\\s*$token(?=\\s|$)")
+ )
+ val hints=patterns.flatMap{re->re.findAll(text).map{it.groupValues[1]}.toList()}.distinct()
+ val hint=hints.singleOrNull()?.takeIf{it.count(Char::isDigit)>=3} ?: return null
+ if('*' in hint)return hint
+ // Unmasked account numbers stay private; retain only the last four digits for display.
+ var visible=4
+ return hint.reversed().map{ch->if(ch.isDigit()){if(visible-->0)ch else '*'}else ch}.reversed().joinToString("")
+}
+internal fun moneySourceLabel(m:MoneyEvent):String? = listOfNotNull(m.provider,m.accountHint?.let{"계좌 $it"})
+ .joinToString(" · ").takeIf{it.isNotBlank()}

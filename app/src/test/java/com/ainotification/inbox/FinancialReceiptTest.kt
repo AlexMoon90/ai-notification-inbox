@@ -68,6 +68,17 @@ class FinancialReceiptTest {
    assertNull(explicitFinancialReceipt(n.copy(text="[출금] 50,000원 출금 예정",bigText=null),1))
   }
  }
+ @Test fun sameBankDifferentMaskedAccountsRemainDistinct(){
+  val sms=row("[Web발신]\n<새마을금고>123456**7 테스트상대 입금50,000 잔액900,000원")
+  val push=row("[입금] 50,000원 9000-00-00****-1 잔액 900,000원 10/04 12:30 테스트상대",title="MG새마을금고").copy(packageName="com.smg.spbs")
+  val a=explicitFinancialReceipt(sms,1)!!;val b=explicitFinancialReceipt(push,1)!!
+  assertEquals("123456**7",a.accountHint);assertEquals("9000-00-00****-1",b.accountHint)
+  assertNotEquals(a.accountHint,b.accountHint)
+  assertEquals("새마을금고 · 계좌 123456**7",moneySourceLabel(a))
+  assertEquals("***-**-**5678",receiptAccountHint(row("계좌번호: 123-45-005678")))
+  assertNull(receiptAccountHint(row("잔액 123456원 10/04 12:30")))
+  assertNull(receiptAccountHint(row("계좌번호: 123456**7\n계좌번호: 765432**1")))
+ }
  @Test fun optionalPrivateLocalAudit(){
   val input=System.getProperty("receipt.audit") ?: return
   val rows=org.json.JSONArray(java.io.File(input).readText());val found=org.json.JSONArray()

@@ -43,6 +43,7 @@ class MoneyStructuredDeviceTest {
     assertTrue(device.wait(Until.hasObject(By.text("+50,000원")),5000))
     assertFalse(device.hasObject(By.textContains("1,253,400")))
     assertTrue(device.hasObject(By.text("김OO · 입금")))
+    assertTrue(device.hasObject(By.text("우리은행 · 계좌 123456**7")))
     device.takeScreenshot(File(app.cacheDir,"money-structured-card.png"))
     device.waitForIdle()
     // Tap the visible left side; a user's picture-in-picture video may cover the center.

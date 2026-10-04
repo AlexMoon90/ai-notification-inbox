@@ -1,0 +1,86 @@
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.LocalReceiptRepairDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.LocalReceiptRepairDeviceTest:
+INSTRUMENTATION_STATUS: test=applyExplicitLocalReceipts
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.LocalReceiptRepairDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=applyExplicitLocalReceipts
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.MoneyStructuredDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+com.ainotification.inbox.MoneyStructuredDeviceTest:
+INSTRUMENTATION_STATUS: test=moneyStorageAndStructuredUiKeepBalanceSeparate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.ainotification.inbox.MoneyStructuredDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at com.ainotification.inbox.MoneyStructuredDeviceTest$moneyStorageAndStructuredUiKeepBalanceSeparate$1.invokeSuspend(MoneyStructuredDeviceTest.kt:46)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.MoneyStructuredDeviceTest.moneyStorageAndStructuredUiKeepBalanceSeparate(MoneyStructuredDeviceTest.kt:20)
+
+INSTRUMENTATION_STATUS: stream=
+Error in moneyStorageAndStructuredUiKeepBalanceSeparate(com.ainotification.inbox.MoneyStructuredDeviceTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at com.ainotification.inbox.MoneyStructuredDeviceTest$moneyStorageAndStructuredUiKeepBalanceSeparate$1.invokeSuspend(MoneyStructuredDeviceTest.kt:46)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.MoneyStructuredDeviceTest.moneyStorageAndStructuredUiKeepBalanceSeparate(MoneyStructuredDeviceTest.kt:20)
+
+INSTRUMENTATION_STATUS: test=moneyStorageAndStructuredUiKeepBalanceSeparate
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 82.612
+There was 1 failure:
+1) moneyStorageAndStructuredUiKeepBalanceSeparate(com.ainotification.inbox.MoneyStructuredDeviceTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at com.ainotification.inbox.MoneyStructuredDeviceTest$moneyStorageAndStructuredUiKeepBalanceSeparate$1.invokeSuspend(MoneyStructuredDeviceTest.kt:46)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(dex-id-9859efbaa13cf78bf30a12bc0d6297b9ca7c9bd4:1)
+	at com.ainotification.inbox.MoneyStructuredDeviceTest.moneyStorageAndStructuredUiKeepBalanceSeparate(MoneyStructuredDeviceTest.kt:20)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
