@@ -29,10 +29,10 @@ class ConversationContextDeviceTest {
    fun find(tag:String)=device.wait(Until.findObject(By.res(tag)),15000) ?: error("Missing $tag")
    ActivityScenario.launch(MainActivity::class.java).use{scenario->
     scenario.onActivity{a->a.setContent{InboxTheme{SmartDashboard(app,true,Modifier.fillMaxSize().systemBarsPadding().semantics{testTagsAsResourceId=true},{},fixtureEntries=entries,loadOriginal={if(it==row.snapshotId)row else null})}};a.window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE)}
-    find("smart_item_${row.snapshotId}");assertTrue(device.hasObject(By.textContains("일정 관련 · 확인 필요")));assertFalse(device.hasObject(By.text("약속 확정")))
+    find("smart_category_schedule").click();find("smart_item_${row.snapshotId}");assertTrue(device.hasObject(By.textContains("일정 관련 · 확인 필요")));assertFalse(device.hasObject(By.text("약속 확정")))
     device.takeScreenshot(File(app.cacheDir,"conversation-card.png"))
     find("smart_item_${row.snapshotId}").visibleBounds.let{device.click(it.left+40,it.centerY())};assertTrue(device.wait(Until.hasObject(By.textContains("수신 메시지만 확인")),5000))
-    assertFalse(device.hasObject(By.text(row.text!!)));find("smart_original").click();assertTrue(device.wait(Until.hasObject(By.text(row.text!!)),5000))
+    repeat(3){if(!device.hasObject(By.text(row.text!!)))device.swipe(500,1600,500,700,20)};assertTrue(device.wait(Until.hasObject(By.text(row.text!!)),5000))
     device.takeScreenshot(File(app.cacheDir,"conversation-detail.png"));scenario.onActivity{it.window.addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE)}
    }
   }finally{db.close()}

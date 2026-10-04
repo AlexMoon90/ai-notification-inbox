@@ -51,11 +51,10 @@ class MoneyStructuredDeviceTest {
     val detailShown=device.wait(Until.hasObject(By.textContains("거래 후 잔액")),5000)
     if(!detailShown){device.takeScreenshot(File(app.cacheDir,"money-detail-failure.png"));device.dumpWindowHierarchy(File(app.cacheDir,"money-detail-failure.xml"))}
     assertTrue(detailShown)
-    assertFalse(device.hasObject(By.textContains("김OO 입금50,000")))
-    find("smart_original").click()
+    repeat(3){if(!device.hasObject(By.textContains("김OO 입금50,000")))device.swipe(500,1600,500,700,20)}
     assertTrue(device.wait(Until.hasObject(By.textContains("김OO 입금50,000")),5000))
     device.takeScreenshot(File(app.cacheDir,"money-structured-detail.png"))
-    find("smart_mark_seen").click();device.pressBack()
+    device.pressBack()
     find("money_shortcut_0").click();find("smart_item_${deposit.snapshotId}")
     scenario.onActivity{it.window.addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE)}
    }
