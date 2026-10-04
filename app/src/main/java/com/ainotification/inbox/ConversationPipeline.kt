@@ -57,6 +57,9 @@ internal class ConversationPipeline(private val context:Context,private val db:I
    if(money==null){
     val type=if(decision.linked && decision.amount?.sourceId!=row.snapshotId && Regex("보냈|송금|이체").containsMatchIn(row.currentMessageText()))"transfer_related" else "money_related_unknown"
     money=MoneyEvent(eventId,row.snapshotId,type,"unknown",decision.amount?.amount,null,null,null,null,null,null,null,row.appLabel,decision.confidence,0.0,"needs_context",true,now,now)
+    if(isContextualPaymentRequest(row.currentMessageText(),row.snapshotId,decision)) {
+     money=money.copy(transactionType="payment_request",direction="neutral",counterparty=notificationDisplayTitle(row),status="pending")
+    }
    }
   }
   val status=if(decision.service && money?.extractionStatus=="complete")"confirmed" else if(money?.extractionStatus=="needs_context")"likely" else decision.status
@@ -66,7 +69,7 @@ internal class ConversationPipeline(private val context:Context,private val db:I
   db.withTransaction {
    if(db.notifications().find(row.snapshotId)==null)return@withTransaction
    db.structured().insertEvent(StructuredEvent(eventId,row.snapshotId,when(decision.intent){"appointment"->"schedule";"task"->"todo";else->"money"},title,row.appLabel,row.packageName,row.postedTime,false,now,now))
-   money?.let{db.structured().saveMoney(it)};dao.saveContext(ec)
+   money?.let{db.structured().saveMoney(it);settleObligations(db,it)};dao.saveContext(ec)
    db.structured().saveProcessing(StructuredProcessing(row.snapshotId,"done"))
    // Extractive summary: selected evidence IDs + intent/confidence/completeness, rendered from originals only.
    if(row.postedTime>=thread.lastMessageAt)dao.saveThread(thread.copy(lastMessageAt=row.postedTime,contextSummary="수신 메시지에서 ${when(decision.intent){"money"->"돈";"appointment"->"일정";else->"업무"}} 관련 정보가 관찰됨. 사용자 발신 메시지는 확인되지 않음.",evidenceIds=JSONArray(refs).toString(),lastIntent=decision.intent,contextConfidence=decision.confidence,contextCompleteness=w.completeness,updatedAt=now))

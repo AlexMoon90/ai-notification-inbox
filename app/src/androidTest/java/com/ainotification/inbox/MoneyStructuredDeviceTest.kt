@@ -56,7 +56,7 @@ class MoneyStructuredDeviceTest {
     assertTrue(device.wait(Until.hasObject(By.textContains("김OO 입금50,000")),5000))
     device.takeScreenshot(File(app.cacheDir,"money-structured-detail.png"))
     find("smart_mark_seen").click();device.pressBack()
-    find("smart_category_money").click();find("smart_item_${deposit.snapshotId}")
+    find("money_shortcut_0").click();find("smart_item_${deposit.snapshotId}")
     scenario.onActivity{it.window.addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE)}
    }
    db.notifications().delete(deposit.snapshotId);assertNull(db.structured().money(deposit.snapshotId));assertTrue(db.structured().observe().first().isEmpty())

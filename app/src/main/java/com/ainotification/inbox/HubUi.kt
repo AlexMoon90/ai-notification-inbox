@@ -128,10 +128,7 @@ import org.json.JSONObject
     val appGroups=data.nowByApp
     BackHandler(inDetail || category!=null){back()}
     Scaffold(modifier=Modifier.semantics{testTagsAsResourceId=true}.testTag(if(data.loaded)"hub_ready" else "hub_loading"),topBar={
-        if(tab==2 && !inDetail)Row(Modifier.statusBarsPadding().fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),verticalAlignment=Alignment.CenterVertically){
-            Text("스마트함",Modifier.weight(1f),fontSize=26.sp,fontWeight=FontWeight.Bold)
-            IconButton(onClick={settingsPage=2},modifier=Modifier.size(40.dp).testTag("open_settings")){Icon(Icons.Outlined.Settings,"설정",Modifier.size(20.dp))}
-        } else Column(Modifier.statusBarsPadding().fillMaxWidth().padding(horizontal=16.dp).padding(top=8.dp,bottom=24.dp)){
+        if(tab==2 && !inDetail)Spacer(Modifier.statusBarsPadding()) else Column(Modifier.statusBarsPadding().fillMaxWidth().padding(horizontal=16.dp).padding(top=8.dp,bottom=24.dp)){
             Row(verticalAlignment=Alignment.CenterVertically){
                 if(inDetail)IconButton(onClick={back()}){Icon(Icons.Outlined.ArrowBack,"뒤로")}
                 Text(when{detailId!=null->"원문";roomId!=null->"대화";sourceHistory!=null->"알림 기록";review->"기준 확인";tab==1->"";tab==2->"";else->java.text.SimpleDateFormat("M월 d일 EEEE",java.util.Locale.KOREAN).format(java.util.Date())},style=MaterialTheme.typography.bodySmall,color=ModernMuted,modifier=Modifier.weight(1f))
@@ -177,7 +174,7 @@ import org.json.JSONObject
         if(!data.loaded && (tab!=0 || roomId!=null)) {
             Box(Modifier.fillMaxSize().padding(padding),contentAlignment=Alignment.Center){Text("알림을 불러오고 있어요",color=ModernMuted)}
         } else if(tab==2 && !inDetail) {
-            SmartDashboard(app,fixtureMode,Modifier.fillMaxSize().padding(padding),open)
+            SmartDashboard(app,fixtureMode,Modifier.fillMaxSize().padding(padding),open,onSettings={settingsPage=2})
         } else if(tab==1 && !inDetail) {
             MessengerRooms(rooms,unread,service,{service=it},{roomId=it},Modifier.fillMaxSize().padding(padding))
         } else LazyColumn(Modifier.fillMaxSize().padding(padding).padding(horizontal=16.dp).testTag("hub_list"),state=listState,contentPadding=PaddingValues(bottom=24.dp)){

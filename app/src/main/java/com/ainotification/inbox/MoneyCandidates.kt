@@ -3,8 +3,8 @@ package com.ainotification.inbox
 import org.json.JSONObject
 import org.json.JSONArray
 
-internal val moneyTypes=listOf("payment","deposit","withdrawal","transfer_in","transfer_out","refund","cancellation","scheduled_payment","recurring_payment","billing","money_related_unknown","transfer_related")
-internal val moneyLabels=mapOf("transfer_in_pending" to "송금 도착 · 받기 전","payment" to "결제","deposit" to "입금","withdrawal" to "출금","transfer_in" to "송금 수신","transfer_out" to "송금 발신","refund" to "환불","cancellation" to "결제 취소","scheduled_payment" to "결제 예정","recurring_payment" to "정기결제","billing" to "청구","money_related_unknown" to "금융 관련 정보","transfer_related" to "송금 관련 정보")
+internal val moneyTypes=listOf("bill","payment_request","overdue","payment","deposit","withdrawal","transfer_in","transfer_out","refund","cancellation","scheduled_payment","recurring_payment","billing","money_related_unknown","transfer_related")
+internal val moneyLabels=mapOf("bill" to "청구", "payment_request" to "납부 요청", "overdue" to "미납", "transfer_in_pending" to "송금 도착 · 받기 전","payment" to "결제","deposit" to "입금","withdrawal" to "출금","transfer_in" to "송금 수신","transfer_out" to "송금 발신","refund" to "환불","cancellation" to "결제 취소","scheduled_payment" to "결제 예정","recurring_payment" to "정기결제","billing" to "청구","money_related_unknown" to "금융 관련 정보","transfer_related" to "송금 관련 정보")
 internal data class MoneyCandidate(val id:String,val text:String,val kind:String,val start:Int=-1,val end:Int=-1,val amount:Long?=null,val time:Long?=null)
 internal data class MoneyCandidates(val text:String,val values:List<MoneyCandidate>) {
  val amounts get()=values.filter{it.kind=="amount"}

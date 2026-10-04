@@ -57,7 +57,7 @@ internal fun assembleMoney(row:CapturedNotification,c:MoneyCandidates,result:JSO
   val v=engine.readChoice(result,field,questions.getJSONObject(field).getJSONObject("criteria").keys().asSequence().toSet())
   return (c.values.find{it.id==v.id}?.takeIf{v.probability>=.95&&v.confidence>=.6}) to v.probability
  }
- val typeAnswer=engine.readChoice(result,"transactionType",moneyTypes.toSet())
+ val typeAnswer=engine.readChoice(result,"transactionType",questions.getJSONObject("transactionType").getJSONObject("criteria").keys().asSequence().toSet())
  val type=typeAnswer.id.takeIf{typeAnswer.probability>=.9&&typeAnswer.confidence>=.55} ?: "money_related_unknown"
  var amount=pick("transactionAmount").first
  var balance=pick("balanceAfter").first
@@ -68,6 +68,6 @@ internal fun assembleMoney(row:CapturedNotification,c:MoneyCandidates,result:JSO
   if(Regex("잔액|한도|누적|가용|잔여|balance|limit",RegexOption.IGNORE_CASE).containsMatchIn(before) || Regex("^\\s*(잔액|한도|누적|balance|limit)",RegexOption.IGNORE_CASE).containsMatchIn(after))amount=null
  }
  val status=if(amount!=null && type!="money_related_unknown")"complete" else "partial"
- return MoneyEvent("event:${row.snapshotId}",row.snapshotId,type,directionFor(type),amount?.amount,balance?.amount,
-  pick("merchant").first?.text,pick("counterparty").first?.text,pick("provider").first?.text,pick("paymentMethod").first?.text,pick("accountHint").first?.text,pick("occurredAt").first?.time,row.appLabel,financial,typeAnswer.probability,status,c.text.isNotBlank(),now,now)
+ return moneyLifecycle(row,MoneyEvent("event:${row.snapshotId}",row.snapshotId,type,directionFor(type),amount?.amount,balance?.amount,
+  pick("merchant").first?.text,pick("counterparty").first?.text,pick("provider").first?.text,pick("paymentMethod").first?.text,pick("accountHint").first?.text,pick("occurredAt").first?.time,row.appLabel,financial,typeAnswer.probability,status,c.text.isNotBlank(),now,now))
 }

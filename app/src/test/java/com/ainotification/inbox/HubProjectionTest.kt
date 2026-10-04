@@ -126,7 +126,7 @@ class HubProjectionTest {
             old.execSQL("INSERT INTO notifications (snapshotId,packageName,appLabel,notificationKey,notificationId,postedTime,capturedTime,title,text,messagesJson,hasContentIntent,isGroupSummary,availableFields,conversationIdentity) VALUES ('saved','test','Test','key',1,1,1,'Original title','Original text','[]',0,0,'','stable-room')")
             old.version=2
         }
-        val db=androidx.room.Room.databaseBuilder(context,InboxDatabase::class.java,name).addMigrations(hubMigration,avatarMigration,nowSelectionMigration,displayMigration,structuredMigration,conversationMigration,relationshipMigration).build()
+        val db=androidx.room.Room.databaseBuilder(context,InboxDatabase::class.java,name).addMigrations(hubMigration,avatarMigration,nowSelectionMigration,displayMigration,structuredMigration,conversationMigration,relationshipMigration,lifeMigration).build()
         try {
             val saved=db.notifications().find("saved")!!
             assertEquals("Original text",saved.text);assertEquals("stable-room",saved.conversationIdentity)

@@ -11,5 +11,5 @@ internal fun kakaoPayReceipt(row:CapturedNotification,now:Long):MoneyEvent? {
  // A group-room name must not become a person's name.
  val party=if(row.isGroupConversation==true)null else row.title?.replace(Regex("[\\p{Cf}]"),"")?.trim()?.takeIf{it.isNotEmpty() && it !in setOf("카카오톡","카카오페이")}
  val type=if(outgoing)"transfer_out" else "transfer_in_pending"
- return MoneyEvent("event:${row.snapshotId}",row.snapshotId,type,if(outgoing)"out" else "neutral",amount,null,null,party,"카카오페이",null,null,null,row.appLabel,1.0,1.0,"complete",true,now,now)
+ return MoneyEvent("event:${row.snapshotId}",row.snapshotId,type,if(outgoing)"out" else "neutral",amount,null,null,party,"카카오페이",null,null,null,row.appLabel,1.0,1.0,"complete",true,now,now,status=if(outgoing)"completed" else "pending")
 }

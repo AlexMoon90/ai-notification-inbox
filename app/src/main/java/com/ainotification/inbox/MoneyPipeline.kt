@@ -62,8 +62,7 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
   if(messageLike(row) || row.packageName==context.packageName || row.packageName in excludedNotificationPackages || row.isGroupSummary || row.isExcludedCallStatus())return
   if(db.structured().money(row.snapshotId)!=null)return
   if(events.isEmpty() || events.any{it in setOf("PAYMENT","MONEY_RECEIVED","REFUND")})return
-  val now=clock()
-  db.withTransaction{if(db.notifications().find(row.snapshotId)!=null)db.structured().insertEvent(StructuredEvent("event:${row.snapshotId}",row.snapshotId,smartCategory(events),smartHeading(events),row.appLabel,row.packageName,row.postedTime,"SCHEDULE_CHANGE" in events,now,now))}
+  extractLife(row)?.let{persistLife(db,row,it,clock())}
  }
  internal suspend fun process(row:CapturedNotification,force:Boolean=false)=lock.withLock {
   replaying=force
@@ -72,10 +71,11 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
   val dao=db.structured();if(db.notifications().find(row.snapshotId)==null)return@withLock
   val old=dao.processing(row.snapshotId);if(old!=null&&old.retryAt>clock())return@withLock
   if(row.packageName==context.packageName){dao.removeEvent(row.snapshotId);dao.saveProcessing(StructuredProcessing(row.snapshotId,"ignored"));return@withLock}
-  explicitFinancialReceipt(row,clock())?.let{receipt->
+  (explicitFinancialReceipt(row,clock()) ?: explicitObligation(row,clock()))?.let{receipt->
    val event=ReceiptSenders(context).enrich(row,receipt)
-   db.withTransaction{dao.removeEvent(row.snapshotId);dao.insertEvent(StructuredEvent(event.id,row.snapshotId,"money",moneyLabels.getValue(event.transactionType),row.appLabel,row.packageName,row.postedTime,false,event.createdAt,event.updatedAt));dao.saveMoney(event);dao.saveProcessing(StructuredProcessing(row.snapshotId,"done"))};return@withLock
+   db.withTransaction{dao.removeEvent(row.snapshotId);dao.insertEvent(StructuredEvent(event.id,row.snapshotId,"money",moneyLabels.getValue(event.transactionType),row.appLabel,row.packageName,row.postedTime,false,event.createdAt,event.updatedAt));dao.saveMoney(event);settleObligations(db,event);dao.saveProcessing(StructuredProcessing(row.snapshotId,"done"))};return@withLock
   }
+  extractLife(row)?.let{persistLife(db,row,it,clock());return@withLock}
   if(force)dao.removeEvent(row.snapshotId)
   if(messageLike(row) && !row.isGroupSummary && !row.hasEmptyContent()){
    ConversationPipeline(context,db,engine,{budget("judgment")},clock).process(row);return@withLock
@@ -107,7 +107,7 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
    if(db.notifications().find(row.snapshotId)==null)return@withTransaction
    if(event!=null){
     dao.insertEvent(StructuredEvent(event.id,row.snapshotId,"money",moneyLabels.getValue(event.transactionType),row.appLabel,row.packageName,row.postedTime,false,event.createdAt,event.updatedAt))
-    dao.saveMoney(event)
+    dao.saveMoney(event);settleObligations(db,event)
    }
    dao.saveProcessing(StructuredProcessing(row.snapshotId,if(event==null)"ignored" else "done"))
   }

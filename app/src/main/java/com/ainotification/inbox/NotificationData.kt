@@ -77,7 +77,7 @@ interface NotificationDao {
     suspend fun readAll(): List<CapturedNotification>
 }
 
-@Database(entities = [CapturedNotification::class, HubClassification::class, PendingNowSelection::class, NotificationDisplay::class, MessageDisplay::class, StructuredEvent::class, MoneyEvent::class, MoneyPattern::class, StructuredProcessing::class, ConversationThread::class, EventContext::class], version = 9, exportSchema = true)
+@Database(entities = [CapturedNotification::class, HubClassification::class, PendingNowSelection::class, NotificationDisplay::class, MessageDisplay::class, StructuredEvent::class, MoneyEvent::class, MoneyPattern::class, StructuredProcessing::class, ConversationThread::class, EventContext::class, LifeEvent::class], version = 10, exportSchema = true)
 abstract class InboxDatabase : RoomDatabase() { abstract fun notifications(): NotificationDao; abstract fun hub(): HubDao; abstract fun nowQueue(): NowSelectionDao; abstract fun display():DisplayDao; abstract fun structured():StructuredDao; abstract fun conversations():ConversationDao }
 
 // The listener depends only on this sink; future AI work consumes stored snapshots separately.

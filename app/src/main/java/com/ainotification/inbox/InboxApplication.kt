@@ -30,7 +30,7 @@ class InboxApplication : Application() {
         override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
             db.execSQL("ALTER TABLE notifications ADD COLUMN conversationIdentity TEXT")
         }
-    }, hubMigration, avatarMigration, nowSelectionMigration, displayMigration, structuredMigration, conversationMigration,relationshipMigration).build() }
+    }, hubMigration, avatarMigration, nowSelectionMigration, displayMigration, structuredMigration, conversationMigration,relationshipMigration,lifeMigration).build() }
     internal val displayIndexer by lazy { DisplayIndexer(database) }
     internal val nowQueue by lazy { NowSelectionQueue(database, accept = { selection.accept(it) },
         failed = { captureError.value = "일부 알림 판단이 지연되고 있습니다. 원문을 확인해 주세요." }) }

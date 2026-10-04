@@ -68,7 +68,8 @@ class NotificationImagesTest {
         val name=row.latestMessage()!!.getString("imageFile");assertNotNull(store.file(name))
         val decoded=android.graphics.BitmapFactory.decodeFile(store.file(name)!!.absolutePath);assertEquals(1024,decoded.width)
         val avatar=Notification();avatar.extras.putParcelable(Notification.EXTRA_LARGE_ICON,bitmap)
-        assertEquals(previewNotifications()[0],store.capture(previewNotifications()[0],avatar))
+        val unchanged=previewNotifications()[0]
+        assertEquals(unchanged,store.capture(unchanged,avatar))
         assertNull(store.file("../../secret"));assertNull(store.readUri("https://example.com/image.png"))
         store.clear();assertNull(store.file(name));bitmap.recycle();decoded.recycle()
     }

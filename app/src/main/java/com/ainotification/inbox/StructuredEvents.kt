@@ -10,13 +10,24 @@ data class StructuredEvent(@PrimaryKey val id:String,val sourceNotificationId:St
 @Entity(tableName="money_events",foreignKeys=[ForeignKey(entity=StructuredEvent::class,parentColumns=["id"],childColumns=["id"],onDelete=ForeignKey.CASCADE)])
 data class MoneyEvent(@PrimaryKey val id:String,val sourceNotificationId:String,val transactionType:String,val direction:String,
  val transactionAmount:Long?,val balanceAfter:Long?,val merchant:String?,val counterparty:String?,val provider:String?,val paymentMethod:String?,val accountHint:String?,val occurredAt:Long?,val sourceApp:String,
- val confidence:Double,val subtypeConfidence:Double,val extractionStatus:String,val originalTextAvailable:Boolean,val createdAt:Long,val updatedAt:Long)
-data class StructuredEntry(@Embedded val event:StructuredEvent,@Relation(parentColumn="id",entityColumn="id") val money:MoneyEvent?,@Relation(parentColumn="id",entityColumn="id") val context:EventContext?=null)
+ val confidence:Double,val subtypeConfidence:Double,val extractionStatus:String,val originalTextAvailable:Boolean,val createdAt:Long,val updatedAt:Long,
+ @ColumnInfo(defaultValue="0") val recurring:Boolean=false,
+ @ColumnInfo(defaultValue="'completed'") val status:String="completed",
+ val dueAt:Long?=null,val referenceKey:String?=null,val settledByTransactionEventId:String?=null,val spendCategory:String?=null)
+data class StructuredEntry(@Embedded val event:StructuredEvent,@Relation(parentColumn="id",entityColumn="id") val money:MoneyEvent?,@Relation(parentColumn="id",entityColumn="id") val context:EventContext?=null,@Relation(parentColumn="id",entityColumn="id") val life:LifeEvent?=null)
 @Entity(tableName="money_patterns")
 data class MoneyPattern(@PrimaryKey val key:String,val templateJson:String?,val retryAt:Long,val createdAt:Long,val updatedAt:Long)
 @Entity(tableName="structured_processing",foreignKeys=[ForeignKey(entity=CapturedNotification::class,parentColumns=["snapshotId"],childColumns=["sourceNotificationId"],onDelete=ForeignKey.CASCADE)])
 data class StructuredProcessing(@PrimaryKey val sourceNotificationId:String,val status:String,val retryAt:Long=Long.MAX_VALUE,val attempts:Int=0)
 @Dao interface StructuredDao {
+ @Upsert suspend fun saveLife(event:LifeEvent)
+ @Query("UPDATE structured_events SET isChanged=1,updatedAt=:at WHERE id=:id") suspend fun markChanged(id:String,at:Long)
+ @Query("SELECT * FROM structured_events WHERE id=:id") suspend fun event(id:String):StructuredEvent?
+ @Query("SELECT * FROM money_events WHERE referenceKey=:ref AND provider=:provider AND sourceNotificationId!=:source") suspend fun relatedMoney(ref:String,provider:String,source:String):List<MoneyEvent>
+ @Query("UPDATE money_events SET status=:status, updatedAt=:at WHERE id=:id") suspend fun setMoneyStatus(id:String,status:String,at:Long)
+ @Query("UPDATE life_events SET status=:status WHERE id=:id") suspend fun setLifeStatus(id:String,status:String)
+ @Query("SELECT * FROM life_events WHERE kind=:kind AND referenceKey=:ref AND provider=:provider") suspend fun relatedLife(kind:String,ref:String,provider:String):List<LifeEvent>
+
  @Query("DELETE FROM structured_events WHERE sourcePackage = :ownPackage") suspend fun removeOwnEvents(ownPackage:String)
  @Query("SELECT COUNT(*) FROM notifications WHERE capturedTime<=:anchor") suspend fun replayCount(anchor:Long):Int
  @Query("SELECT * FROM notifications WHERE capturedTime<=:anchor AND (capturedTime>:after OR (capturedTime=:after AND snapshotId>:id)) ORDER BY capturedTime,snapshotId LIMIT 16") suspend fun replayPage(anchor:Long,after:Long,id:String):List<CapturedNotification>
