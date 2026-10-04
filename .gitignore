@@ -27,3 +27,6 @@ replay_pid*.log
 
 # Raw device UI hierarchies (may include notification text)
 evaluations/**/*.xml
+
+# Local recovery snapshots and private debug configuration
+recovery/

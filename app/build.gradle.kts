@@ -45,7 +45,7 @@ dependencies {
 // Explicitly authorized private test APK only. Never add this directory to main/release.
 val standaloneDebugAssets = tasks.register<Exec>("generateStandaloneDebugAssets") {
     workingDir(rootProject.projectDir)
-    commandLine("python3", "scripts/export_android_setup_config.py")
+    commandLine("python3", "scripts/export_android_setup_config.py", layout.buildDirectory.dir("generated/standaloneDebugAssets").get().asFile.absolutePath)
     outputs.upToDateWhen { false }
 }
 android.sourceSets.getByName("debug").assets.srcDir(layout.buildDirectory.dir("generated/standaloneDebugAssets"))

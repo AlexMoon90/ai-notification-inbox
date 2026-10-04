@@ -31,15 +31,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.layout.boundsInRoot
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -73,9 +70,8 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
     val common=groups.filter{it.common}
     val individual=groups.filterNot{it.common}
     val apps=groups.flatMap{it.apps}.distinct()
-    val rects=remember{mutableStateMapOf<String,Rect>()}
-    var origin by remember{mutableStateOf(Offset.Zero)}
-    fun measured(key:String)=Modifier.onGloballyPositioned{rects[key]=it.boundsInRoot()}
+    val anchors=remember{RelationAnchors()}
+    fun measured(key:String)=anchors.node(key)
     Column(verticalArrangement=Arrangement.spacedBy(10.dp),modifier=Modifier.testTag("policy_relation_map").onSizeChanged{mapWidth=it.width.coerceAtLeast(1)}.draggable(drag,Orientation.Horizontal)) {
         Row(horizontalArrangement=Arrangement.spacedBy(6.dp)) {
             listOf("공통 상황" to (1f-animatedFocus),"앱" to 0.23f,"개별 지시사항" to animatedFocus).forEach{(label,weight)->
@@ -83,12 +79,12 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
             }
         }
         if(rules.isEmpty())Text("새 기준을 만들면 상황과 앱, 지시사항의 연결을 볼 수 있어요.",color=RelationInk,modifier=Modifier.padding(vertical=28.dp))
-        else Box(Modifier.heightIn(max=470.dp).clipToBounds().verticalScroll(rememberScrollState())) {
-            Box(Modifier.fillMaxWidth().onGloballyPositioned{origin=it.boundsInRoot().topLeft}) {
-                Canvas(Modifier.matchParentSize()) {
+        else Box(Modifier.heightIn(max=470.dp).testTag("relation_scroll").clipToBounds().verticalScroll(rememberScrollState())) {
+            Box(Modifier.fillMaxWidth()) {
+                Canvas(Modifier.matchParentSize().then(anchors.canvasModifier())) {
                     fun edge(from:String,to:String,active:Boolean) {
-                        val a=rects[from]?:return;val b=rects[to]?:return
-                        val start=Offset(a.right-origin.x+(if(from.startsWith("a:") || from=="app")1.dp.toPx() else 0f),a.center.y-origin.y);val end=Offset(b.left-origin.x-(if(to.startsWith("a:") || to=="app")1.dp.toPx() else 0f),b.center.y-origin.y)
+                        val a=anchors.bounds(from)?:return;val b=anchors.bounds(to)?:return
+                        val start=Offset(a.right+(if(from.startsWith("a:") || from=="app")1.dp.toPx() else 0f),a.center.y);val end=Offset(b.left-(if(to.startsWith("a:") || to=="app")1.dp.toPx() else 0f),b.center.y)
                         val path=Path().apply{moveTo(start.x,start.y);cubicTo((start.x+end.x)/2,start.y,(start.x+end.x)/2,end.y,end.x,end.y)}
                         val color=if(active)RelationBlue else Color(0xFF587CB5)
                         drawPath(path,color,style=Stroke(2.dp.toPx(),cap=StrokeCap.Round))
@@ -109,7 +105,7 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
                             val icon=remember(pkg){if(pkg=="*")null else runCatching{context.packageManager.getApplicationIcon(pkg).toBitmap(96,96).asImageBitmap()}.getOrNull()}
                             val label=if(pkg=="*")"모든 앱" else rows.firstOrNull{it.packageName==pkg}?.appLabel ?: runCatching{context.packageManager.getApplicationLabel(context.packageManager.getApplicationInfo(pkg,0)).toString()}.getOrDefault(pkg)
                             Box(modifier=Modifier.fillMaxWidth().height(maxOf(40,individual.count{pkg in it.apps}*30).dp).testTag("relation_app_$pkg").clickable{spotlight="a:$pkg"},contentAlignment=Alignment.Center){
-                                Column(Modifier.padding(1.dp),horizontalAlignment=Alignment.CenterHorizontally){if(icon!=null)Image(icon,label,Modifier.size(24.dp).then(measured("a:$pkg"))) else Icon(Icons.Outlined.Notifications,label,Modifier.size(24.dp).then(measured("a:$pkg")),tint=RelationBlue);Text(label,fontSize=8.sp,lineHeight=10.sp,maxLines=1,softWrap=false,overflow=TextOverflow.Clip,color=RelationInk)}
+                                Column(Modifier.padding(1.dp),horizontalAlignment=Alignment.CenterHorizontally){if(icon!=null)Image(icon,label,Modifier.size(24.dp).then(measured("a:$pkg")).testTag("relation_icon_$pkg")) else Icon(Icons.Outlined.Notifications,label,Modifier.size(24.dp).then(measured("a:$pkg")).testTag("relation_icon_$pkg"),tint=RelationBlue);Text(label,fontSize=8.sp,lineHeight=10.sp,maxLines=1,softWrap=false,overflow=TextOverflow.Clip,color=RelationInk)}
                             }
                         }
                     }
@@ -154,9 +150,7 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
 /** Modal focus changes presentation only. The background keeps its position and width. */
 @Composable private fun RelationSpotlight(key:String,rules:List<JSONObject>,rows:List<CapturedNotification>,dismiss:()->Unit,onApp:(String)->Unit,displayTitle:String,configure:(String)->Unit) {
     var settings by remember(key){mutableStateOf(false)}
-    var frame by remember { mutableStateOf(Rect.Zero) }
-    var labelBounds by remember { mutableStateOf(Rect.Zero) }
-    val iconBounds=remember { mutableStateMapOf<String,Rect>() }
+    val anchors=remember{RelationAnchors()}
     val isSituation=key.startsWith("s:")
     val title=displayTitle
     val explicitApps=rules.flatMap(::relationApps).distinct()
@@ -168,13 +162,16 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
         Column(Modifier.fillMaxWidth().padding(24.dp).heightIn(max=550.dp).verticalScroll(rememberScrollState()).semantics{testTagsAsResourceId=true}.testTag("relation_spotlight"),verticalArrangement=Arrangement.spacedBy(16.dp)) {
             TextButton(onClick=dismiss,modifier=Modifier.align(Alignment.End).testTag("close_relation_spotlight")){Text("닫기",color=Color.White)}
             Text("텍스트를 다시 누르면 설정할 수 있어요",color=Color.White.copy(alpha=.75f),fontSize=12.sp)
-            Box(Modifier.fillMaxWidth().clipToBounds().onGloballyPositioned{frame=it.boundsInRoot()}) {
-                Canvas(Modifier.matchParentSize()) {
+            Box(Modifier.fillMaxWidth().clipToBounds()) {
+                Canvas(Modifier.matchParentSize().then(anchors.canvasModifier())) {
+                    val labelBounds=anchors.bounds("label") ?: return@Canvas
+                    val viewport=anchors.bounds("icons-viewport") ?: return@Canvas
                     val textX=if(isSituation)labelBounds.right else labelBounds.left
-                    val start=Offset(textX-frame.left,labelBounds.center.y-frame.top)
-                    iconBounds.values.forEach { bounds ->
-                        if(bounds.center.y>=frame.top && bounds.center.y<=frame.bottom) {
-                            val end=Offset((if(isSituation)bounds.left-1.dp.toPx() else bounds.right+1.dp.toPx())-frame.left,bounds.center.y-frame.top)
+                    val start=Offset(textX,labelBounds.center.y)
+                    packages.forEach { pkg ->
+                        val bounds=anchors.bounds(pkg) ?: return@forEach
+                        if(bounds.center.y>=viewport.top && bounds.center.y<=viewport.bottom) {
+                            val end=Offset(if(isSituation)bounds.left-1.dp.toPx() else bounds.right+1.dp.toPx(),bounds.center.y)
                             val path=Path().apply{moveTo(start.x,start.y);cubicTo((start.x+end.x)/2,start.y,(start.x+end.x)/2,end.y,end.x,end.y)}
                             drawPath(path,Color(0xFFB4D0FF),style=Stroke(2.dp.toPx(),cap=StrokeCap.Round))
                             drawCircle(Color(0xFFB4D0FF),2.dp.toPx(),end)
@@ -183,16 +180,16 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
                 }
                 Row(Modifier.height(IntrinsicSize.Min),verticalAlignment=Alignment.CenterVertically) {
                     @Composable fun focusedText(modifier:Modifier) {
-                        Text(title,modifier.onGloballyPositioned{labelBounds=it.boundsInRoot()}.clipToBounds().clickable{settings=!settings}.padding(start=if(isSituation)0.dp else 6.dp,end=if(isSituation)6.dp else 0.dp,top=12.dp,bottom=12.dp).testTag("spotlight_text"),textAlign=if(isSituation)TextAlign.Right else TextAlign.Left,fontSize=16.sp,fontWeight=FontWeight.SemiBold,color=Color.White,maxLines=1,softWrap=false,overflow=TextOverflow.Clip)
+                        Text(title,modifier.then(anchors.node("label")).clipToBounds().clickable{settings=!settings}.padding(start=if(isSituation)0.dp else 6.dp,end=if(isSituation)6.dp else 0.dp,top=12.dp,bottom=12.dp).testTag("spotlight_text"),textAlign=if(isSituation)TextAlign.Right else TextAlign.Left,fontSize=16.sp,fontWeight=FontWeight.SemiBold,color=Color.White,maxLines=1,softWrap=false,overflow=TextOverflow.Clip)
                     }
                     @Composable fun appIcons(modifier:Modifier) {
-                        Column(modifier.heightIn(max=240.dp).verticalScroll(rememberScrollState()),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(12.dp)) {
+                        Column(modifier.heightIn(max=240.dp).testTag("spotlight_icons_scroll").then(anchors.node("icons-viewport")).verticalScroll(rememberScrollState()),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(12.dp)) {
                             packages.forEach { pkg ->
                                 val context=LocalContext.current
                                 val icon=remember(pkg){if(pkg=="*")null else runCatching{context.packageManager.getApplicationIcon(pkg).toBitmap(96,96).asImageBitmap()}.getOrNull()}
                                 val label=if(pkg=="*")"모든 앱" else rows.firstOrNull{it.packageName==pkg}?.appLabel ?: runCatching{context.packageManager.getApplicationLabel(context.packageManager.getApplicationInfo(pkg,0)).toString()}.getOrDefault(pkg)
                                 Column(Modifier.testTag("spotlight_app_$pkg").clickable{onApp(pkg)},horizontalAlignment=Alignment.CenterHorizontally) {
-                                    if(icon!=null)Image(icon,label,Modifier.size(24.dp).onGloballyPositioned{iconBounds[pkg]=it.boundsInRoot()}) else Icon(Icons.Outlined.Notifications,label,Modifier.size(24.dp).onGloballyPositioned{iconBounds[pkg]=it.boundsInRoot()},tint=Color(0xFF8AB4FF))
+                                    if(icon!=null)Image(icon,label,Modifier.size(24.dp).then(anchors.node(pkg)).testTag("spotlight_icon_$pkg")) else Icon(Icons.Outlined.Notifications,label,Modifier.size(24.dp).then(anchors.node(pkg)).testTag("spotlight_icon_$pkg"),tint=Color(0xFF8AB4FF))
                                     Text(label,color=Color.White,fontSize=9.sp,maxLines=1,softWrap=false,overflow=TextOverflow.Clip)
                                 }
                             }
@@ -222,9 +219,8 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
     val common=groups.filter{it.common};val individual=groups.filterNot{it.common}
     val rules=groups.flatMap{it.rules}
     var selectedIds by remember(pkg){mutableStateOf<List<String>>(emptyList())}
-    val anchors=remember { mutableStateMapOf<String,Rect>() }
-    var origin by remember { mutableStateOf(Offset.Zero) }
-    fun anchor(id:String)=Modifier.onGloballyPositioned{anchors[id]=it.boundsInRoot()}
+    val anchors=remember{RelationAnchors()}
+    fun anchor(id:String)=anchors.node(id)
     Dialog(onDismissRequest=dismiss,properties=DialogProperties(usePlatformDefaultWidth=false)) {
         val window=(LocalView.current.parent as? DialogWindowProvider)?.window
         SideEffect{window?.setDimAmount(.82f)}
@@ -236,12 +232,12 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
             Row(horizontalArrangement=Arrangement.spacedBy(6.dp)) {
                 listOf("공통 상황" to .36f,"앱" to .20f,"개별 지시사항" to .44f).forEach{(text,weight)->Text(text,if(text=="앱")Modifier.width(40.dp) else Modifier.weight(weight),color=Color.White.copy(alpha=.7f),fontSize=11.sp,maxLines=1,softWrap=false,overflow=TextOverflow.Clip)}
             }
-            Box(Modifier.heightIn(max=320.dp).clipToBounds().verticalScroll(rememberScrollState())) {
-                Box(Modifier.fillMaxWidth().onGloballyPositioned{origin=it.boundsInRoot().topLeft}) {
-                    Canvas(Modifier.matchParentSize()) {
+            Box(Modifier.heightIn(max=320.dp).testTag("app_connection_scroll").clipToBounds().verticalScroll(rememberScrollState())) {
+                Box(Modifier.fillMaxWidth()) {
+                    Canvas(Modifier.matchParentSize().then(anchors.canvasModifier())) {
                         fun line(from:String,to:String) {
-                            val a=anchors[from]?:return;val b=anchors[to]?:return
-                            val start=Offset(a.right-origin.x+(if(from.startsWith("a:") || from=="app")1.dp.toPx() else 0f),a.center.y-origin.y);val end=Offset(b.left-origin.x-(if(to.startsWith("a:") || to=="app")1.dp.toPx() else 0f),b.center.y-origin.y)
+                            val a=anchors.bounds(from)?:return;val b=anchors.bounds(to)?:return
+                            val start=Offset(a.right+(if(from.startsWith("a:") || from=="app")1.dp.toPx() else 0f),a.center.y);val end=Offset(b.left-(if(to.startsWith("a:") || to=="app")1.dp.toPx() else 0f),b.center.y)
                             val path=Path().apply{moveTo(start.x,start.y);cubicTo((start.x+end.x)/2,start.y,(start.x+end.x)/2,end.y,end.x,end.y)}
                             drawPath(path,Color(0xFFB4D0FF),style=Stroke(2.dp.toPx(),cap=StrokeCap.Round))
                             drawCircle(Color(0xFFB4D0FF),2.dp.toPx(),start);drawCircle(Color(0xFFB4D0FF),2.dp.toPx(),end)
@@ -255,7 +251,7 @@ internal fun relationRulesForApp(rules:List<JSONObject>,pkg:String)=rules.filter
                         }
                         Box(Modifier.width(40.dp).fillMaxHeight(),contentAlignment=Alignment.Center) {
                             Column(Modifier.fillMaxWidth().testTag("app_connection_icon"),horizontalAlignment=Alignment.CenterHorizontally) {
-                                if(icon!=null)Image(icon,label,Modifier.size(24.dp).then(anchor("app"))) else Icon(Icons.Outlined.Notifications,label,Modifier.size(24.dp).then(anchor("app")),tint=Color(0xFF8AB4FF))
+                                if(icon!=null)Image(icon,label,Modifier.size(24.dp).then(anchor("app")).testTag("app_connection_anchor")) else Icon(Icons.Outlined.Notifications,label,Modifier.size(24.dp).then(anchor("app")).testTag("app_connection_anchor"),tint=Color(0xFF8AB4FF))
                                 Text(label,color=Color.White,fontSize=9.sp,maxLines=1,softWrap=false,overflow=TextOverflow.Clip)
                             }
                         }

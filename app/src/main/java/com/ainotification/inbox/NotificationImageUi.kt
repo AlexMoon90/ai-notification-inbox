@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -25,12 +27,15 @@ import kotlinx.coroutines.withContext
     var enlarged by remember(name){mutableStateOf(false)}
     if(bitmap!=null) {
         Image(bitmap!!.asImageBitmap(),contentDescription="메시지 첨부 이미지",contentScale=ContentScale.Fit,
-            modifier=Modifier.fillMaxWidth().heightIn(max=if(compact)120.dp else 240.dp).padding(vertical=6.dp).testTag("notification_image").clickable{enlarged=true})
+            modifier=(if(compact)Modifier.width(132.dp).heightIn(max=84.dp) else Modifier.fillMaxWidth().aspectRatio(bitmap!!.width.toFloat()/bitmap!!.height)).padding(vertical=6.dp).testTag("notification_image").clickable{enlarged=true})
     } else Text("사진 · 원래 앱에서 확인",style=MaterialTheme.typography.bodySmall,modifier=Modifier.padding(vertical=6.dp))
-    if(enlarged && bitmap!=null)Dialog(onDismissRequest={enlarged=false}) {
-        Surface {Column(Modifier.fillMaxWidth().padding(12.dp)){
-            Image(bitmap!!.asImageBitmap(),"첨부 이미지 크게 보기",Modifier.fillMaxWidth().heightIn(max=550.dp),contentScale=ContentScale.Fit)
-            TextButton(onClick={enlarged=false}){Text("닫기")}
-        }}
+    if(enlarged && bitmap!=null)Dialog(onDismissRequest={enlarged=false},properties=DialogProperties(usePlatformDefaultWidth=false)) {
+        Surface(color=ModernInk,contentColor=ModernBg,modifier=Modifier.fillMaxSize()) {
+            Column(Modifier.fillMaxSize().systemBarsPadding().padding(16.dp)){
+                Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically){Text("첨부 사진",Modifier.weight(1f),style=MaterialTheme.typography.titleMedium);TextButton(onClick={enlarged=false}){Text("닫기",color=ModernBg)}}
+                Box(Modifier.weight(1f).fillMaxWidth(),contentAlignment=Alignment.Center){Image(bitmap!!.asImageBitmap(),"첨부 이미지 크게 보기",Modifier.fillMaxSize(),contentScale=ContentScale.Fit)}
+                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text("알림에 포함된 사진",style=MaterialTheme.typography.bodySmall);Text("1 / 1",style=MaterialTheme.typography.bodySmall)}
+            }
+        }
     }
 }

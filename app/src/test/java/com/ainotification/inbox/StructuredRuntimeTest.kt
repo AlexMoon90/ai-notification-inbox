@@ -21,10 +21,10 @@ class StructuredRuntimeTest {
         return JSONObject().put("type","choice").put("choice",label).put("confidence",.9).put("probabilities",probabilities)
     }
     private fun engine(values:Map<String,Double>)=JevEngine(context){request->JSONObject().put("usage",JSONObject().put("input_tokens",100).put("output_tokens",10)).put("answers",JSONObject().apply{request.getJSONObject("questions").keys().forEach{key->put(key,choice(values[key]?:.99,(values[key+"_unknown"]?:0.0)>.5))}})}
-    @Test fun defaultShowMakesNoCallWhenNoPolicyApplies(){
+    @Test fun noApplicablePolicyStoresWithoutNowDecisionOrAi(){
         val r=rule();r.getJSONObject("scope").put("apps",JSONArray().put("different.app"))
         val runtime=StructuredPolicyRuntime(JevEngine(context){error("must not call")})
-        assertEquals("match",runtime.classify(JSONArray().put(r),previewNotifications()[0]).getString("status"))
+        assertEquals("unconfigured",runtime.classify(JSONArray().put(r),previewNotifications()[0]).getString("status"))
     }
     @Test fun explicitHideOnlyWhenConditionMatchIsCertain(){
         assertEquals("outside",StructuredPolicyRuntime(engine(emptyMap())).classify(JSONArray().put(rule()),previewNotifications()[0]).getString("status"))
@@ -45,7 +45,7 @@ class StructuredRuntimeTest {
         assertEquals("SHOW",runtime.classify(policies,row("com.kakao.talk","문세현")).getString("action"))
         assertEquals("HIDE",runtime.classify(policies,row("com.kakao.talk","다른 발신자")).getString("action"))
         assertEquals("HIDE",runtime.classify(policies,row("sms","문세현")).getString("action"))
-        assertEquals("SHOW",runtime.classify(policies,row("other","문세현")).getString("action"))
+        assertEquals("unconfigured",runtime.classify(policies,row("other","문세현")).getString("status"))
     }
     @Test fun narrowAppScopeWinsAndSameScopeConflictRemainsVisible(){
         val broad=rule();val narrow=rule("SHOW").put("id","second");narrow.getJSONObject("scope").put("type","SPECIFIC_APP").put("apps",JSONArray().put(previewNotifications()[0].packageName))
@@ -61,7 +61,7 @@ class StructuredRuntimeTest {
         for(row in listOf(empty.copy(title="보안 경고"),empty.copy(messagesJson="""[{"text":"납부 요청"}]"""),empty.copy(messagesJson="""[{"mimeType":"image/jpeg"}]""")))
             assertEquals("match",rt.classify(JSONArray().put(r),row,false).getString("status"))
         r.put("enabled",false)
-        assertEquals("match",rt.classify(JSONArray().put(r),empty,false).getString("status"))
+        assertEquals("unconfigured",rt.classify(JSONArray().put(r),empty,false).getString("status"))
     }
     @Test fun localPassCannotGuessWeatherOrBypassUnknownException() {
         val r=rule();r.getJSONArray("conditions").getJSONObject(0).put("type","CONTENT").put("value","날씨 정보")
@@ -90,7 +90,7 @@ class StructuredRuntimeTest {
         val result=rt.classify(policies,row)
         assertEquals("outside",result.getString("status"))
         assertEquals(listOf("sports"),jsonStrings(result.getJSONArray("matched_policy_ids")))
-        assertEquals("match",rt.classify(policies,row.copy(packageName="another.app")).getString("status"))
+        assertEquals("unconfigured",rt.classify(policies,row.copy(packageName="another.app")).getString("status"))
     }
     @Test fun uncertainSportsAloneCannotHideAndPossibleAllowStillProtects() {
         val row=previewNotifications()[0].copy(packageName="com.google.android.googlequicksearchbox")

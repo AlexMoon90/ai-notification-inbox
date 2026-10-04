@@ -1,6 +1,7 @@
 package com.ainotification.inbox
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.foundation.verticalScroll
@@ -23,11 +24,20 @@ import org.json.JSONObject
 internal fun actionLabel(action:String)=when(action){"SHOW"->"표시";"QUIET"->"조용히 보기";"HIDE"->"숨김";else->"Watch · 준비 중"}
 internal fun conditionLabel(type:String)=mapOf("ANY" to "모든 내용","EMPTY_CONTENT" to "내용 없음","MEETING_CONFIRMED" to "약속 확정","SCHEDULE_CHANGE" to "일정 변경","PAYMENT_REQUIRED" to "납부·회비 요청","MONEY_RECEIVED" to "입금","REPLY_REQUIRED" to "답변 필요","ACTION_REQUIRED" to "행동 요청","DELIVERY" to "배송","RESERVATION" to "예약","SECURITY" to "보안·로그인","IMPORTANT_NOTICE" to "주요 공지","PROMOTION" to "광고","CASUAL_CHAT" to "잡담","USER_MENTIONED" to "내 이름 언급","AI_TASK_COMPLETED" to "AI 작업 완료","AI_INPUT_REQUIRED" to "AI 입력 필요","MEANINGFUL_CHANGE" to "의미 있는 변화","CONTENT" to "내용 조건")[type] ?: type
 internal fun scopeLabel(rule:JSONObject,rows:List<CapturedNotification>):String {
+    if(rule.getJSONObject("scope").getString("type")=="INITIAL_PREFERENCE")return "처음 선택한 방향 · 모든 앱"
     val s=rule.getJSONObject("scope");val rooms=jsonStrings(s.getJSONArray("conversation_ids"));val apps=jsonStrings(s.getJSONArray("apps"))
     val parts=mutableListOf<String>()
-    if(rooms.isNotEmpty())parts.add(rooms.joinToString { id-> rows.firstOrNull{it.conversationIdentity==id}?.let{it.conversationTitle?:it.title?:"선택 대화"} ?: "저장된 대화" })
-    else if(apps.isNotEmpty())parts.add(apps.joinToString{pkg->rows.firstOrNull{it.packageName==pkg}?.appLabel?:pkg}) else parts.add("모든 앱")
-    jsonStrings(s.getJSONArray("sender_names")).takeIf{it.isNotEmpty()}?.let{parts.add(it.joinToString())}
+    val senders=jsonStrings(s.getJSONArray("sender_names"))
+    if(rooms.isNotEmpty())parts.add(rooms.joinToString { id->
+        val matches=rows.filter{it.conversationIdentity==id && (apps.isEmpty() || it.packageName in apps)}
+        val title=matches.firstNotNullOfOrNull{it.conversationTitle?.takeIf(String::isNotBlank)}
+        val room=title?.let{"‘$it’ 대화방"} ?: if(matches.any{it.hasGroupConversation()})"단톡방" else "선택한 대화방"
+        if(senders.isEmpty())"$room 전체" else "${room}의 ${senders.joinToString()} 메시지"
+    })
+    else {
+        if(apps.isNotEmpty())parts.add(apps.joinToString{pkg->rows.firstOrNull{it.packageName==pkg}?.appLabel?:pkg}) else parts.add("모든 앱")
+        if(senders.isNotEmpty())parts.add(senders.joinToString()+" 메시지")
+    }
     if(s.getString("relationship").isNotBlank())parts.add(mapOf("WORK" to "회사","FAMILY" to "가족","FRIENDS" to "친구·모임","PERSONAL" to "개인","SERVICE" to "서비스","AI" to "AI·도구")[s.getString("relationship")].orEmpty())
     s.optString("source_type").takeIf{it.isNotBlank()}?.let{parts.add(mapOf("MESSENGER" to "메신저","EMAIL" to "이메일","AI" to "AI 알림","OTHER" to "기타 출처")[it]?:it)}
     return parts.joinToString(" · ")
@@ -65,17 +75,18 @@ internal fun policyResultText(r:JSONObject,rows:List<CapturedNotification>):Stri
     if(time.isNotEmpty())lines.add(time.joinToString(" · ")+" (${t.getString("zone")})")
     return lines.joinToString("\n")
 }
-@Composable internal fun PolicyProposalPanel(controller:PolicyController,rows:List<CapturedNotification>,onboarding:Boolean=false) {
+@Composable internal fun PolicyProposalPanel(controller:PolicyController,rows:List<CapturedNotification>,onboarding:Boolean=false,compact:Boolean=false) {
     val state by controller.state.collectAsStateWithLifecycle();val busy by controller.busy.collectAsStateWithLifecycle();val error by controller.error.collectAsStateWithLifecycle()
     val proposal=state.optJSONObject("policy_proposal");val result=proposal?.optJSONObject("result")
+    var riskConfirmed by rememberSaveable(proposal?.toString()){mutableStateOf(false)}
     var answer by rememberSaveable(result?.optString("question")){mutableStateOf("")}
     var writing by rememberSaveable(result?.optString("question")){mutableStateOf(false)}
     var chooseRoom by remember { mutableStateOf(false) }
     val stale=proposal!=null && proposal.optString("base_revision")!=state.optJSONObject("policy")?.optString("id").orEmpty()
     if(busy){LinearProgressIndicator(Modifier.fillMaxWidth());Text("잠시만요…")}
-    if(error!=null)Text("처리하지 못했어요. 다시 시도해 주세요.",color=MaterialTheme.colorScheme.error)
+    if(error!=null)Text(error!!,color=MaterialTheme.colorScheme.error)
     if(stale)Text("기준이 바뀌었어요. 다시 요청해 주세요.",color=MaterialTheme.colorScheme.error)
-    if(proposal!=null) Text(when(result?.optString("status")){"clarification_required"->"이것만 확인해 주세요";"ready"->"이렇게 바꿀까요?";else->"요청 확인"},style=MaterialTheme.typography.titleMedium,modifier=Modifier.testTag("pending_policy_heading"))
+    if(proposal!=null && !(compact && result?.optString("status")=="ready")) Text(when(result?.optString("status")){"clarification_required"->"이것만 확인해 주세요";"ready"->"이렇게 바꿀까요?";else->"요청 확인"},style=MaterialTheme.typography.titleMedium,modifier=Modifier.testTag("pending_policy_heading"))
     if(result!=null) {
         when(result.getString("status")) {
             "clarification_required"->{
@@ -100,13 +111,15 @@ internal fun policyResultText(r:JSONObject,rows:List<CapturedNotification>):Stri
             }
             "ready"->{
                 val changes=PolicyContract.diff(proposal.getJSONArray("before"),result.getJSONArray("rules"))
+                val risky=changes.any{(_,before,after)->(after!=null && after.optBoolean("enabled") && after.optString("action") in listOf("HIDE","QUIET")) || (after==null && before?.optString("action")=="SHOW")}
                 if(changes.isEmpty())Text("이미 적용된 내용이에요.")
-                changes.forEach{(op,before,after)->Column(Modifier.fillMaxWidth().padding(vertical=6.dp),verticalArrangement=Arrangement.spacedBy(4.dp)){
-                    Text(when(op){"ADD"->"추가";"DELETE"->"삭제";else->"변경"},style=MaterialTheme.typography.labelMedium)
-                    if(before!=null && after!=null)Text("이전: "+policyResultText(before,rows),style=MaterialTheme.typography.bodySmall,color=Color(0xFF667592))
+                changes.forEach{(op,before,after)->Column(Modifier.fillMaxWidth().background(if(!compact && after?.optString("action")=="HIDE")Color(0xFFFFF2EF) else Color.Transparent).padding(vertical=8.dp,horizontal=8.dp),verticalArrangement=Arrangement.spacedBy(4.dp)){
+                    if(!compact || op=="DELETE")Text(when(op){"ADD"->"추가";"DELETE"->"삭제";else->"변경"},style=MaterialTheme.typography.labelMedium)
+                    if(!compact && before!=null && after!=null)Text("이전: "+policyResultText(before,rows),style=MaterialTheme.typography.bodySmall,color=ModernMuted)
                     Text(policyResultText(after?:before!!,rows),style=MaterialTheme.typography.bodyLarge)
                 }}
-                Button(onClick={controller.apply(onboarding)},enabled=!busy&&!stale&&proposal.optBoolean("validated"),modifier=Modifier.fillMaxWidth().testTag("confirm_policy")){Text(if(onboarding)"시작하기" else "적용")}
+                if(risky)Row(verticalAlignment=androidx.compose.ui.Alignment.CenterVertically){Checkbox(riskConfirmed,{riskConfirmed=it},enabled=!busy,modifier=Modifier.testTag("risk_confirm"));Text("알림이 숨겨지거나 줄어드는 변경을 확인했어요.",style=MaterialTheme.typography.bodySmall)}
+                ModernButton(if(onboarding)"시작하기" else "적용",{controller.apply(onboarding)},Modifier.testTag("confirm_policy"),!busy&&!stale&&proposal.optBoolean("validated")&&(!risky||riskConfirmed))
             }
         }
         TextButton(onClick={controller.discard()},enabled=!busy){Text("취소")}
@@ -134,10 +147,10 @@ internal fun policyResultText(r:JSONObject,rows:List<CapturedNotification>):Stri
     val preview=false
     Column(verticalArrangement=Arrangement.spacedBy(14.dp)) {
         Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,verticalAlignment=androidx.compose.ui.Alignment.CenterVertically) {
-            Text("알림 기준",style=MaterialTheme.typography.headlineMedium,fontWeight=FontWeight.Bold)
+            Text("알림 기준",style=MaterialTheme.typography.titleLarge,fontWeight=FontWeight.Bold)
 
         }
-        Text("어떤 알림을, 어떻게 알려드릴까요?",color=Color(0xFF667592))
+        Text("어떤 알림을, 어떻게 알려드릴까요?",color=ModernMuted)
         if(busy)LinearProgressIndicator(Modifier.fillMaxWidth())
         if(state.optJSONObject("policy")?.has("rules")==true) Text(policyDisplayGroups(jsonObjects(rules)).let{groups->"공통 ${groups.count{it.common}}개 · 개별 ${groups.count{!it.common}}개 · 꺼짐 ${groups.count{!it.rules.first().getBoolean("enabled")}}개"},style=MaterialTheme.typography.bodySmall)
         else if(state.optJSONObject("policy")!=null) Text("기존 기준 적용 중 · 새 구조 전환 전")
@@ -148,16 +161,16 @@ internal fun policyResultText(r:JSONObject,rows:List<CapturedNotification>):Stri
         PolicyRelationMap(jsonObjects(graphRules),rows,onAppSettings={pkg->contextTarget=JSONObject().put("label",if(pkg=="*")"모든 앱 규칙" else (rows.firstOrNull{it.packageName==pkg}?.appLabel?:pkg)+" 규칙").put("package",pkg)}){selectedRule=it}
         HorizontalDivider()
         Text("추가 설정",style=MaterialTheme.typography.titleMedium)
-        Surface(onClick={showEditor=true;input="방해 금지 시간을 설정해줘: ";c.saveInput(input)},shape=MaterialTheme.shapes.medium,border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFE4EAF5)),modifier=Modifier.fillMaxWidth()) {
+        Surface(onClick={showEditor=true;input="방해 금지 시간을 설정해줘: ";c.saveInput(input)},shape=MaterialTheme.shapes.medium,border=androidx.compose.foundation.BorderStroke(1.dp,ModernInk),modifier=Modifier.fillMaxWidth()) {
             Row(Modifier.padding(16.dp),verticalAlignment=androidx.compose.ui.Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-                androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.Notifications,null,tint=Color(0xFF8294C8))
-                Text("방해 금지",fontWeight=FontWeight.SemiBold);Text("시간 조건 설정",style=MaterialTheme.typography.bodySmall,color=Color(0xFF667592))
+                androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.Notifications,null,tint=ModernInk)
+                Text("방해 금지",fontWeight=FontWeight.SemiBold);Text("시간 조건 설정",style=MaterialTheme.typography.bodySmall,color=ModernMuted)
             }
         }
-        Surface(onClick={showEditor=true;input="기존 기준에 예외를 추가해줘: ";c.saveInput(input)},shape=MaterialTheme.shapes.medium,border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFE4EAF5)),modifier=Modifier.fillMaxWidth()) {
+        Surface(onClick={showEditor=true;input="기존 기준에 예외를 추가해줘: ";c.saveInput(input)},shape=MaterialTheme.shapes.medium,border=androidx.compose.foundation.BorderStroke(1.dp,ModernInk),modifier=Modifier.fillMaxWidth()) {
             Row(Modifier.padding(16.dp),verticalAlignment=androidx.compose.ui.Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-                androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.Settings,null,tint=Color(0xFF8294C8))
-                Text("예외 조건",fontWeight=FontWeight.SemiBold);Text("기준별로 설정",style=MaterialTheme.typography.bodySmall,color=Color(0xFF667592))
+                androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.Settings,null,tint=ModernInk)
+                Text("예외 조건",fontWeight=FontWeight.SemiBold);Text("기준별로 설정",style=MaterialTheme.typography.bodySmall,color=ModernMuted)
             }
         }
         TextButton(onClick={resetRevision=state.optJSONObject("policy")?.optString("id").orEmpty()},enabled=!busy,modifier=Modifier.testTag("reset_policies")){Text("조건 초기화",color=MaterialTheme.colorScheme.error)}

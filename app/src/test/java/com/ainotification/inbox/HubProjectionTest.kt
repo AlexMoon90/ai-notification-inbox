@@ -13,6 +13,46 @@ import org.robolectric.annotation.Config
 @Config(sdk=[34],application=Application::class)
 class HubProjectionTest {
     private fun row(id:String="a")=previewNotifications()[0].copy(snapshotId=id,notificationKey="key",notificationCategory="msg",conversationIdentity="room",conversationTitle="회사",messagesJson="[]")
+    @Test fun latestSourceKeepsHistoryAndMessagesAndFiltersBeforeGrouping(){
+        val old=row("old").copy(packageName="shop.a",notificationCategory=null,postedTime=10,serviceType=null)
+        val newer=old.copy(snapshotId="new",postedTime=20)
+        val hidden=old.copy(snapshotId="hidden",postedTime=30)
+        val other=old.copy(snapshotId="other",packageName="shop.b",postedTime=15)
+        val message=row("message").copy(postedTime=11)
+        val message2=message.copy(snapshotId="message2",postedTime=12)
+        val rows=listOf(old,newer,hidden,other,message,message2)
+        val decisions=JSONObject()
+        rows.forEach{decisions.put(it.snapshotId,JSONObject().put("status","match").put("action",if(it==hidden)"HIDE" else "SHOW"))}
+        assertEquals(listOf("new","other","message2"),latestNowBySource(rows,decisions).map{it.snapshotId})
+        assertEquals(6,rows.size)
+    }
+    @Test fun latestMessagesKeepSeparateRoomsAndApps(){
+        val old=row("old").copy(postedTime=10)
+        val latest=old.copy(snapshotId="latest",postedTime=20)
+        val other=old.copy(snapshotId="other",conversationIdentity="different",postedTime=15)
+        val otherApp=old.copy(snapshotId="other-app",packageName="org.telegram.messenger",postedTime=16)
+        val hidden=old.copy(snapshotId="hidden",postedTime=30)
+        val rows=listOf(old,latest,other,otherApp,hidden)
+        val decisions=JSONObject()
+        rows.forEach{decisions.put(it.snapshotId,JSONObject().put("status","match").put("action",if(it==hidden)"HIDE" else "SHOW"))}
+        assertEquals(listOf("latest","other-app","other"),latestNowBySource(rows,decisions).map{it.snapshotId})
+        assertEquals(5,rows.size)
+    }
+    @Test fun hideOnlyPhotoPlaceholdersPreserveCaptionsAndText() {
+        assertEquals("",photoCaption("사진을 보냈습니다.",true))
+        assertEquals("",photoCaption("민수님이 사진을 보냈습니다.",true,"민수"))
+        assertEquals("내일 이 장소에서 만나요",photoCaption("내일 이 장소에서 만나요",true))
+        assertEquals("사진을 보냈습니다.",photoCaption("사진을 보냈습니다.",false))
+    }
+    @Test fun uncertainPhotoIsVisibleButExplicitHideRemainsHidden() {
+        val photo=previewNotifications()[0].copy(snapshotId="photo",isGroupSummary=false,messagesJson="""[{"mimeType":"image/","text":"사진"}]""")
+        assertFalse(photo.hasEmptyContent())
+        val decisions=JSONObject().put("photo",JSONObject().put("status","review"))
+        assertTrue(isNowNotification(photo,decisions))
+        assertFalse(isNowNotification(photo.copy(isGroupSummary=true),decisions))
+        decisions.getJSONObject("photo").put("status","outside").put("action","HIDE")
+        assertFalse(isNowNotification(photo,decisions))
+    }
     @Test fun unnamedGroupDoesNotUseSenderAsRoomTitleOrMergeRooms(){
         val group=row().copy(isGroupConversation=true,conversationTitle=null,title="민수")
         assertEquals("단톡방",notificationDisplayTitle(group))
@@ -32,7 +72,7 @@ class HubProjectionTest {
     }
     @Test fun socialAppDoesNotBecomeDmWithoutMessageEvidence(){
         val r=row().copy(packageName="com.instagram.android",appLabel="Instagram",notificationCategory=null)
-        assertNull(messageService(r));assertEquals("Instagram",messageService(r.copy(notificationCategory="msg")))
+        assertNull(messageService(r));assertNull(messageService(r.copy(notificationCategory="msg")))
         assertNull(messageService(r.copy(notificationCategory="msg",isGroupSummary=true)))
         assertEquals("문자",messageService(r.copy(serviceType="SMS")))
         assertEquals("문자",messageService(r.copy(packageName="com.samsung.android.messaging",notificationCategory="msg")))
@@ -86,11 +126,12 @@ class HubProjectionTest {
             old.execSQL("INSERT INTO notifications (snapshotId,packageName,appLabel,notificationKey,notificationId,postedTime,capturedTime,title,text,messagesJson,hasContentIntent,isGroupSummary,availableFields,conversationIdentity) VALUES ('saved','test','Test','key',1,1,1,'Original title','Original text','[]',0,0,'','stable-room')")
             old.version=2
         }
-        val db=androidx.room.Room.databaseBuilder(context,InboxDatabase::class.java,name).addMigrations(hubMigration,avatarMigration).build()
+        val db=androidx.room.Room.databaseBuilder(context,InboxDatabase::class.java,name).addMigrations(hubMigration,avatarMigration,nowSelectionMigration,displayMigration,structuredMigration,conversationMigration,relationshipMigration).build()
         try {
             val saved=db.notifications().find("saved")!!
             assertEquals("Original text",saved.text);assertEquals("stable-room",saved.conversationIdentity)
             assertNull(saved.notificationCategory)
+            assertTrue(db.nowQueue().batch().isEmpty())
             db.hub().save(HubClassification("saved","[\"PAYMENT\"]",1))
             assertNotNull(db.hub().find("saved"))
             db.notifications().deleteAll();assertNull(db.hub().find("saved"))

@@ -16,6 +16,48 @@ import org.robolectric.annotation.Config
 @Config(sdk=[34],application=Application::class)
 class NotificationImagesTest {
     private val context get()=ApplicationProvider.getApplicationContext<Application>()
+    @Test fun metadataPreservesPhotoEvidenceAndIdentityBeforeDecoding() {
+        val store=NotificationImages(context)
+        val row=previewNotifications()[0].copy(title=null,text=null,bigText=null,subText=null,conversationTitle=null,messagesJson="""[{"mimeType":"image/","dataUri":"content://private/photo"}]""")
+        val metadata=store.metadata(row,Notification())
+        assertFalse(metadata.hasEmptyContent());assertTrue(metadata.latestMessage()!!.isImageAttachment())
+        assertFalse(metadata.messagesJson.contains("content://"));assertEquals(row.snapshotId,metadata.snapshotId)
+        assertEquals(row.snapshotId,store.capture(row,Notification()).snapshotId)
+    }
+    @Test fun mediaUpdateKeepsSingleRowAndCannotRestoreDeletedNotification()=kotlinx.coroutines.runBlocking {
+        val db=androidx.room.Room.inMemoryDatabaseBuilder(context,InboxDatabase::class.java).build()
+        try{
+            val row=previewNotifications()[0];db.notifications().insert(row)
+            db.notifications().attachMedia(row.snapshotId,"[]","thumbnail.png")
+            assertEquals(1,db.notifications().readAll().size)
+            assertEquals(row.text,db.notifications().find(row.snapshotId)!!.text)
+            db.notifications().delete(row.snapshotId)
+            db.notifications().attachMedia(row.snapshotId,"[]","thumbnail.png")
+            assertNull(db.notifications().find(row.snapshotId))
+        }finally{db.close()}
+    }
+    @Test fun alreadyOpenedImageSurvivesLaterUriDenialAndCloses() {
+        val bitmap=Bitmap.createBitmap(2,2,Bitmap.Config.ARGB_8888)
+        val bytes=java.io.ByteArrayOutputStream().apply{bitmap.compress(Bitmap.CompressFormat.PNG,100,this)}.toByteArray();bitmap.recycle()
+        var closed=false
+        val input=object:java.io.ByteArrayInputStream(bytes){override fun close(){closed=true;super.close()}}
+        val row=previewNotifications()[0].copy(isGroupSummary=false,messagesJson="""[{"mimeType":"image/","dataUri":"content://no-longer-readable/photo"}]""")
+        val pending=PendingImageReads();pending.prepare(row){input}
+        val store=NotificationImages(context)
+        val result=try{store.capture(row,Notification(),pending)}finally{pending.close()}
+        assertTrue(closed);assertEquals("saved",result.latestMessage()!!.getString("imageReadStatus"))
+        assertEquals("opened_at_receipt",result.latestMessage()!!.getString("imageOpenStatus"))
+        assertNotNull(store.file(result.latestMessage()!!.getString("imageFile")))
+        assertTrue(pending.streams.isEmpty())
+    }
+    @Test fun attachmentFailureKeepsReasonWithoutRawUri() {
+        val original=previewNotifications()[0].copy(messagesJson="""[{"text":"사진","mimeType":"image/","dataUri":"file:///private/photo.jpg"}]""")
+        val captured=NotificationImages(context).capture(original,Notification())
+        val m=captured.latestMessage()!!
+        assertEquals("file",m.getString("imageUriScheme"))
+        assertEquals("unsupported_scheme",m.getString("imageReadStatus"))
+        assertFalse(m.has("dataUri"));assertFalse(m.toString().contains("photo.jpg"));assertFalse(m.has("imageFile"))
+    }
     @Test fun pictureIsPrivateBoundedAndNotAvatar(){
         val store=NotificationImages(context);store.clear()
         val bitmap=Bitmap.createBitmap(2048,100,Bitmap.Config.ARGB_8888)

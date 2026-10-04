@@ -13,6 +13,26 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.security.MessageDigest
 
+/** Open while the notification URI grant is still active; never read pixels on the callback thread. */
+internal class PendingImageReads : java.io.Closeable {
+    companion object { private val permits=java.util.concurrent.Semaphore(16) }
+    val streams=mutableMapOf<String,java.io.InputStream>()
+    val status=mutableMapOf<String,String>()
+    fun prepare(row:CapturedNotification,open:(String)->java.io.InputStream?) {
+        if(row.isGroupSummary)return
+        jsonObjects(JSONArray(row.messagesJson)).filter{it.isImageAttachment()}.mapNotNull{it.stringOrNull("dataUri")}.distinct().takeLast(4).forEach { uri->
+            if(Uri.parse(uri).scheme!="content")return@forEach
+            if(!permits.tryAcquire()){status[uri]="capture_busy";return@forEach}
+            try {
+                val input=open(uri)
+                if(input==null){status[uri]="empty_stream";permits.release()}
+                else {streams[uri]=input;status[uri]="opened_at_receipt"}
+            } catch(e:Exception){status[uri]=e.javaClass.simpleName;permits.release()}
+        }
+    }
+    override fun close(){streams.values.forEach{runCatching{it.close()};permits.release()};streams.clear()}
+}
+
 /** Private previews of actual notification attachments. Never fetch arbitrary web URLs; keep attachments and avatars separate. */
 internal class NotificationImages(private val context:Context) {
     private val directory get()=File(context.filesDir,"notification-images").apply{mkdirs()}
@@ -28,24 +48,37 @@ internal class NotificationImages(private val context:Context) {
         if(!target.exists()) { val tmp=File.createTempFile("image-",".tmp",directory);try{tmp.writeBytes(bytes);check(tmp.renameTo(target))}finally{tmp.delete()} }
         return name
     }
-    internal fun readUri(value:String):String? = runCatching {
+    internal fun readUri(value:String,onFailure:(String)->Unit = {},opened:java.io.InputStream?=null):String? = runCatching {
         val uri=Uri.parse(value)
-        if(uri.scheme!="content")return null
-        val bytes=context.contentResolver.openInputStream(uri)?.use { input->
+        if(uri.scheme!="content"){onFailure("unsupported_scheme");return null}
+        val bytes=(opened ?: context.contentResolver.openInputStream(uri))?.use { input->
             val out=ByteArrayOutputStream();val buffer=ByteArray(8192);var total=0
             while(true){val n=input.read(buffer);if(n<0)break;total+=n;require(total<=10*1024*1024);out.write(buffer,0,n)}
             out.toByteArray()
-        } ?: return null
+        } ?: run{onFailure("empty_stream");return null}
         val options=BitmapFactory.Options().apply{inJustDecodeBounds=true}
         BitmapFactory.decodeByteArray(bytes,0,bytes.size,options)
-        require(options.outWidth>0 && options.outHeight>0)
+        if(options.outWidth<=0 || options.outHeight<=0){onFailure("not_decodable_image");return null}
         var sample=1
         while(maxOf(options.outWidth,options.outHeight)/sample>1024)sample*=2
         val bitmap=BitmapFactory.decodeByteArray(bytes,0,bytes.size,BitmapFactory.Options().apply{inSampleSize=sample}) ?: return null
         try{store(bitmap)}finally{bitmap.recycle()}
-    }.getOrNull()
+    }.onFailure{onFailure(it.javaClass.simpleName)}.getOrNull()
+    /** Preserve attachment evidence before decoding; never persist raw content URIs. */
+    fun metadata(row:CapturedNotification,notification:Notification):CapturedNotification {
+        if(row.isGroupSummary)return row
+        val messages=JSONArray(row.messagesJson)
+        for(i in 0 until messages.length()){
+            val m=messages.getJSONObject(i)
+            m.stringOrNull("dataUri")?.let{uri->m.remove("dataUri");m.put("attachmentId",hash(uri.toByteArray()))}
+        }
+        if(messages.length()==0 && (notification.extras.containsKey(Notification.EXTRA_PICTURE) || notification.extras.containsKey(Notification.EXTRA_PICTURE_ICON))){
+            messages.put(JSONObject().put("text",row.currentMessageText()).put("timestamp",row.postedTime).put("mimeType","image/*").put("attachmentOnly",true))
+        }
+        return row.copy(messagesJson=messages.toString())
+    }
     @Suppress("DEPRECATION")
-    fun capture(row:CapturedNotification,notification:Notification):CapturedNotification {
+    fun capture(row:CapturedNotification,notification:Notification,pending:PendingImageReads?=null):CapturedNotification {
         if(row.isGroupSummary)return row
         val messages=JSONArray(row.messagesJson)
         var changed=false
@@ -54,7 +87,12 @@ internal class NotificationImages(private val context:Context) {
             val uri=m.stringOrNull("dataUri")
             if(uri!=null){
                 m.remove("dataUri");m.put("attachmentId",hash(uri.toByteArray()));changed=true
-                if(m.isImageAttachment())readUri(uri)?.let{m.put("imageFile",it)}
+                if(m.isImageAttachment()) {
+                    m.put("imageUriScheme",Uri.parse(uri).scheme ?: "missing")
+                    m.put("imageReadStatus","unavailable")
+                    pending?.status?.get(uri)?.let{m.put("imageOpenStatus",it)}
+                    readUri(uri,{status->m.put("imageReadStatus",status)},pending?.streams?.get(uri))?.let{m.put("imageFile",it);m.put("imageReadStatus","saved")}
+                }
             }
         }
         // EXTRA_LARGE_ICON and Person icons are profile pictures, never message attachments.
@@ -96,8 +134,7 @@ internal class NotificationImages(private val context:Context) {
             if(avatar==null && row.isGroupConversation==false)avatar=senderImages.lastOrNull()
         }
         if(!changed && avatar==null)return row
-        val id=hash((row.snapshotId+messages.toString()+avatar.orEmpty()).toByteArray())
-        return row.copy(snapshotId=id,messagesJson=messages.toString(),conversationAvatarFile=avatar)
+        return row.copy(messagesJson=messages.toString(),conversationAvatarFile=avatar)
     }
     private fun saveAvatar(icon:androidx.core.graphics.drawable.IconCompat?):String? = runCatching {
         if(icon==null)return null

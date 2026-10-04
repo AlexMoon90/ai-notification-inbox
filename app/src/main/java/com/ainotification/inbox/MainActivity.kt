@@ -24,23 +24,25 @@ import java.text.DateFormat
 import java.util.Date
 
 class MainActivity : ComponentActivity() {
+    private var nowSnapshot by mutableStateOf<String?>(null)
     private var accessGranted by mutableStateOf(false)
     private var unavailableRow by mutableStateOf<CapturedNotification?>(null)
     private val app get() = application as InboxApplication
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        nowSnapshot=intent.getStringExtra("now_snapshot")
         enableEdgeToEdge(
             statusBarStyle = androidx.activity.SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
             navigationBarStyle = androidx.activity.SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT))
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         setContent {
             InboxTheme {
-                InboxScreen(app, accessGranted, ::openSettings, ::openNotification)
+                InboxScreen(app, accessGranted, ::openSettings, ::openNotification, initialSnapshot=nowSnapshot)
                 unavailableRow?.let { row ->
                     AlertDialog(
                         onDismissRequest = { unavailableRow = null },
-                        title = { Text("대화 바로가기를 사용할 수 없어요") },
-                        text = { Text("알림의 연결 정보가 남아 있지 않거나 원래 앱에서 취소했습니다. ${row.appLabel} 앱을 열어 직접 확인할 수 있습니다. 해당 대화로 바로 이동하지는 않습니다.") },
+                        title = { Text("이 알림으로 바로 이동할 수 없어요") },
+                        text = { Text("대신 ${row.appLabel} 앱을 열까요? 해당 대화나 내용은 앱에서 찾아주세요.") },
                         confirmButton = { TextButton(onClick = {
                             unavailableRow = null
                             openSourceApp(row.packageName)
@@ -54,7 +56,12 @@ class MainActivity : ComponentActivity() {
     internal fun openNotification(row: CapturedNotification) {
         // Called only by an explicit tap while this Activity is resumed.
         if (!lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)) return
-        if (!accessGranted || !app.opener.open(row, this)) unavailableRow = row
+        if (app.opener.open(row, this)) return
+        val sms=smsSenderIntent(row)
+        if(sms!=null)try{startActivity(sms);return}
+        catch(_:android.content.ActivityNotFoundException){ }
+        catch(_:SecurityException){ }
+        unavailableRow = row
     }
     private fun openSourceApp(packageName: String) {
         try {
@@ -70,6 +77,7 @@ class MainActivity : ComponentActivity() {
     }
     override fun onResume() {
         super.onResume()
+        app.screenStore.refreshTimeGroups()
         val component = ComponentName(this, InboxNotificationListener::class.java)
         accessGranted = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
             ?.split(':')?.any { ComponentName.unflattenFromString(it) == component } == true

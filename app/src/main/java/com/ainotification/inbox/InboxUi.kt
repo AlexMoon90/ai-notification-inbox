@@ -32,20 +32,22 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-private val Ink = Color(0xFF172B4D)
-private val Blue = Color(0xFF315DAD)
+private val Ink = ModernInk
+private val Blue = ModernAccent
 @Composable internal fun InboxTheme(content: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = lightColorScheme(primary = Blue, onPrimary = Color.White,
-        primaryContainer = Color(0xFFE8EFFC), onPrimaryContainer = Ink,
-        secondaryContainer = Color(0xFFE8EFFC), onSecondaryContainer = Blue,
-        background = Color(0xFFF6F8FC), surface = Color.White, onSurface = Ink,
-        onBackground = Ink, surfaceVariant = Color(0xFFEEF2F8), onSurfaceVariant = Color(0xFF5D6B80)),
-        shapes = Shapes(medium = RoundedCornerShape(16.dp), large = RoundedCornerShape(24.dp)), content = content)
+    MaterialTheme(colorScheme = lightColorScheme(primary=ModernAccent,onPrimary=ModernBg,
+        primaryContainer=Color(0xFFFFF2EF),onPrimaryContainer=Color(0xFF7C1405),
+        secondaryContainer=Color(0xFFD7D3D3),onSecondaryContainer=ModernInk,
+        background=ModernBg,surface=ModernBg,onSurface=ModernInk,onBackground=ModernInk,
+        surfaceVariant=ModernSurface,onSurfaceVariant=ModernMuted,outline=ModernInk,
+        error=ModernRedText,surfaceContainer=ModernSurface),
+        typography=ModernTypography,
+        shapes=Shapes(androidx.compose.foundation.shape.RoundedCornerShape(0.dp),androidx.compose.foundation.shape.RoundedCornerShape(0.dp),androidx.compose.foundation.shape.RoundedCornerShape(0.dp),androidx.compose.foundation.shape.RoundedCornerShape(0.dp),androidx.compose.foundation.shape.RoundedCornerShape(0.dp)),content=content)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable internal fun LegacySettingsScreen(app: InboxApplication, granted: Boolean, settings: () -> Unit,
-    open: (CapturedNotification) -> Unit, preview: Boolean = false, initialTab:Int=1, onExit:()->Unit={}) {
+    open: (CapturedNotification) -> Unit, preview: Boolean = false, initialTab:Int=1, startVoice:Boolean=false, onExit:()->Unit={}) {
     val stored by app.repository.recent.collectAsStateWithLifecycle(initialValue = emptyList())
     val storedCount by app.repository.count.collectAsStateWithLifecycle(initialValue = 0)
     val connected by app.listenerConnected.collectAsStateWithLifecycle()
@@ -78,18 +80,18 @@ private val Blue = Color(0xFF315DAD)
     val draft = drafts.find { it.optString("id") == draftId }
     val inDetail = selectedId != null || draftId != null || composing || ruleEditor
     val back = { selectedId = null; draftId = null; composing = false; ruleEditor = false }
-    var newPolicyRequest by rememberSaveable { mutableIntStateOf(0) }
+    var newPolicyRequest by rememberSaveable { mutableIntStateOf(if(startVoice)1 else 0) }
     var onboarding by rememberSaveable { mutableStateOf(false) }
     if (!preview && onboarding) {
         FirstOnboardingScreen(app, stored, granted, settings, {onboarding=false})
         return
     }
     BackHandler { if(inDetail)back() else onExit() }
-    Scaffold(modifier = Modifier.semantics { testTagsAsResourceId = true }, containerColor = if(tab==1) Color.White else MaterialTheme.colorScheme.background,
+    Scaffold(modifier = Modifier.semantics { testTagsAsResourceId = true }, containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(title = {
                 Column {
-                    Text(if (ruleEditor) "기준 추가·수정" else if (selectedId != null) "알림 상세" else if (composing) "새 알림 기준" else if (draftId != null) "기준 확인" else listOf("내 알림", "알림 기준", "설정")[tab], fontWeight = FontWeight.Bold)
+                    Text(if (ruleEditor) "기준 추가·수정" else if (selectedId != null) "알림 상세" else if (composing) "새 알림 기준" else if (draftId != null) "기준 확인" else listOf("내 알림", "기준 관리", "설정")[tab], fontWeight = FontWeight.Bold)
                     if (!inDetail) Text(if (preview) "디자인 미리보기 · 예시 데이터" else "AI Notification Inbox", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }, navigationIcon = { IconButton(onClick = {if(inDetail)back() else onExit()}) { Icon(Icons.Outlined.ArrowBack, "뒤로") } },
@@ -119,7 +121,7 @@ private val Blue = Color(0xFF315DAD)
                     item { OutlinedButton(onClick={recommendId=selected.snapshotId},modifier=Modifier.testTag("notification_policy_settings")){Text("이 알림 기준 설정하기")} }
                     item { Text(selected.conversationTitle ?: selected.title ?: "알림", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold) }
                     decisions.optJSONObject(selected.snapshotId)?.let { decision -> item {
-                        Notice(decision.selectionLabel(), decision.optString("reason") + "\n적용했던 기준: " + decision.optString("instruction"))
+                        Notice(decision.selectionLabel(), decision.optString("reason") + "\n적용했던 기준: " + decision.optString("instruction").ifBlank{selectionState.optJSONObject("result_instructions")?.optString(decision.optString("policy_id")).orEmpty()})
                     } }
                     if (selected.needsOriginalReview()) item { Notice("긴 내용 · 원본 확인 필요", "알림에 전체 내용이 담기지 않았을 수 있습니다. 카카오톡에서 전체 내용을 확인해 주세요.") }
                     item { Button(onClick = { open(selected) }, Modifier.fillMaxWidth()) { Text("원래 앱에서 확인") } }
@@ -349,7 +351,7 @@ private val Blue = Color(0xFF315DAD)
 
 /** Synthetic-only design fixture, never stored or classified. */
 internal fun previewNotifications(): List<CapturedNotification> {
-    val now = 1790166000000L
+    val now = System.currentTimeMillis()
     fun row(id: Int, app: String, title: String, text: String, pkg: String) = CapturedNotification(
         "preview-$id", pkg, app, "preview-$id", id, now - id * 600000L, now, title, text, null, null, null,
         "[]", null, null, false, false, "")

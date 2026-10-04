@@ -3,7 +3,7 @@ package com.ainotification.inbox
 import org.json.JSONArray
 import org.json.JSONObject
 
-internal class StructuredPolicyRuntime(private val engine:JevEngine) {
+internal class StructuredPolicyRuntime(private val engine:JevEngine, private val cache:NowJudgmentCache?=null, private val revision:String="") {
     fun classify(rules:JSONArray,row:CapturedNotification,allowAi:Boolean=true):JSONObject {
         val latest=row.latestMessage()
         val sender=latest?.stringOrNull("sender").orEmpty();val text=row.currentMessageText()
@@ -13,7 +13,7 @@ internal class StructuredPolicyRuntime(private val engine:JevEngine) {
                 (apps.isEmpty() || row.packageName in apps) && (rooms.isEmpty() || row.conversationIdentity in rooms) && (senders.isEmpty() || sender in senders)
             }
         }
-        if(candidates.isEmpty())return decision("SHOW",emptyList(),"적용되는 제외 기준이 없어 표시합니다.")
+        if(candidates.isEmpty())return JSONObject().put("status","unconfigured").put("reason","이 알림에 적용할 활성 기준이 없어 원본만 저장했습니다.")
         // Also protect older saved JSON: a qualifier on a local ANY/EMPTY condition
         // must never disappear merely because the AI editor accepted it previously.
         val allConditions=candidates.flatMap { r -> jsonObjects(r.getJSONArray("conditions"))+jsonObjects(r.getJSONArray("exceptions")).flatMap { jsonObjects(it.getJSONArray("conditions")) } }
@@ -27,37 +27,57 @@ internal class StructuredPolicyRuntime(private val engine:JevEngine) {
             else->null
         }
         val questions=JSONObject();val definitions=JSONObject()
-        fun add(key:String,conditions:JSONArray,logic:String) {
-            definitions.put(key,JSONObject().put("conditions",conditions).put("logic",logic))
+        val aliases=mutableMapOf<String,String>();val questionIds=mutableMapOf<String,String>()
+        fun localGroup(conditions:JSONArray,logic:String):Boolean? {
+            val values=jsonObjects(conditions).map{c->local(c)?.let{if(c.getBoolean("negated"))!it else it}}
+            return if(logic=="ALL") when{false in values->false;values.all{it==true}->true;else->null}
+                else when{true in values->true;values.all{it==false}->false;else->null}
+        }
+        fun add(key:String,conditions:JSONArray,logic:String,skip:Boolean=false) {
+            definitions.put(key,JSONObject().put("conditions",conditions).put("logic",logic).put("skip",skip))
+            if(skip || localGroup(conditions,logic)!=null)return
             jsonObjects(conditions).forEachIndexed { index,c ->
                 if(local(c)!=null)return@forEachIndexed
-                val id=key+"c"+index
-                questions.put(id,conditionQuestion(c))
+                val id=key+"c"+index;val question=conditionQuestion(c)
+                val existing=questionIds.getOrPut(canonical(question)){questions.put(id,question);id}
+                aliases[id]=existing
             }
         }
-        candidates.forEachIndexed{i,r->add("r$i",r.getJSONArray("conditions"),r.getString("logic"));jsonObjects(r.getJSONArray("exceptions")).forEachIndexed{j,e->add("r${i}e$j",e.getJSONArray("conditions"),e.getString("logic"))}}
+        candidates.forEachIndexed { i,r ->
+            add("r$i",r.getJSONArray("conditions"),r.getString("logic"))
+            val inactive=localGroup(r.getJSONArray("conditions"),r.getString("logic"))==false
+            jsonObjects(r.getJSONArray("exceptions")).forEachIndexed { j,e ->
+                add("r${i}e$j",e.getJSONArray("conditions"),e.getString("logic"),inactive)
+            }
+        }
         if(questions.length()>100)return JSONObject().put("status","review").put("reason","한 번에 판단할 조건이 많아 원본 확인이 필요합니다.")
         val state=JSONObject().put("app",row.appLabel).put("package",row.packageName).put("title",row.title.orEmpty()).put("conversation",row.conversationTitle.orEmpty()).put("sender",sender).put("text",text)
-        val result=if(allowAi && questions.length()>0) engine.evaluateConditions(JSONObject(engine.masked(state.toString())),JSONObject(engine.masked(questions.toString()))) else JSONObject()
+        val result=when {
+            questions.length()==0 -> JSONObject()
+            !allowAi -> cache?.lookup(row,revision,JSONArray(candidates),state,questions,engine) ?: JSONObject()
+            else -> cache?.evaluate(row,revision,JSONArray(candidates),state,questions,engine)
+                ?: engine.evaluateConditions(JSONObject(engine.masked(state.toString())),JSONObject(engine.masked(questions.toString())))
+        }
         fun matches(key:String):Boolean? {
             val definition=definitions.getJSONObject(key)
+            if(definition.optBoolean("skip"))return false
+            localGroup(definition.getJSONArray("conditions"),definition.getString("logic"))?.let{return it}
             val values=jsonObjects(definition.getJSONArray("conditions")).mapIndexed { index,c ->
-                val value: Boolean? = local(c) ?: if(!allowAi) null else {
+                val value: Boolean? = local(c) ?: if(!allowAi && !result.has("answers")) null else {
                     val id=key+"c"+index
-                    engine.readConditionVerdict(result,id)
+                    engine.readConditionVerdict(result,aliases.getValue(id))
                 }
                 value?.let { if(c.getBoolean("negated")) !it else it }
             }
             return if(definition.getString("logic")=="ALL") when { false in values->false; values.all{it==true}->true;else->null }
                 else when {true in values->true;values.all{it==false}->false;else->null}
         }
-        fun specificity(r:JSONObject):Int {val s=r.getJSONObject("scope");return when {s.getString("type")=="RELATIONSHIP"->2;s.getJSONArray("conversation_ids").length()>0->4;s.getJSONArray("sender_names").length()>0->4;s.getJSONArray("apps").length()>0->3;else->1}}
-        val verdicts=candidates.mapIndexed { i,r -> PolicyVerdict(r.getString("id"),specificity(r),matches("r$i"),r.getString("action"),
+        val verdicts=candidates.mapIndexed { i,r -> PolicyVerdict(r.getString("id"),policySpecificity(r),matches("r$i"),r.getString("action"),
             jsonObjects(r.getJSONArray("exceptions")).mapIndexed { j,e -> matches("r${i}e$j") to e.getString("action") }) }
         val trace=JSONArray(verdicts.map { v -> JSONObject().put("rule_id",v.id).put("priority",v.priority)
             .put("matched",v.matched ?: JSONObject.NULL).put("possible_actions",JSONArray(v.possibleActions().map { it ?: "NO_MATCH" }))
             .put("exception_matches",JSONArray(v.exceptions.map { it.first ?: JSONObject.NULL })) })
-        fun diagnosed(result:JSONObject)=result.put("decision_stage","policy_resolution").put("contract_version","predicate-choice-v2").put("policy_trace",trace)
+        fun diagnosed(decisionResult:JSONObject)=decisionResult.put("decision_stage","policy_resolution").put("contract_version","predicate-choice-v2").put("policy_trace",trace).put("cache_hit",result.optBoolean("cache_hit"))
         val action=resolvePolicyAction(verdicts) ?: return diagnosed(JSONObject().put("status","review").put("reason","조건 또는 예외를 확실히 판단하지 못해 표시합니다. 원문을 확인해 주세요."))
         val confirmed=verdicts.filter { it.matched==true && it.possibleActions()==setOf(action) }
         val top=confirmed.maxOfOrNull { it.priority }

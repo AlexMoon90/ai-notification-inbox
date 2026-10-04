@@ -2,9 +2,17 @@ package com.ainotification.inbox
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 
 // Exclude only these system sources, not every preinstalled/system app.
 internal val excludedNotificationPackages = listOf("com.android.systemui", "android")
+
+// Product default: phone status cards are not inbox events; missed calls remain eligible.
+internal fun CapturedNotification.isExcludedCallStatus(): Boolean {
+    val channel=channelId.orEmpty().lowercase().replace(Regex("[^a-z0-9]"),"")
+    if(notificationCategory=="missed_call" || channel in setOf("missedcall","missedcalls"))return false
+    return packageName in setOf("com.samsung.android.incallui","com.samsung.android.dialer")
+}
 
 @Entity(tableName = "notifications", indices = [Index("postedTime"), Index("notificationKey")])
 data class CapturedNotification(
@@ -43,35 +51,58 @@ data class CapturedNotification(
 
 @Dao
 interface NotificationDao {
-    @Query("SELECT * FROM notifications WHERE packageName NOT IN (:excludedPackages) ORDER BY postedTime DESC, capturedTime DESC LIMIT 500")
+    @Query("SELECT * FROM notifications WHERE packageName NOT IN (:excludedPackages) ORDER BY postedTime DESC, capturedTime DESC LIMIT 100")
     fun observeRecent(excludedPackages: List<String> = excludedNotificationPackages): Flow<List<CapturedNotification>>
     @Query("SELECT * FROM notifications WHERE packageName NOT IN (:excludedPackages) ORDER BY postedTime DESC, capturedTime DESC")
     fun observeAll(excludedPackages: List<String> = excludedNotificationPackages): Flow<List<CapturedNotification>>
+    @Query("SELECT * FROM notifications WHERE packageName NOT IN (:excludedPackages) AND capturedTime <= :anchor ORDER BY postedTime DESC, capturedTime DESC, snapshotId LIMIT :limit OFFSET :offset")
+    fun observePage(anchor:Long,offset:Int,limit:Int,excludedPackages:List<String> = excludedNotificationPackages):Flow<List<CapturedNotification>>
     @Query("SELECT COUNT(*) FROM notifications WHERE packageName NOT IN (:excludedPackages)")
     fun observeCount(excludedPackages: List<String> = excludedNotificationPackages): Flow<Int>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(notification: CapturedNotification)
     @Query("SELECT * FROM notifications WHERE snapshotId = :id LIMIT 1")
     suspend fun find(id: String): CapturedNotification?
+    @Query("UPDATE notifications SET messagesJson = :messages, conversationAvatarFile = :avatar WHERE snapshotId = :id")
+    suspend fun attachMedia(id:String,messages:String,avatar:String?)
     @Query("DELETE FROM notifications WHERE snapshotId = :id")
     suspend fun delete(id: String)
     @Query("DELETE FROM notifications")
     suspend fun deleteAll()
     @Query("SELECT * FROM notifications WHERE packageName = :packageName ORDER BY postedTime DESC LIMIT 1")
     suspend fun latestFrom(packageName: String): CapturedNotification?
+    @Query("SELECT n.* FROM notifications n LEFT JOIN hub_classifications h ON n.snapshotId = h.notificationId WHERE h.notificationId IS NULL AND n.capturedTime >= :since ORDER BY n.capturedTime ASC LIMIT 32")
+    suspend fun unclassified(since:Long): List<CapturedNotification>
     @Query("SELECT * FROM notifications ORDER BY postedTime DESC")
     suspend fun readAll(): List<CapturedNotification>
 }
 
-@Database(entities = [CapturedNotification::class, HubClassification::class], version = 4, exportSchema = true)
-abstract class InboxDatabase : RoomDatabase() { abstract fun notifications(): NotificationDao; abstract fun hub(): HubDao }
+@Database(entities = [CapturedNotification::class, HubClassification::class, PendingNowSelection::class, NotificationDisplay::class, MessageDisplay::class, StructuredEvent::class, MoneyEvent::class, MoneyPattern::class, StructuredProcessing::class, ConversationThread::class, EventContext::class], version = 9, exportSchema = true)
+abstract class InboxDatabase : RoomDatabase() { abstract fun notifications(): NotificationDao; abstract fun hub(): HubDao; abstract fun nowQueue(): NowSelectionDao; abstract fun display():DisplayDao; abstract fun structured():StructuredDao; abstract fun conversations():ConversationDao }
 
 // The listener depends only on this sink; future AI work consumes stored snapshots separately.
 interface NotificationSink { suspend fun save(notification: CapturedNotification) }
-class NotificationRepository(private val dao: NotificationDao) : NotificationSink {
-    val recent = dao.observeRecent()
-    val all = dao.observeAll()
+class NotificationRepository(private val dao: NotificationDao, scope:kotlinx.coroutines.CoroutineScope?=null,private val db:InboxDatabase?=null) : NotificationSink {
+    private val bodies=object:LinkedHashMap<String,CapturedNotification>(32,.75f,true){}
+    private fun bodyBytes(row:CapturedNotification)=(row.messagesJson.length+row.text.orEmpty().length+row.bigText.orEmpty().length)*2L
+    suspend fun loadBody(id:String):CapturedNotification? {
+        synchronized(bodies){bodies[id]?.let{return it}}
+        val row=dao.find(id) ?: return null
+        synchronized(bodies){
+            bodies[id]=row
+            while(bodies.size>32 || bodies.values.sumOf(::bodyBytes)>4*1024*1024){bodies.remove(bodies.keys.first())}
+        }
+        return row
+    }
+    val recent = dao.observeRecent().map { rows -> rows.filterNot { it.isExcludedCallStatus() } }
+    val all = (db?.display()?.observeRows()?.map{rows->rows.map{it.row}} ?: dao.observeAll()).map{rows->rows.filterNot{it.isExcludedCallStatus()}}
+        .let{source->if(scope==null)source else source.shareIn(scope,SharingStarted.WhileSubscribed(5000,0),1)}
     val count = dao.observeCount()
-    override suspend fun save(notification: CapturedNotification) = dao.insert(notification)
-    suspend fun clear() = dao.deleteAll()
+    override suspend fun save(notification: CapturedNotification) { dao.insert(notification) }
+    suspend fun attachMedia(row:CapturedNotification) {
+        synchronized(bodies){bodies.remove(row.snapshotId)}
+        dao.attachMedia(row.snapshotId,row.messagesJson,row.conversationAvatarFile)
+        db?.let{indexNotification(it,row)}
+    }
+    suspend fun clear() { synchronized(bodies){bodies.clear()};dao.deleteAll() }
 }

@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
-    <application android:networkSecurityConfig="@xml/debug_network_security"><activity android:name=".DesignPreviewActivity" android:exported="false" /></application>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <application android:networkSecurityConfig="@xml/debug_network_security"><activity android:name=".DesignPreviewActivity" android:exported="false" /><activity android:name=".NowAlertSettingsActivity" android:exported="true" /><activity android:name=".DndProbeActivity" android:exported="true" /><receiver android:name=".DndProbeExpiry" android:exported="false" /></application>
 </manifest>

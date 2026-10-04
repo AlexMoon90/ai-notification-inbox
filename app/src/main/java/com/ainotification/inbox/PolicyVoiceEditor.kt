@@ -27,7 +27,7 @@ internal fun policySpeechIntent()=Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEEC
     .putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,1)
 
 @Composable internal fun NewPolicyButton(enabled:Boolean,onClick:()->Unit) {
-    Button(onClick=onClick,enabled=enabled,colors=ButtonDefaults.buttonColors(containerColor=Color(0xFF2868FF)),modifier=Modifier.testTag("new_policy")) { Text("+ 새 기준 추가") }
+    ModernButton("새 기준 말하기",onClick,Modifier.testTag("new_policy"),enabled)
 }
 
 @Composable internal fun PolicyVoiceEditor(input:String,onInput:(String)->Unit,busy:Boolean,autoVoice:Boolean,onVoiceStarted:()->Unit,dismiss:()->Unit,submit:()->Unit) {
@@ -53,13 +53,13 @@ internal fun policySpeechIntent()=Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEEC
     Dialog(onDismissRequest=dismiss) {
         Surface(shape=MaterialTheme.shapes.large) {
             Column(Modifier.semantics{testTagsAsResourceId=true}.testTag("policy_voice_editor").heightIn(max=550.dp).verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                Text("새 요청",style=MaterialTheme.typography.titleLarge)
+                Text("직접 말하기",style=MaterialTheme.typography.titleLarge)
                 Text("원하는 알림을 말하거나 적어 주세요.",style=MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(input,{onInput(it.take(4000))},minLines=3,label={Text("말한 내용 · 직접 수정 가능")},enabled=!busy&&!awaitingSpeech,modifier=Modifier.fillMaxWidth().testTag("policy_request"))
                 if(message.isNotBlank())Text(message,style=MaterialTheme.typography.bodySmall)
                 OutlinedButton(onClick={speak()},enabled=!busy&&!awaitingSpeech,modifier=Modifier.testTag("policy_microphone")){Text("마이크로 말하기")}
                 Text("음성은 휴대폰의 음성 인식 서비스로 처리합니다. 확인한 문장과 기존 기준을 OpenAI에 전달합니다.",style=MaterialTheme.typography.bodySmall)
-                Button(onClick=submit,enabled=input.isNotBlank()&&!busy&&!awaitingSpeech,modifier=Modifier.fillMaxWidth().testTag("generate_policy")){Text("확인")}
+                ModernButton("변경 확인으로",submit,Modifier.testTag("generate_policy"),input.isNotBlank()&&!busy&&!awaitingSpeech,dark=true)
                 TextButton(onClick=dismiss,modifier=Modifier.testTag("close_policy_editor")){Text("닫기")}
             }
         }

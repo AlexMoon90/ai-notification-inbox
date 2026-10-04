@@ -48,7 +48,7 @@ internal class JevEngine(private val context: Context, private val transport: ((
             val judgments = JSONObject()
             questions.keys().forEach { key ->
                 if(questions.getJSONObject(key).getString("type")=="choice") {
-                    conditionProbabilities(result,key) // Validate before trusting or logging a typed answer.
+                    readChoice(result,key,questions.getJSONObject(key).getJSONObject("criteria").keys().asSequence().toSet()) // Validate exact declared options.
                     judgments.put(key,result.getJSONObject("answers").getJSONObject(key))
                 } else judgments.put(key, probability(result, key))
             }
@@ -67,6 +67,20 @@ internal class JevEngine(private val context: Context, private val transport: ((
     // Historical entry point deliberately cannot compile or authorize policies.
     fun compile(instruction: String, bindings: JSONArray, checkConflicts: Boolean = false): JSONObject =
         throw IllegalStateException("규칙 생성은 OpenAI 정책 편집기가 담당합니다.")
+    internal data class Choice(val id:String,val probability:Double,val confidence:Double)
+    internal fun readChoice(result:JSONObject,key:String,allowed:Set<String>):Choice {
+        val a=result.getJSONObject("answers").getJSONObject(key)
+        require(a.getString("type")=="choice")
+        val p=a.getJSONObject("probabilities")
+        require(p.keys().asSequence().toSet()==allowed)
+        val values=allowed.associateWith{label->p.get(label).let{require(it is Number);(it as Number).toDouble().also{v->require(v.isFinite()&&v in 0.0..1.0)}}}
+        require(kotlin.math.abs(values.values.sum()-1.0)<.02)
+        val id=a.getString("choice");require(id in allowed && values.getValue(id)==values.values.max())
+        val confidence=a.get("confidence").let{require(it is Number);(it as Number).toDouble()};require(confidence.isFinite()&&confidence in 0.0..1.0)
+        return Choice(id,values.getValue(id),confidence)
+    }
+    internal fun evaluateConversation(state:JSONObject,questions:JSONObject):JSONObject=call("conversation_context",state,questions)
+    internal fun evaluateMoney(state:JSONObject,questions:JSONObject):JSONObject=call("money_extraction",state,questions)
     internal fun evaluateHub(state:JSONObject,questions:JSONObject):JSONObject = call("hub_classification",state,questions)
     internal fun evaluateRecommendation(state:JSONObject,questions:JSONObject):JSONObject = call("context_recommendation",state,questions)
     internal fun evaluateConditions(state: JSONObject, questions: JSONObject): JSONObject = call("rule_match", state, questions)

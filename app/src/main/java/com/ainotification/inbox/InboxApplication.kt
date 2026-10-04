@@ -9,22 +9,39 @@ import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 
 
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class InboxApplication : Application() {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    internal val screenStore by lazy { HubScreenStore(scope, source = {
+        combine(nowScreenData(repository.all, selection.state),displayIndexer.ready){data,ready->data.copy(loaded=ready)}
+    }, classifications = database.hub().observe(), roomSource = combine(repository.all,database.display().observeMessages(),::indexedRooms)) }
+    override fun onCreate() {
+        super.onCreate()
+        // NotificationListenerService also starts this process before the user opens Now.
+        screenStore
+        displayIndexer.start(scope)
+        nowQueue.start(scope)
+        structured.start(scope)
+    }
     val database by lazy { Room.databaseBuilder(this, InboxDatabase::class.java, "inbox.db").addMigrations(object : androidx.room.migration.Migration(1, 2) {
         override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
             db.execSQL("ALTER TABLE notifications ADD COLUMN conversationIdentity TEXT")
         }
-    }, hubMigration, avatarMigration).build() }
+    }, hubMigration, avatarMigration, nowSelectionMigration, displayMigration, structuredMigration, conversationMigration,relationshipMigration).build() }
+    internal val displayIndexer by lazy { DisplayIndexer(database) }
+    internal val nowQueue by lazy { NowSelectionQueue(database, accept = { selection.accept(it) },
+        failed = { captureError.value = "일부 알림 판단이 지연되고 있습니다. 원문을 확인해 주세요." }) }
     internal val images by lazy { NotificationImages(this) }
-    internal val hub by lazy { HubClassifier(database, JevEngine(this)) }
-    val repository by lazy { NotificationRepository(database.notifications()) }
+    internal val structured by lazy { MoneyPipeline(this,database) }
+    internal val hub by lazy { HubClassifier(database, JevEngine(this), afterClassification={ row,events -> structured.onClassified(row,events) }) }
+    val repository by lazy { NotificationRepository(database.notifications(),scope,database) }
     val listenerConnected = MutableStateFlow(false)
     val captureError = MutableStateFlow<String?>(null)
     val opener = NotificationOpener()
+    internal val nowAlerts by lazy { NowAlerts(this) }
     internal val selection by lazy { NotificationSelection(this, scope) }
     internal val recommendations by lazy { ContextRecommendationEngine(JevEngine(this)) }
     internal val policies by lazy { PolicyController(this, scope, selection) }

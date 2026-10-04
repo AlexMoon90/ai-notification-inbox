@@ -22,7 +22,7 @@ internal object PolicyContract {
     fun obj(vararg fields: Pair<String, JSONObject>) = JSONObject().put("type", "object").put("properties", JSONObject().apply { fields.forEach { put(it.first,it.second) } }).put("required",JSONArray(fields.map{it.first})).put("additionalProperties",false)
     private val bool get() = JSONObject().put("type","boolean")
     val condition get() = obj("type" to str(*events.toTypedArray()), "value" to str(), "negated" to bool)
-    val scope get() = obj("type" to str("ALL_APPS","SPECIFIC_APP","SPECIFIC_CONVERSATION","SPECIFIC_SENDER","RELATIONSHIP","SOURCE_TYPE"), "apps" to arr(str()), "conversation_ids" to arr(str()), "sender_names" to arr(str()), "relationship" to str("","WORK","FAMILY","FRIENDS","PERSONAL","SERVICE","AI"), "source_type" to str("","MESSENGER","EMAIL","AI","OTHER"))
+    val scope get() = obj("type" to str("INITIAL_PREFERENCE","ALL_APPS","SPECIFIC_APP","SPECIFIC_CONVERSATION","SPECIFIC_SENDER","RELATIONSHIP","SOURCE_TYPE"), "apps" to arr(str()), "conversation_ids" to arr(str()), "sender_names" to arr(str()), "relationship" to str("","WORK","FAMILY","FRIENDS","PERSONAL","SERVICE","AI"), "source_type" to str("","MESSENGER","EMAIL","AI","OTHER"))
     val time get() = obj("zone" to str(), "days" to arr(str("MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY")), "start" to str(), "end" to str(), "from" to str(), "until" to str())
     val exception get() = obj("id" to str(), "conditions" to arr(condition), "logic" to str("ANY","ALL"), "action" to str(*actions.toTypedArray()))
     val rule get() = obj("id" to str(), "name" to str(), "enabled" to bool, "scope" to scope, "conditions" to arr(condition), "logic" to str("ANY","ALL"), "action" to str(*actions.toTypedArray()), "exceptions" to arr(exception), "time" to time, "source_instruction" to str())
@@ -73,7 +73,7 @@ internal object PolicyContract {
             require(ss.all{it in senders || prior?.getJSONArray("sender_names")?.let(::jsonStrings)?.contains(it)==true}) { "관찰된 발신자를 선택해 주세요." }
             require(cc.all { rooms[it]==null || aa.isEmpty() || rooms[it]!!.getString("package") in aa })
             when(s.getString("type")) {
-                "ALL_APPS" -> require(aa.isEmpty() && cc.isEmpty() && ss.isEmpty() && s.getString("relationship").isEmpty() && s.getString("source_type").isEmpty())
+                "ALL_APPS", "INITIAL_PREFERENCE" -> require(aa.isEmpty() && cc.isEmpty() && ss.isEmpty() && s.getString("relationship").isEmpty() && s.getString("source_type").isEmpty())
                 "SPECIFIC_APP" -> require(aa.isNotEmpty())
                 "SPECIFIC_CONVERSATION" -> require(cc.isNotEmpty())
                 "SPECIFIC_SENDER" -> require(ss.isNotEmpty())

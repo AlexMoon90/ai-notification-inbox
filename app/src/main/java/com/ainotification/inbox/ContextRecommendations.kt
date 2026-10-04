@@ -4,7 +4,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 internal enum class RecommendationAction {
-    KEEP_AS_IS, SHOW_SIMILAR, HIDE_SIMILAR, HIDE_APP, SHOW_ONLY_SELECTED_TYPES,
+    KEEP_AS_IS, SHOW_ROOM_TOPIC, SHOW_SIMILAR, HIDE_SIMILAR, HIDE_APP, HIDE_CONVERSATION, HIDE_ROOM_SENDER, HIDE_ROOM_TOPIC, SHOW_ONLY_SELECTED_TYPES,
     QUIET_SIMILAR, ALWAYS_SHOW_SENDER, ALWAYS_SHOW_CONVERSATION, WATCH_CONVERSATION, CUSTOM_RULE
 }
 internal data class RuleRecommendation(val action:RecommendationAction,val label:String,val event:String="UNKNOWN")
@@ -45,6 +45,7 @@ internal class ContextRecommendationEngine(private val engine:JevEngine) {
     }
 }
 internal fun recommendationTarget(row:CapturedNotification)=JSONObject().put("label",row.appLabel).put("package",row.packageName)
+    .put("is_group_conversation",row.hasGroupConversation()).put("is_group_summary",row.isGroupSummary).put("conversation_title",row.conversationTitle.orEmpty())
     .put("notification_example",JSONObject().put("title",row.title).put("text",row.currentMessageText().take(500)))
     .apply {if(!row.isGroupSummary)row.conversationIdentity?.let{put("conversation_id",it)};row.latestMessage()?.stringOrNull("sender")?.takeIf{it.isNotBlank()}?.let{put("sender",it)}}
 
@@ -56,8 +57,20 @@ internal fun recommendationRule(row:CapturedNotification,choice:RuleRecommendati
     var type="ANY";var action="SHOW";val exceptions=JSONArray()
     when(choice.action) {
         RecommendationAction.HIDE_APP->action="HIDE"
+        RecommendationAction.HIDE_CONVERSATION,RecommendationAction.HIDE_ROOM_SENDER,RecommendationAction.HIDE_ROOM_TOPIC->{
+            require(!row.isGroupSummary && !row.conversationIdentity.isNullOrBlank())
+            scope.put("type","SPECIFIC_CONVERSATION").put("conversation_ids",JSONArray().put(row.conversationIdentity));action="HIDE"
+            if(choice.action==RecommendationAction.HIDE_ROOM_SENDER){
+                val sender=row.latestMessage()?.stringOrNull("sender");require(!sender.isNullOrBlank());scope.put("sender_names",JSONArray().put(sender))
+            }
+            if(choice.action==RecommendationAction.HIDE_ROOM_TOPIC){require(choice.event in recommendationEvents);type=choice.event}
+        }
         RecommendationAction.ALWAYS_SHOW_CONVERSATION->{require(!row.isGroupSummary && row.conversationIdentity!=null);scope.put("type","SPECIFIC_CONVERSATION").put("conversation_ids",JSONArray().put(row.conversationIdentity))}
         RecommendationAction.ALWAYS_SHOW_SENDER->{val sender=row.latestMessage()?.stringOrNull("sender");require(!sender.isNullOrBlank());scope.put("type","SPECIFIC_SENDER").put("sender_names",JSONArray().put(sender))}
+        RecommendationAction.SHOW_ROOM_TOPIC->{
+            require(!row.isGroupSummary && !row.conversationIdentity.isNullOrBlank() && choice.event in recommendationEvents)
+            scope.put("type","SPECIFIC_CONVERSATION").put("conversation_ids",JSONArray().put(row.conversationIdentity));type=choice.event
+        }
         RecommendationAction.SHOW_ONLY_SELECTED_TYPES->{
             require(selectedTypes.isNotEmpty() && selectedTypes.all{it in selectableNotificationTypes});action="HIDE"
             exceptions.put(JSONObject().put("id","selected_types").put("conditions",JSONArray(selectedTypes.sorted().map(::condition))).put("logic","ANY").put("action","SHOW"))
@@ -69,11 +82,15 @@ internal fun recommendationRule(row:CapturedNotification,choice:RuleRecommendati
         }
         else->error("이 기능은 추천 기준으로 적용할 수 없습니다.")
     }
+    if(action=="HIDE" && choice.action!=RecommendationAction.SHOW_ONLY_SELECTED_TYPES && selectedTypes.isNotEmpty()){
+        require(selectedTypes.all{it in selectableNotificationTypes})
+        exceptions.put(JSONObject().put("id","keep_selected").put("conditions",JSONArray(selectedTypes.sorted().map(::condition))).put("logic","ANY").put("action","SHOW"))
+    }
     return JSONObject().put("id",id).put("name",choice.label).put("enabled",true).put("scope",scope).put("conditions",JSONArray().put(condition(type))).put("logic","ALL").put("action",action).put("exceptions",exceptions).put("time",PolicyContract.emptyTime()).put("source_instruction",choice.label)
 }
 internal fun recommendationHasOverlap(before:JSONArray,candidate:JSONObject):Boolean {
     val apps=jsonStrings(candidate.getJSONObject("scope").getJSONArray("apps"))
-    return jsonObjects(before).any {r->val oldApps=jsonStrings(r.getJSONObject("scope").getJSONArray("apps"));oldApps.isEmpty() || oldApps.any{it in apps}}
+    return jsonObjects(before).filter{it.getJSONObject("scope").getString("type")!="INITIAL_PREFERENCE"}.any {r->val oldApps=jsonStrings(r.getJSONObject("scope").getJSONArray("apps"));oldApps.isEmpty() || oldApps.any{it in apps}}
 }
 
 internal val conversationKinds=linkedMapOf("PERSONAL" to "개인 대화", "FRIENDS" to "친구·소규모 그룹", "WORK" to "업무 그룹", "INFORMATION" to "정보공유방", "OTHER" to "기타")

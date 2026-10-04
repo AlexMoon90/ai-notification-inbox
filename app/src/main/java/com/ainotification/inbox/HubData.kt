@@ -16,6 +16,7 @@ data class HubClassification(@PrimaryKey val notificationId:String,val eventsJso
 }
 @Dao interface HubDao {
     @Query("SELECT * FROM hub_classifications") fun observe():Flow<List<HubClassification>>
+    @Query("SELECT * FROM hub_classifications WHERE notificationId IN (:ids)") fun observeIds(ids:List<String>):Flow<List<HubClassification>>
     @Query("SELECT * FROM hub_classifications WHERE notificationId=:id") suspend fun find(id:String):HubClassification?
     @Insert(onConflict=OnConflictStrategy.REPLACE) suspend fun save(value:HubClassification)
 }
