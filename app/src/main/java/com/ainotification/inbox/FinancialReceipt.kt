@@ -8,7 +8,7 @@ internal fun explicitFinancialReceipt(row:CapturedNotification,now:Long):MoneyEv
  if(Regex("광고|예시|예정|예상|거절|실패|미승인|미결제|입금 전|출금 전|한도 안내|입금해|출금할|결제할|입금하면|결제하면|결제 시|결제시|가정|테스트 문구|보내주세요").containsMatchIn(text))return null
  fun labeled(label:String)=c.amounts.filter { a ->
   val before=text.substring((a.start-16).coerceAtLeast(0),a.start)
-  Regex("(?:$label)(?:금액)?\\s*[:：]?\\s*[₩￦]?\\s*$").containsMatchIn(before)
+  Regex("(?:$label)\\]?(?:금액)?\\s*[:：]?\\s*[₩￦]?\\s*$").containsMatchIn(before)
  }.singleOrNull()
  val bankType=listOf("입금" to "deposit","출금" to "withdrawal").mapNotNull{(label,type)->labeled(label)?.let{type to it}}.singleOrNull()
  val bankCue=Regex("\\[Web발신\\]|은행|계좌|<[^>]{1,12}>|\\d{2}[/:]\\d{2}",RegexOption.IGNORE_CASE).containsMatchIn(text)

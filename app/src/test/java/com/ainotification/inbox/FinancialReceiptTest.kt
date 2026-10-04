@@ -58,6 +58,16 @@ class FinancialReceiptTest {
   assertNull(explicitFinancialReceipt(paid.copy(packageName="com.ainotification.inbox"),1))
   assertNull(explicitFinancialReceipt(paid.copy(isGroupConversation=true),1)!!.counterparty)
  }
+ @Test fun mgPushBracketedLabelsPreserveAmountBalanceAndParty(){
+  for((label,type) in listOf("입금" to "deposit","출금" to "withdrawal")) {
+   val n=row("[$label] 50,000원 1234-00-00****-0 잔액 900,000원 10/04 12:30 테스트상대",title="MG새마을금고").copy(packageName="com.smg.spbs")
+   val e=explicitFinancialReceipt(n,1)!!
+   assertEquals(type,e.transactionType);assertEquals(50000L,e.transactionAmount);assertEquals(900000L,e.balanceAfter)
+   assertEquals("테스트상대",e.counterparty);assertEquals("새마을금고",e.provider)
+   assertNull(explicitFinancialReceipt(n.copy(isGroupSummary=true),1))
+   assertNull(explicitFinancialReceipt(n.copy(text="[출금] 50,000원 출금 예정",bigText=null),1))
+  }
+ }
  @Test fun optionalPrivateLocalAudit(){
   val input=System.getProperty("receipt.audit") ?: return
   val rows=org.json.JSONArray(java.io.File(input).readText());val found=org.json.JSONArray()

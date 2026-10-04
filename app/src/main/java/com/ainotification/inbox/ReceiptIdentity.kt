@@ -16,6 +16,11 @@ internal fun receiptParty(row:CapturedNotification,type:String):String? {
  if(type in listOf("deposit","withdrawal")) {
   // Bank SMS: <bank> account-hint literal-counterparty 입금/출금 amount 잔액 balance.
   val action=if(type=="deposit")"입금" else "출금"
+  // MG push: [입금/출금] amount account 잔액 balance MM/dd HH:mm counterparty.
+  if(row.packageName=="com.smg.spbs") {
+   val tail=Regex("\\[$action\\]\\s*[0-9,]+원\\s+[0-9*\\-]+\\s+잔액\\s*[0-9,]+원\\s+[0-9]{2}/[0-9]{2}\\s+[0-9]{2}:[0-9]{2}\\s+([^\\n]+)$").find(text)
+   clean(tail?.groupValues?.get(1))?.let{return it}
+  }
   val parties=Regex("<[^>\\n]+>\\s*[0-9* -]{5,}\\s+([^\\n]+?)\\s+$action\\s*[0-9]").findAll(text).mapNotNull{clean(it.groupValues[1])}.distinct().toList()
   return parties.singleOrNull()
  }
