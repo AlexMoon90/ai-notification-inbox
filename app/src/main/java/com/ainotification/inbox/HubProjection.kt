@@ -84,6 +84,9 @@ internal fun conversationRooms(rows:List<CapturedNotification>):List<HubRoom> = 
     }.filter{it.messages.isNotEmpty()}.sortedByDescending{it.latest.time}
 
 internal fun isNowNotification(row:CapturedNotification,decisions:JSONObject):Boolean {
+    // Android group summaries are containers, not individual notifications. They may
+    // arrive after a child with empty text and must never replace its Now card.
+    if(row.isGroupSummary)return false
     val d=decisions.optJSONObject(row.snapshotId) ?: return false
     return (d.optString("status")=="match" && d.optString("action","SHOW")=="SHOW") ||
         (d.optString("status")=="review" && !row.isGroupSummary && row.latestMessage()?.isImageAttachment()==true)

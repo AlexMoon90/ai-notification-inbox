@@ -26,6 +26,20 @@ class HubProjectionTest {
         assertEquals(listOf("new","other","message2"),latestNowBySource(rows,decisions).map{it.snapshotId})
         assertEquals(6,rows.size)
     }
+    @Test fun laterEmptyGroupSummaryCannotReplacePaymentBody() {
+        val child=row("payment").copy(packageName="com.kakaopay.app",notificationCategory=null,
+            conversationTitle=null,isGroupSummary=false,title="결제 안내",text="테스트 가맹점 결제가 완료되었습니다",
+            bigText=null,postedTime=100,capturedTime=100)
+        val summary=child.copy(snapshotId="summary",notificationKey="summary-key",title="",text="",
+            subText="알림 묶음",isGroupSummary=true,postedTime=101,capturedTime=106)
+        val decisions=JSONObject()
+        listOf(child,summary).forEach { decisions.put(it.snapshotId,JSONObject().put("status","match").put("action","SHOW")) }
+        assertEquals(listOf(child),latestNowBySource(listOf(summary,child),decisions))
+        assertEquals(child.text,latestNowBySource(listOf(summary,child),decisions).single().preview())
+        assertFalse(isNowNotification(summary,decisions))
+        decisions.getJSONObject(child.snapshotId).put("action","HIDE")
+        assertTrue(latestNowBySource(listOf(summary,child),decisions).isEmpty())
+    }
     @Test fun latestMessagesKeepSeparateRoomsAndApps(){
         val old=row("old").copy(postedTime=10)
         val latest=old.copy(snapshotId="latest",postedTime=20)
