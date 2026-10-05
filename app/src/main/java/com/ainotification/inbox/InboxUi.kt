@@ -82,7 +82,7 @@ private val Blue = NowsetColors.ActionBlue
     val back = { selectedId = null; draftId = null; composing = false; ruleEditor = false }
     var newPolicyRequest by rememberSaveable { mutableIntStateOf(if(startVoice)1 else 0) }
     var brandAbout by rememberSaveable { mutableStateOf(false) }
-    if(brandAbout)AlertDialog(onDismissRequest={brandAbout=false},text={NowsetAboutContent()},confirmButton={TextButton(onClick={brandAbout=false}){Text("닫기")}})
+    if(brandAbout)AlertDialog(modifier=Modifier.semantics { testTagsAsResourceId = true },onDismissRequest={brandAbout=false},text={NowsetAboutContent()},confirmButton={TextButton(onClick={brandAbout=false}){Text("닫기")}})
     var onboarding by rememberSaveable { mutableStateOf(false) }
     if (!preview && onboarding) {
         FirstOnboardingScreen(app, stored, granted, settings, {onboarding=false})
