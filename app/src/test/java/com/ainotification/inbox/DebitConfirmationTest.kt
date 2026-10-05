@@ -36,4 +36,31 @@ class DebitConfirmationTest {
   assertNotEquals(old.key,debitCandidates(changed).single().key)
   assertEquals(changed,applyDebitConfirmations(changed,debitCandidates(changed),mapOf(old.key to "debit")))
  }
+ private fun pair(suffix:String,account:String?="123-**-456",bank:String?="테스트은행"):DebitCandidate {
+  val p=row("p$suffix","payment")
+  val w=row("w$suffix","withdrawal").let{it.copy(money=it.money!!.copy(provider=bank,accountHint=account))}
+  return DebitCandidate(p,w)
+ }
+ @Test fun learnedAccountAppliesToNewTransactionsButNotOtherAccounts(){
+  val first=pair("1");val next=pair("2");val rules=setOf(first.accountRuleKey!!)
+  assertNotEquals(first.key,next.key)
+  assertEquals("debit",debitDecision(next,emptyMap(),rules))
+  assertEquals("debit",debitDecision(pair("3","123**456"),emptyMap(),rules))
+  assertNull(debitDecision(pair("4","123-**-789"),emptyMap(),rules))
+  assertNull(debitDecision(pair("5",bank="다른은행"),emptyMap(),rules))
+  assertNull(debitDecision(pair("6",account=null),emptyMap(),rules))
+  assertNull(debitDecision(pair("7",bank=null),emptyMap(),rules))
+  assertEquals("separate",debitDecision(next,mapOf(next.key to "separate"),rules))
+  val rows=listOf(next.payment,next.withdrawal)
+  assertEquals("체크카드",applyDebitConfirmations(rows,listOf(next),emptyMap(),rules)[0].money!!.paymentMethod)
+  assertEquals(rows,applyDebitConfirmations(rows,listOf(next),emptyMap(),emptySet()))
+ }
+ @Test fun learnedAccountStillRequiresPairedAmountAndTime(){
+  val p=pair("1");val rules=setOf(p.accountRuleKey!!)
+  val lone=listOf(p.payment)
+  assertEquals(lone,applyDebitConfirmations(lone,debitCandidates(lone),emptyMap(),rules))
+  val distant=listOf(p.payment,p.withdrawal.copy(money=p.withdrawal.money!!.copy(occurredAt=200000)))
+  assertEquals(distant,applyDebitConfirmations(distant,debitCandidates(distant),emptyMap(),rules))
+ }
+
 }
