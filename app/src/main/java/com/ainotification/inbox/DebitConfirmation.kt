@@ -30,3 +30,14 @@ internal fun applyDebitConfirmations(rows:List<StructuredEntry>,pairs:List<Debit
 /** A transaction-specific rejection overrides the learned account rule. */
 internal fun debitDecision(pair:DebitCandidate,answers:Map<String,String>,accountRules:Set<String>):String? =
  answers[pair.key] ?: if(pair.accountRuleKey in accountRules) "debit" else null
+
+/** Missing approval evidence is a reason to explain setup, never to infer a card purchase. */
+internal fun needsCardApprovalGuide(rows:List<StructuredEntry>,now:Long):Boolean {
+ val approvals=rows.filter{it.money?.let{m->m.transactionType in setOf("payment","recurring_payment") && m.status=="completed" && m.transactionAmount!=null}==true}
+ return rows.any{e->e.money?.let{m->
+  m.transactionType=="withdrawal" && m.status=="completed" && m.extractionStatus=="complete" &&
+   m.transactionAmount?.let{it>0}==true && m.paymentMethod.isNullOrBlank() &&
+   eventTime(e) in (now-30L*86400000)..(now-120_000) &&
+   approvals.none{p->p.money!!.transactionAmount==m.transactionAmount && kotlin.math.abs(eventTime(p)-eventTime(e))<=120_000}
+ }==true}
+}

@@ -63,4 +63,17 @@ class DebitConfirmationTest {
   assertEquals(distant,applyDebitConfirmations(distant,debitCandidates(distant),emptyMap(),rules))
  }
 
+ @Test fun guideExplainsUnmatchedWithdrawalsWithoutGuessingMerchantOrPerson(){
+  val now=1_000_000L
+  val withdrawal=row("w","withdrawal",now-180000)
+  assertTrue(needsCardApprovalGuide(listOf(withdrawal),now))
+  assertTrue(needsCardApprovalGuide(listOf(withdrawal.copy(money=withdrawal.money!!.copy(merchant=null,counterparty="홍길동"))),now))
+  assertFalse(needsCardApprovalGuide(listOf(withdrawal.copy(money=withdrawal.money!!.copy(paymentMethod="체크카드 연결 출금"))),now))
+  assertFalse(needsCardApprovalGuide(listOf(withdrawal,row("p","payment",now-180000)),now))
+  assertFalse(needsCardApprovalGuide(listOf(row("new","withdrawal",now-1000)),now))
+  assertFalse(needsCardApprovalGuide(listOf(row("old","withdrawal",now-31L*86400000)),now))
+  assertFalse(needsCardApprovalGuide(listOf(row("deposit","deposit",now-180000)),now))
+  assertFalse(needsCardApprovalGuide(emptyList(),now))
+ }
+
 }

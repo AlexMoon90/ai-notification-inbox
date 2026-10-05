@@ -3,6 +3,7 @@ package com.ainotification.inbox
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -117,6 +118,26 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  var query by rememberSaveable{mutableStateOf("")}
  var search by rememberSaveable{mutableStateOf(false)}
  var statusError by remember{mutableStateOf<String?>(null)}
+ var cardGuideAcknowledged by remember{mutableStateOf(if(fixture)true else prefs.getBoolean("card-approval-guide-acknowledged",false))}
+ var cardGuideVisible by rememberSaveable{mutableStateOf(false)}
+ val needsApprovalGuide=remember(current,now){needsCardApprovalGuide(current,now)}
+ LaunchedEffect(category,selected,needsApprovalGuide,cardGuideAcknowledged){
+  if(category=="money" && selected==null && needsApprovalGuide && !cardGuideAcknowledged)cardGuideVisible=true
+ }
+ fun closeCardGuide(){cardGuideVisible=false;cardGuideAcknowledged=true;if(!fixture)prefs.edit().putBoolean("card-approval-guide-acknowledged",true).apply()}
+ if(cardGuideVisible)AlertDialog(
+  onDismissRequest={closeCardGuide()},
+  title={Text("체크카드 결제를 구분하려면")},
+  text={Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)){
+   Text("계좌 출금 알림만으로는 실물 체크카드 결제인지, 이체나 다른 출금인지 확실히 알 수 없어요. 상호명이나 사람 이름만으로 체크카드로 분류하지 않습니다.")
+   Text("체크카드 결제를 구분하고 싶다면 이용 중인 은행·카드사의 앱이나 고객센터에서 ‘카드 이용·결제 승인 알림’의 문자 또는 앱 알림을 신청·설정해 주세요. ‘계좌 입출금 알림’과는 별도입니다.")
+   Text("이미 이용 중이라면 카드사 앱의 알림과 우리 앱의 알림 접근 권한도 확인해 주세요. 승인 알림에서 카드 종류를 확인할 수 있어야 정확히 구분할 수 있어요.")
+   Text("결제 근거가 없는 거래는 계속 출금으로 보관합니다. 이 안내는 거래를 변경하거나 알림 서비스를 대신 신청하지 않습니다.",fontSize=12.sp,color=DashboardMuted)
+  }},
+  confirmButton={TextButton(onClick={closeCardGuide()},modifier=Modifier.testTag("card_approval_guide_confirm")){Text("확인")}},
+  modifier=Modifier.testTag("card_approval_guide")
+ )
+
  val showWork=current.count{it.event.category=="todo" && it.context?.relationship=="work_likely"}>=3
  val groups=current.groupBy{if(showWork && it.event.category=="todo" && it.context?.relationship=="work_likely")"work" else it.event.category}
  val detail=projected.find{it.event.id==selected}
@@ -196,6 +217,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  }
  fun LazyListScope.moneyItems(section:String){
     val moneyRows=current.filter{it.money!=null}
+    if(section in setOf("계좌 입출금","거래 내역"))item{TextButton(onClick={cardGuideVisible=true},modifier=Modifier.testTag("card_approval_guide_open")){Text("체크카드 결제 알림 설정 안내")}}
     if(section!="통계")debitPairs.firstOrNull{debitDecision(it,debitAnswers,learnedRules)==null && (it.accountRuleKey ?: it.key) !in deferredDebit}?.let{pair->item{debitQuestion(pair)}}
     item{choices(if(section=="통계")listOf("이번 주","이번 달","최근 3개월") else listOf("전체","오늘","이번 주","이번 달","최근 3개월"),period){period=it}}
     if(section=="통계"){
