@@ -92,7 +92,13 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  LaunchedEffect(learnedRules){if(learnedRules!=debitRules){debitRules=learnedRules;if(!fixture)prefs.edit().putStringSet("debit-account-rules",learnedRules).apply()}}
  var deferredDebit by remember{mutableStateOf(emptySet<String>())}
  val projected=remember(stored,debitPairs,debitAnswers,learnedRules){applyDebitConfirmations(stored,debitPairs,debitAnswers,learnedRules)}
- val current=remember(base,debitPairs,debitAnswers,learnedRules){applyDebitConfirmations(base,debitPairs,debitAnswers,learnedRules)}
+ val paymentProjection=remember(base,debitPairs,debitAnswers,learnedRules){
+  groupCardPayments(applyDebitConfirmations(base,debitPairs,debitAnswers,learnedRules),
+   debitPairs.filter{debitDecision(it,debitAnswers,learnedRules)=="debit"},debitPairs.filter{debitDecision(it,debitAnswers,learnedRules)=="separate"})
+ }
+ val current=paymentProjection.rows
+ val accountRows=paymentProjection.accountRows
+
  fun answerDebit(pair:DebitCandidate,answer:String){
   debitAnswers=debitAnswers+(pair.key to answer)
   if(!fixture)prefs.edit().putString("debit:${pair.key}",answer).apply()
@@ -140,13 +146,13 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
 
  val showWork=current.count{it.event.category=="todo" && it.context?.relationship=="work_likely"}>=3
  val groups=current.groupBy{if(showWork && it.event.category=="todo" && it.context?.relationship=="work_likely")"work" else it.event.category}
- val detail=projected.find{it.event.id==selected}
+ val detail=accountRows.find{it.event.id==selected} ?: projected.find{it.event.id==selected}
  fun seenKey(e:StructuredEntry)="${e.event.sourceNotificationId}:${e.event.updatedAt}"
  val fresh=current.count{!it.event.isChanged && seenKey(it) !in seen}
  val changed=current.count{it.event.isChanged && seenKey(it) !in seen}
- val relatedIds=remember(detail,stored,debitAnswers,learnedRules){
+ val relatedIds=remember(detail,stored,debitAnswers,learnedRules,paymentProjection){
   val d=detail
-  if(d==null)emptyList() else (listOf(d.event.sourceNotificationId)+debitPairs.filter{debitDecision(it,debitAnswers,learnedRules)=="debit" && d.event.id in listOf(it.payment.event.id,it.withdrawal.event.id)}.flatMap{listOf(it.payment.event.sourceNotificationId,it.withdrawal.event.sourceNotificationId)}+d.context?.let{evidenceIds(it.evidenceIds)}.orEmpty()+
+  if(d==null)emptyList() else (listOf(d.event.sourceNotificationId)+paymentProjection.sources[d.event.id].orEmpty()+debitPairs.filter{debitDecision(it,debitAnswers,learnedRules)=="debit" && d.event.id in listOf(it.payment.event.id,it.withdrawal.event.id)}.flatMap{listOf(it.payment.event.sourceNotificationId,it.withdrawal.event.sourceNotificationId)}+d.context?.let{evidenceIds(it.evidenceIds)}.orEmpty()+
    d.life?.referenceKey?.let{ref->stored.filter{it.life?.referenceKey==ref && it.life?.provider==d.life.provider && it.life?.kind==d.life.kind}.map{it.event.sourceNotificationId}}.orEmpty()+
    d.money?.referenceKey?.let{ref->stored.filter{it.money?.referenceKey==ref && it.money?.provider==d.money.provider && it.money?.accountHint==d.money.accountHint && it.money?.transactionType==d.money.transactionType}.map{it.event.sourceNotificationId}}.orEmpty()+
    d.money?.settledByTransactionEventId?.let{id->listOfNotNull(stored.find{it.event.id==id}?.event?.sourceNotificationId)}.orEmpty()).distinct()
@@ -216,12 +222,12 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
   }
  }
  fun LazyListScope.moneyItems(section:String){
-    val moneyRows=current.filter{it.money!=null}
+    val moneyRows=(if(section=="계좌 입출금")accountRows else current).filter{it.money!=null}
     if(section in setOf("계좌 입출금","거래 내역"))item{TextButton(onClick={cardGuideVisible=true},modifier=Modifier.testTag("card_approval_guide_open")){Text("체크카드 결제 알림 설정 안내")}}
-    if(section!="통계")debitPairs.firstOrNull{debitDecision(it,debitAnswers,learnedRules)==null && (it.accountRuleKey ?: it.key) !in deferredDebit}?.let{pair->item{debitQuestion(pair)}}
+    if(section!="통계")debitPairs.firstOrNull{debitDecision(it,debitAnswers,learnedRules)==null && paymentProjection.sources[it.payment.event.id]?.contains(it.withdrawal.event.sourceNotificationId)!=true && (it.accountRuleKey ?: it.key) !in deferredDebit}?.let{pair->item{debitQuestion(pair)}}
     item{choices(if(section=="통계")listOf("이번 주","이번 달","최근 3개월") else listOf("전체","오늘","이번 주","이번 달","최근 3개월"),period){period=it}}
     if(section=="통계"){
-     val summary=summarizeMoney(moneyRows,period,now)
+     val summary=summarizeMoney(moneyRows,period,now,accountRows)
      item{Surface(color=Color(0xffeaf3ff),shape=RoundedCornerShape(16.dp)){Column(Modifier.padding(16.dp)){
       metric("확인된 결제 지출",moneyText(summary.spending));metric("들어온 돈",moneyText(summary.income));metric("계좌 출금·송금",moneyText(summary.accountOut));metric("환불",moneyText(summary.refunds));metric("정기결제 ${summary.recurringCount}건",moneyText(summary.recurring));metric("확인된 기록","${summary.count}건")
       summary.comparison?.let{Text("이전 기간 같은 경과 시점 대비 ${if(it>0)"+" else ""}$it%",fontSize=12.sp,color=DashboardMuted)}
@@ -285,6 +291,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
   when {
    detail!=null -> {
     val e=detail
+    paymentProjection.sources[e.event.id]?.takeIf{it.size>1}?.let{ids->item{chip("같은 거래 · 알림 ${ids.size}개")}}
     item{Text(entryTitle(e),fontSize=24.sp,fontWeight=FontWeight.Bold,color=DashboardInk)}
     e.money?.let{m->
      item{moneyDisplayAmount(m)?.let{Text(it,fontSize=30.sp,fontWeight=FontWeight.Bold,color=DashboardInk)}}
@@ -357,7 +364,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
     }}
     item{Surface(color=Color(0xffeaf3ff),shape=RoundedCornerShape(20.dp),modifier=Modifier.testTag("smart_category_money").clickable{enter("money")} ){
      Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(4.dp)){
-      val summary=summarizeMoney(current,"이번 주",now)
+      val summary=summarizeMoney(current,"이번 주",now,accountRows)
       Row(Modifier.fillMaxWidth().clickable{enter("money")},verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)){
        Surface(color=Color(0xffd6e7ff),shape=RoundedCornerShape(16.dp)){Icon(Icons.Default.AccountBox,null,Modifier.padding(6.dp).size(26.dp),tint=DashboardBlue)}
        Column(Modifier.weight(1f)){Text("돈",fontSize=20.sp,fontWeight=FontWeight.Bold,color=DashboardInk);Text("이번 주 결제",fontSize=10.sp,color=DashboardMuted)}

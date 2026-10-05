@@ -34,14 +34,14 @@ internal fun currentInformation(rows:List<StructuredEntry>):List<StructuredEntry
   else e.event.id
  }
 internal data class MoneySummary(val spending:Long,val income:Long,val accountOut:Long,val refunds:Long,val recurring:Long,val recurringCount:Int,val count:Int,val methods:List<Pair<String,Long>>,val merchants:List<Pair<String,Long>>,val comparison:Int?)
-internal fun summarizeMoney(rows:List<StructuredEntry>,period:String,now:Long):MoneySummary {
+internal fun summarizeMoney(rows:List<StructuredEntry>,period:String,now:Long,accountRows:List<StructuredEntry> = rows):MoneySummary {
  val start=periodStart(period,now)
  val eligible=rows.filter{it.money?.extractionStatus=="complete" && it.money.status=="completed" && eventTime(it) in start..now && it.money.transactionAmount!=null}
  // Account withdrawals/transfers are not automatically consumption. Keep those totals separate.
  val spending=eligible.filter{it.money!!.transactionType in setOf("payment","recurring_payment")}
  fun sum(r:List<StructuredEntry>)=r.sumOf{it.money!!.transactionAmount ?: 0}
  val income=eligible.filter{it.money!!.transactionType in setOf("deposit","transfer_in")}
- val out=eligible.filter{it.money!!.transactionType in setOf("withdrawal","transfer_out")}
+ val out=accountRows.filter{it.money?.extractionStatus=="complete" && it.money.status=="completed" && eventTime(it) in start..now && it.money.transactionType in setOf("withdrawal","transfer_out")}
  val recurring=spending.filter{it.money!!.recurring}
  val previousStart=when(period){"이번 주"->start-7*86400000L;"이번 달"->Instant.ofEpochMilli(start).atZone(ZoneId.systemDefault()).minusMonths(1).toInstant().toEpochMilli();else->null}
  val elapsed=now-start
