@@ -133,7 +133,7 @@ import org.json.JSONObject
                 if(inDetail)IconButton(onClick={back()}){Icon(Icons.Outlined.ArrowBack,"뒤로")}
                 Text(when{detailId!=null->"원문";roomId!=null->"대화";sourceHistory!=null->"알림 기록";review->"기준 확인";tab==1->"";tab==2->"";else->java.text.SimpleDateFormat("M월 d일 EEEE",java.util.Locale.KOREAN).format(java.util.Date())},style=MaterialTheme.typography.bodySmall,color=ModernMuted,modifier=Modifier.weight(1f))
                 val source=if(detail==null)room?.latest?.source else null
-                if(source!=null)SourceOpenButton(source){open(source)}
+                if(source!=null && room==null)SourceOpenButton(source){open(source)}
                 if(!inDetail)IconButton(onClick={settingsPage=2},modifier=Modifier.size(40.dp).testTag("open_settings")){Icon(Icons.Outlined.Settings,"설정",Modifier.size(20.dp))}
             }
             Row(verticalAlignment=Alignment.CenterVertically){
@@ -158,7 +158,10 @@ import org.json.JSONObject
             }
             if(!inDetail && tab!=2)Text(listOf("급하고 중요한 것은 지금","모든 메시지를 한곳에서 조용히","필요한 정보는 보관했다가 나중에")[tab],style=MaterialTheme.typography.bodyLarge.copy(fontWeight=FontWeight.Medium,lineHeight=24.sp),color=ModernInk,modifier=Modifier.padding(top=10.dp).testTag("hub_subtitle"))
         }
-    },bottomBar={if(!inDetail)Column(Modifier.navigationBarsPadding()){
+    },bottomBar={if(room!=null && detailId==null)key(room.id){
+        val replyEngine=remember(app){ReplyEngine(app)}
+        ReplyAssistantBar(room,app.replyPreferences,{app.repository.loadBody(it)},{open(room.latest.source)},replyEngine)
+    }else if(!inDetail)Column(Modifier.navigationBarsPadding()){
         if(tab==0){ModernLine(true);Row(Modifier.fillMaxWidth().background(ModernSurface).clickable{voiceEntry=true;settingsPage=1}.padding(horizontal=16.dp,vertical=6.dp).testTag("now_voice"),verticalAlignment=Alignment.CenterVertically){Text("말로 기준 만들기",Modifier.weight(1f),color=ModernMuted);Box(Modifier.size(40.dp).background(ModernAccent),contentAlignment=Alignment.Center){Icon(androidx.compose.ui.res.painterResource(R.drawable.ic_mic),"말로 기준 만들기",tint=ModernBg)}}}
         ModernLine(true)
         Row(Modifier.fillMaxWidth().height(56.dp)){

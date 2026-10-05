@@ -40,6 +40,7 @@ class InboxApplication : Application() {
     val repository by lazy { NotificationRepository(database.notifications(),scope,database) }
     val listenerConnected = MutableStateFlow(false)
     val captureError = MutableStateFlow<String?>(null)
+    internal val replyPreferences by lazy { ReplyPreferences(this) }
     val opener = NotificationOpener()
     internal val nowAlerts by lazy { NowAlerts(this) }
     internal val selection by lazy { NotificationSelection(this, scope) }

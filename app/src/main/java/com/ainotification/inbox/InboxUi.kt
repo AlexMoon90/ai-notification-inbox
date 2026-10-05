@@ -190,6 +190,7 @@ private val Blue = ModernAccent
                 }
                 else -> {
                     item { OutlinedButton(onClick={onboarding=true},Modifier.fillMaxWidth().testTag("open_onboarding")){Text("처음 설정 안내 다시 보기")} }
+                    item { ReplySettingsRow(app.replyPreferences) }
                     item { SectionLabel("수집과 보관") }
                     item { Notice(if (granted) "알림 접근 허용됨" else "알림 접근 꺼짐", "알림 제목과 본문은 이 기기에 저장합니다. 시스템 UI 알림은 목록에서 제외합니다.") }
                     item { OutlinedButton(onClick = settings, Modifier.fillMaxWidth()) { Text("알림 접근 설정") } }

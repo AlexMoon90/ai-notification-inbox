@@ -153,12 +153,13 @@ internal class SetupEngine(private val context: Context,
         }
     }
     internal fun structured(purpose: String, prompt: String, spec: JSONObject, input: JSONObject): JSONObject {
+        val replyTask=purpose in setOf("reply_assistant","reply_assistant_rewrite")
         val serialized = input.toString()
         require(serialized.length <= 48000)
         val payload = JSONObject().put("model", config.getString("model")).put("store", false)
-            .put("max_output_tokens", 6000).put("reasoning", JSONObject().put("effort", "low"))
+            .put("max_output_tokens", if(replyTask)1800 else 6000).put("reasoning", JSONObject().put("effort", "low"))
             .put("input", arr(JSONObject().put("role", "developer").put("content", prompt), JSONObject().put("role", "user").put("content", serialized)))
-            .put("text", JSONObject().put("format", JSONObject().put("type", "json_schema").put("name", "rule_management").put("strict", true).put("schema", spec)))
+            .put("text", JSONObject().put("format", JSONObject().put("type", "json_schema").put("name", if(replyTask)"reply_assistant" else "rule_management").put("strict", true).put("schema", spec)))
         val start = System.nanoTime()
         val metric = JSONObject().put("model", config.getString("model")).put("purpose", purpose).put("reasoning_effort", "low")
             .put("request_bytes", payload.toString().toByteArray().size).put("api_attempts", 1)
@@ -181,7 +182,11 @@ internal class SetupEngine(private val context: Context,
         finally {
             metric.put("latency_ms", (System.nanoTime()-start)/1e6)
             if (transport == null) synchronized(SetupEngine::class.java) {
-                File(context.filesDir, "rule-management-usage.jsonl").appendText(metric.toString()+"\n")
+                runCatching {
+                    val log=File(context.filesDir,if(replyTask)"reply-assistant-usage.jsonl" else "rule-management-usage.jsonl")
+                    if(replyTask && log.length()>256*1024)log.writeText("")
+                    log.appendText(metric.toString()+"\n")
+                }
             }
         }
     }
