@@ -27,6 +27,7 @@ import org.json.JSONObject
     LaunchedEffect(state.optBoolean("onboarding_complete"),busy,submitted){if(submitted && !busy && error==null && state.optBoolean("onboarding_complete") && state.optJSONObject("policy_proposal")==null)onExit?.invoke()}
     BackHandler(step>0 || onExit!=null){if(step>0){c.discard();update("step",step-1)}else onExit?.invoke()}
     Column(Modifier.fillMaxSize().safeDrawingPadding().semantics{testTagsAsResourceId=true}.verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)) {
+        if(step==0){Box(Modifier.fillMaxWidth(),contentAlignment=androidx.compose.ui.Alignment.Center){NowsetLogo(Modifier.width(154.dp))};Text("지금을 내 기준으로.",style=MaterialTheme.typography.titleMedium)}
         Text("처음에는 방향만 정해주세요",style=MaterialTheme.typography.headlineSmall)
         Text("${step+1} / 4 · "+listOf("알림 접근","꼭 알려주세요","이런 건 조용히 해주세요","사용 시작")[step])
         LinearProgressIndicator(progress={(step+1)/4f},modifier=Modifier.fillMaxWidth())

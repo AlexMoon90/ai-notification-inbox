@@ -65,9 +65,9 @@ internal fun smartHeading(events:List<String>):String=when {
 }
 // Only literal amounts are displayed; no guessed merchant, date or event linkage.
 internal fun smartAmount(text:String):String?=Regex("(?<![0-9])(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]+)\\s*원").findAll(text).map{it.value}.distinct().toList().singleOrNull()
-private val DashboardInk=Color(0xff172847)
-private val DashboardBlue=Color(0xff287eff)
-private val DashboardMuted=Color(0xff607596)
+private val DashboardInk=NowsetColors.DeepNavy
+private val DashboardBlue=NowsetColors.ActionBlue
+private val DashboardMuted=NowsetColors.Muted
 private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Default.AccountBox;"delivery"->Icons.Default.ShoppingCart;"schedule"->Icons.Default.DateRange;"health"->Icons.Default.Favorite;"investment"->Icons.Default.Star;else->Icons.Default.List}
 
 @Composable internal fun SmartDashboard(app:InboxApplication,fixture:Boolean,modifier:Modifier=Modifier,open:(CapturedNotification)->Unit,fixtureEntries:List<StructuredEntry> = emptyList(),loadOriginal:suspend(String)->CapturedNotification?={app.repository.loadBody(it)},onSettings:(()->Unit)?=null) {
@@ -214,7 +214,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  @Composable fun choices(values:List<String>,selectedValue:String,onSelect:(String)->Unit){Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(6.dp)){values.forEach{value->FilterChip(selectedValue==value,{onSelect(value)},label={Text(value,fontSize=12.sp)},modifier=Modifier.testTag("smart_filter_$value"))}}}
  @Composable fun metric(label:String,value:String){Row(Modifier.fillMaxWidth().padding(vertical=6.dp)){Text(label,Modifier.weight(1f),fontSize=13.sp,color=DashboardMuted);Text(value,fontSize=16.sp,fontWeight=FontWeight.SemiBold,color=DashboardInk)}}
  @Composable fun debitQuestion(pair:DebitCandidate){
-  Surface(color=Color(0xffeaf3ff),shape=RoundedCornerShape(12.dp),modifier=Modifier.fillMaxWidth().testTag("debit_question")){
+  Surface(color=NowsetColors.BlueTint,shape=RoundedCornerShape(12.dp),modifier=Modifier.fillMaxWidth().testTag("debit_question")){
    Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(6.dp)){
     Text("체크카드 결제인가요?",fontWeight=FontWeight.Bold)
     Text("삼성 월렛 · ${entryTitle(pair.payment)} · ${moneyText(pair.payment.money!!.transactionAmount!!)}",fontSize=12.sp)
@@ -232,7 +232,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
     item{choices(if(section=="통계")listOf("이번 주","이번 달","최근 3개월") else listOf("전체","오늘","이번 주","이번 달","최근 3개월"),period){period=it}}
     if(section=="통계"){
      val summary=summarizeMoney(moneyRows,period,now,accountRows)
-     item{Surface(color=Color(0xffeaf3ff),shape=RoundedCornerShape(16.dp)){Column(Modifier.padding(16.dp)){
+     item{Surface(color=NowsetColors.BlueTint,shape=RoundedCornerShape(16.dp)){Column(Modifier.padding(16.dp)){
       metric("확인된 결제 지출",moneyText(summary.spending));metric("들어온 돈",moneyText(summary.income));metric("계좌 출금·송금",moneyText(summary.accountOut));metric("환불",moneyText(summary.refunds));metric("정기결제 ${summary.recurringCount}건",moneyText(summary.recurring));metric("확인된 기록","${summary.count}건")
       summary.comparison?.let{Text("이전 기간 같은 경과 시점 대비 ${if(it>0)"+" else ""}$it%",fontSize=12.sp,color=DashboardMuted)}
      }}}
@@ -269,7 +269,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
   if(search){OutlinedTextField(query,{query=it},singleLine=true,placeholder={Text("상대방·가맹점·계좌 검색")},modifier=Modifier.fillMaxWidth().testTag("smart_search"))}
   if(statusError!=null){Text(statusError!!,color=MaterialTheme.colorScheme.error)}
  }}
- val bg=Color(0xfff5f8fc)
+ val bg=NowsetColors.Mist
  if(category=="money" && detail==null){
   val pager=rememberPagerState(initialPage=moneySections.indexOf(section).coerceAtLeast(0)){moneySections.size}
   LaunchedEffect(pager.settledPage){
@@ -370,7 +370,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
      Surface(color=DashboardBlue,shape=RoundedCornerShape(20.dp),modifier=Modifier.testTag("smart_concept_2")){Text("대시보드",Modifier.padding(horizontal=14.dp,vertical=6.dp),fontSize=12.sp,color=Color.White)}
      TextButton(onClick={updateSnapshot=updates.filter{seenKey(it) !in seen}.map{seenKey(it)}.toSet();updatesOnly=true},modifier=Modifier.testTag("smart_all_changes")){Text("새 정보 $fresh · 변경 $changed",fontSize=12.sp)}
     }}
-    item{Surface(color=Color(0xffeaf3ff),shape=RoundedCornerShape(20.dp),modifier=Modifier.testTag("smart_category_money").clickable{enter("money")} ){
+    item{Surface(color=NowsetColors.BlueTint,shape=RoundedCornerShape(20.dp),modifier=Modifier.testTag("smart_category_money").clickable{enter("money")} ){
      Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(4.dp)){
       val summary=summarizeMoney(current,"이번 주",now,accountRows)
       Row(Modifier.fillMaxWidth().clickable{enter("money")},verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)){

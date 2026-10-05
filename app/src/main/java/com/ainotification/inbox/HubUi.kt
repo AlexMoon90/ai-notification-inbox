@@ -168,7 +168,7 @@ import org.json.JSONObject
             listOf("Now","메시지","스마트함").forEachIndexed{i,label->
                 Column(Modifier.weight(1f).fillMaxHeight().selectable(tab==i,role=Role.Tab,onClick={tab=i;service=null;category=null}).testTag("nav_$i")){
                     Box(Modifier.fillMaxWidth().height(4.dp).background(if(tab==i)ModernAccent else Color.Transparent))
-                    Column(Modifier.padding(horizontal=16.dp,vertical=12.dp)){Text(label,fontWeight=if(tab==i)FontWeight.ExtraBold else FontWeight.Medium,color=if(tab==i)ModernInk else ModernMuted)}
+                    Column(Modifier.padding(horizontal=16.dp,vertical=12.dp)){Text(label,fontWeight=if(tab==i)FontWeight.ExtraBold else FontWeight.Medium,color=if(tab==i)NowsetColors.ActionBlue else ModernMuted)}
                 }
                 if(i<2)VerticalDivider(color=ModernInk.copy(alpha=.4f))
             }
@@ -279,7 +279,7 @@ import org.json.JSONObject
                             ModernLine(true)
                         }
                         item{Row(Modifier.padding(vertical=10.dp),verticalAlignment=Alignment.CenterVertically){
-                            Row(Modifier.border(1.dp,ModernInk)){listOf("time" to "시간순","app" to "앱별").forEach{(value,label)->Box(Modifier.background(if(nowSort==value)ModernAccent else Color.Transparent).selectable(nowSort==value,role=Role.Tab,onClick={nowSort=value}).testTag("now_sort_$value").padding(horizontal=14.dp,vertical=8.dp)){Text(label,style=MaterialTheme.typography.labelMedium,color=if(nowSort==value)ModernBg else ModernInk)}}}
+                            Row(Modifier.border(1.dp,ModernInk)){listOf("time" to "시간순","app" to "앱별").forEach{(value,label)->Box(Modifier.background(if(nowSort==value)NowsetColors.ActionBlue else Color.Transparent).selectable(nowSort==value,role=Role.Tab,onClick={nowSort=value}).testTag("now_sort_$value").padding(horizontal=14.dp,vertical=8.dp)){Text(label,style=MaterialTheme.typography.labelMedium,color=if(nowSort==value)ModernBg else ModernInk)}}}
                             Spacer(Modifier.weight(1f));Text(if(nowSort=="time")"최신이 위" else "최근 받은 앱이 위",style=MaterialTheme.typography.bodySmall,color=ModernMuted)
                         }}
                     }else item{Text("아직 판단하지 못한 알림이에요. 조용히 버리지 않고 여기에 모아둬요.",color=ModernMuted,modifier=Modifier.padding(bottom=16.dp))}
@@ -401,7 +401,7 @@ import org.json.JSONObject
                                 Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)){
                                     Text(listOfNotNull(r.latest.sender?.takeIf{it.isNotBlank()},r.latest.text).joinToString(" · "),Modifier.weight(1f),maxLines=1,overflow=TextOverflow.Ellipsis,style=MaterialTheme.typography.bodyMedium)
                                     val count=unread[r.id] ?: 0
-                                    if(count>0)Box(Modifier.size(22.dp).background(ModernAccent,androidx.compose.foundation.shape.CircleShape).testTag("room_unread"),contentAlignment=Alignment.Center){
+                                    if(count>0)Box(Modifier.size(22.dp).background(NowsetColors.ActionBlue,androidx.compose.foundation.shape.CircleShape).testTag("room_unread"),contentAlignment=Alignment.Center){
                                         Text(if(count>99)"99+" else count.toString(),color=ModernBg,style=MaterialTheme.typography.labelSmall.copy(fontSize=10.sp),maxLines=1)
                                     }
                                 }

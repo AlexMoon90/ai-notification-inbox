@@ -19,12 +19,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-internal val ModernInk=Color(0xFF201E1D)
-internal val ModernBg=Color(0xFFF3F2F2)
-internal val ModernSurface=Color(0xFFEAE9E9)
-internal val ModernAccent=Color(0xFFEC3013)
-internal val ModernRedText=Color(0xFFAE1800)
-internal val ModernMuted=Color(0xFF605D5D)
+internal val ModernInk=NowsetColors.DeepNavy
+internal val ModernBg=NowsetColors.Mist
+internal val ModernSurface=NowsetColors.Surface
+internal val ModernAccent=NowsetColors.VividBlue
+internal val ModernRedText=NowsetColors.Error
+internal val ModernMuted=NowsetColors.Muted
 internal val ModernFont=FontFamily(Font(R.font.archivo_400,FontWeight.Normal),Font(R.font.archivo_600,FontWeight.SemiBold),Font(R.font.archivo_800,FontWeight.ExtraBold))
 internal val ModernTypography=Typography(
  displaySmall=TextStyle(fontFamily=ModernFont,fontSize=38.sp,lineHeight=38.sp,fontWeight=FontWeight.ExtraBold,letterSpacing=(-1.3).sp),
@@ -41,7 +41,7 @@ internal val ModernTypography=Typography(
 
 @Composable internal fun ModernLine(thick:Boolean=false,modifier:Modifier=Modifier){HorizontalDivider(modifier,thickness=if(thick)2.dp else 1.dp,color=ModernInk.copy(alpha=if(thick)1f else .4f))}
 @Composable internal fun ModernButton(label:String,onClick:()->Unit,modifier:Modifier=Modifier,enabled:Boolean=true,dark:Boolean=false){
- Button(onClick,modifier.fillMaxWidth().heightIn(min=50.dp),enabled,shape=RectangleShape,colors=ButtonDefaults.buttonColors(containerColor=if(dark)ModernInk else ModernAccent,contentColor=ModernBg),contentPadding=PaddingValues(horizontal=16.dp)){
+ Button(onClick,modifier.fillMaxWidth().heightIn(min=50.dp),enabled,shape=RectangleShape,colors=ButtonDefaults.buttonColors(containerColor=if(dark)ModernInk else NowsetColors.ActionBlue,contentColor=ModernBg),contentPadding=PaddingValues(horizontal=16.dp)){
   Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.SpaceBetween){Text(label);Icon(Icons.Outlined.ArrowForward,null,Modifier.size(18.dp))}
  }
 }

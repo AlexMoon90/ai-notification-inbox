@@ -140,3 +140,32 @@ Explicit group notices now bypass the contextual AI allowance, retain day-only/a
 - Root cause of older meeting links: the opener only held snapshot-specific PendingIntents in a bounded process-local cache. It now also holds a bounded latest-token index keyed by source package and OS shortcut-derived conversation identity. It never substitutes a same-title room or reused Android notification key; canceled tokens are removed and older replays cannot replace newer room tokens. A failed explicit tap refreshes tokens from the connected listener's active notifications, without reclassifying or replaying them. When no usable token exists, the dialog explains the limitation and offers room-name copying and an explicit app launch. PendingIntents are not persisted or invented. Actual third-party conversation launch was not exercised against a private chat; synthetic tests cover routing/cancellation/isolation/reconnect behavior.
 - Shopping now has Delivery / Refund / Ads tabs. Delivery includes completed shipments; returns share the refund tab. Explicitly marked shopping promotions are extracted locally and existing missing promotions are backfilled with paged queries, without external AI replay. Ads do not enter the main new/change count or shipment preview. Now policy behavior and original records are preserved.
 - Validation: final suite 261 tests, zero failures/errors; APK builds passed. Synthetic physical-device shopping tab test passed in 4.682 seconds, covering in-progress and completed delivery, refund and ads separation, and switching back. Updated app installed and reopened. Private database verification found 44 shopping advertisement records, completed backfill marker, no lost original notification IDs, and a clean SQLite quick check. No real messages were sent. Private data and generated APKs remain outside Git.
+
+## 2026-10-06 — NOWSET brand integration (device verification pending)
+
+Source visual truth: `/Users/alexmoon/Downloads/NOWSET UI 디자인 시스템 보드.png` (1491 × 1055).
+User-selected scope: integrate this branding in the existing native Android app; preserve the information architecture and behavior. SVG reconstruction is explicitly preferred in the attached user instructions, overriding the image-to-code skill's generic prohibition on hand-reconstructed vectors. No new web prototype, new onboarding flow, or whole-app dark redesign is in scope.
+
+Asset comparison evidence:
+- First combined comparison: `/private/tmp/nowset-logo-comparison.png`.
+- Final combined comparison: `/private/tmp/nowset-logo-comparison-final.png` (940 × 530).
+- Source brand region cropped to its logo area, rendered near 400px wide; implementation stacked SVG rendered at 1080 × 1032 then scaled to 420px wide to align the wordmark width. Transparent implementation is composited on Mist. These are asset comparisons, not native screen captures.
+- Native implementation screenshot: unavailable. Connected phone disappeared before installation; `adb devices -l` returned no devices and no local AVD was available. `NowsetBrandDeviceTest` is ready to capture synthetic Now/messages/smart screens, the actual About entry/dialog, dark brand component, and platform-rendered launcher icon.
+
+Comparison history:
+- [P2, fixed] Initial slogan was too tightly set and too large relative to the wordmark. Added tracking to outlined slogan paths. N was too small relative to NOWSET; increased symbol scale to match the board's proportions. Initial vertical-leg gradients were too subdued; corrected their axes and stops. Reopened and compared the final combined asset image.
+- [P3] Reconstructed symbol lacks the board's fine glossy highlight, and the existing Archivo-based outlined wordmark is not an official source logo master. Shapes, blue/navy direction, stacked composition and small-icon N recognition are preserved. Replace with official masters if supplied; no further speculative redesign.
+- [Blocker] Native installation, viewport inspection and visual comparison remain unverified because the device is disconnected. Do not treat APK build success or vector previews as passing native UI QA.
+
+Required fidelity surfaces:
+- Typography: retain Archivo/system Korean fallback; outlined logo wordmark and tracked slogan; native large-font behavior awaits device.
+- Spacing/layout: retain existing Modernist screen/menu structure; compact onboarding logo and About logo; Android 12+ uses OS icon/branding slots. No artificial splash hold.
+- Colors/tokens: exact four requested brand colors in NowsetColors; readable muted/action derivatives for small text; semantic error/status colors retained.
+- Image quality: SVG sources, high-resolution alpha PNG derivatives, opaque 512px icon export, adaptive foreground/background and monochrome, light/dark logos. No board pixels shipped.
+- Copy/content: NOWSET label in app/service/settings, English slogan limited to brand surfaces, Korean brand line in onboarding/About. Package/application ID, DB and AI logic unchanged.
+
+Validation: 261 unit tests passed, zero failures/errors; APK and androidTest APK builds passed. Compiled manifest label verified as NOWSET; package remains com.ainotification.inbox. Phone installation attempt failed with device not found. No device test result or screen fidelity pass is claimed.
+
+Full requested implementation/asset/file report: `docs/NOWSET_BRAND_REPORT.txt`.
+
+final result: blocked

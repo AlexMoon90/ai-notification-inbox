@@ -33,11 +33,11 @@ import java.util.Date
 import java.util.Locale
 
 private val Ink = ModernInk
-private val Blue = ModernAccent
+private val Blue = NowsetColors.ActionBlue
 @Composable internal fun InboxTheme(content: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = lightColorScheme(primary=ModernAccent,onPrimary=ModernBg,
-        primaryContainer=Color(0xFFFFF2EF),onPrimaryContainer=Color(0xFF7C1405),
-        secondaryContainer=Color(0xFFD7D3D3),onSecondaryContainer=ModernInk,
+    MaterialTheme(colorScheme = lightColorScheme(primary=NowsetColors.ActionBlue,onPrimary=ModernBg,
+        primaryContainer=NowsetColors.BlueTint,onPrimaryContainer=NowsetColors.DeepNavy,
+        secondaryContainer=NowsetColors.Surface,onSecondaryContainer=ModernInk,
         background=ModernBg,surface=ModernBg,onSurface=ModernInk,onBackground=ModernInk,
         surfaceVariant=ModernSurface,onSurfaceVariant=ModernMuted,outline=ModernInk,
         error=ModernRedText,surfaceContainer=ModernSurface),
@@ -81,6 +81,8 @@ private val Blue = ModernAccent
     val inDetail = selectedId != null || draftId != null || composing || ruleEditor
     val back = { selectedId = null; draftId = null; composing = false; ruleEditor = false }
     var newPolicyRequest by rememberSaveable { mutableIntStateOf(if(startVoice)1 else 0) }
+    var brandAbout by rememberSaveable { mutableStateOf(false) }
+    if(brandAbout)AlertDialog(onDismissRequest={brandAbout=false},text={NowsetAboutContent()},confirmButton={TextButton(onClick={brandAbout=false}){Text("닫기")}})
     var onboarding by rememberSaveable { mutableStateOf(false) }
     if (!preview && onboarding) {
         FirstOnboardingScreen(app, stored, granted, settings, {onboarding=false})
@@ -92,7 +94,7 @@ private val Blue = ModernAccent
             TopAppBar(title = {
                 Column {
                     Text(if (ruleEditor) "기준 추가·수정" else if (selectedId != null) "알림 상세" else if (composing) "새 알림 기준" else if (draftId != null) "기준 확인" else listOf("내 알림", "기준 관리", "설정")[tab], fontWeight = FontWeight.Bold)
-                    if (!inDetail) Text(if (preview) "디자인 미리보기 · 예시 데이터" else "AI Notification Inbox", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (!inDetail) Text(if (preview) "디자인 미리보기 · 예시 데이터" else "NOWSET", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }, navigationIcon = { IconButton(onClick = {if(inDetail)back() else onExit()}) { Icon(Icons.Outlined.ArrowBack, "뒤로") } },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background))
@@ -190,6 +192,7 @@ private val Blue = ModernAccent
                 }
                 else -> {
                     item { OutlinedButton(onClick={onboarding=true},Modifier.fillMaxWidth().testTag("open_onboarding")){Text("처음 설정 안내 다시 보기")} }
+                    item { TextButton(onClick={brandAbout=true},modifier=Modifier.testTag("nowset_about")){Text("NOWSET 앱 정보")} }
                     item { ReplySettingsRow(app.replyPreferences) }
                     item { SectionLabel("수집과 보관") }
                     item { Notice(if (granted) "알림 접근 허용됨" else "알림 접근 꺼짐", "알림 제목과 본문은 이 기기에 저장합니다. 시스템 UI 알림은 목록에서 제외합니다.") }

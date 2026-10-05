@@ -1,0 +1,12 @@
+<resources>
+ <style name="Theme.Inbox" parent="android:style/Theme.Material.Light.NoActionBar">
+  <item name="android:fontFamily">sans</item>
+  <item name="android:windowLightStatusBar">false</item>
+  <item name="android:colorAccent">@color/nowset_blue</item>
+  <item name="android:windowSplashScreenBackground">@color/nowset_splash_background</item>
+  <item name="android:windowSplashScreenAnimatedIcon">@drawable/nowset_symbol_light</item>
+  <item name="android:windowSplashScreenBrandingImage">@drawable/nowset_wordmark_light</item>
+  <item name="android:windowSplashScreenAnimationDuration">0</item>
+  <item name="android:windowBackground">@color/nowset_mist</item>
+ </style>
+</resources>

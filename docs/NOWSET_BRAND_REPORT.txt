@@ -1,0 +1,125 @@
+NOWSET 브랜딩 적용 보고서 — 2026-10-06
+
+상태: 구현 및 APK 빌드 완료. 휴대폰 연결이 끊겨 설치와 실기기 디자인 QA는 보류.
+기존 단위 테스트 261개 통과(실패 0). 실제 화면 확인 전 완료 판정하지 않음.
+
+1. 변경 파일 목록
+- app/src/androidTest/java/com/ainotification/inbox/NowsetBrandDeviceTest.kt
+- app/src/main/java/com/ainotification/inbox/NowsetBrand.kt
+- app/src/main/res/drawable-night/nowset_splash.xml
+- app/src/main/res/drawable-nodpi/nowset_logo_stacked.png
+- app/src/main/res/drawable-nodpi/nowset_logo_stacked_light.png
+- app/src/main/res/drawable/ic_nowset_notification.xml
+- app/src/main/res/drawable/nowset_foreground.xml
+- app/src/main/res/drawable/nowset_monochrome.xml
+- app/src/main/res/drawable/nowset_splash.xml
+- app/src/main/res/drawable/nowset_symbol.xml
+- app/src/main/res/drawable/nowset_symbol_light.xml
+- app/src/main/res/drawable/nowset_wordmark.xml
+- app/src/main/res/drawable/nowset_wordmark_light.xml
+- app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+- app/src/main/res/values-night-v31/styles.xml
+- app/src/main/res/values-night/nowset.xml
+- app/src/main/res/values-v31/styles.xml
+- app/src/main/res/values/nowset.xml
+- assets/branding/nowset_app_icon.png
+- assets/branding/nowset_app_icon.svg
+- assets/branding/nowset_app_icon_512.png
+- assets/branding/nowset_logo_horizontal.png
+- assets/branding/nowset_logo_horizontal.svg
+- assets/branding/nowset_logo_horizontal_light.png
+- assets/branding/nowset_logo_horizontal_light.svg
+- assets/branding/nowset_logo_stacked.png
+- assets/branding/nowset_logo_stacked.svg
+- assets/branding/nowset_logo_stacked_light.png
+- assets/branding/nowset_logo_stacked_light.svg
+- assets/branding/nowset_symbol.png
+- assets/branding/nowset_symbol.svg
+- assets/branding/nowset_symbol_light.png
+- assets/branding/nowset_symbol_light.svg
+- assets/branding/nowset_symbol_monochrome.png
+- assets/branding/nowset_symbol_monochrome.svg
+- docs/NOWSET_BRAND_REPORT.txt
+- scripts/generate_nowset_brand.py
+- scripts/render_nowset_brand.cjs
+- app/src/debug/java/com/ainotification/inbox/DndProbeActivity.kt
+- app/src/main/AndroidManifest.xml
+- app/src/main/java/com/ainotification/inbox/FirstOnboardingUi.kt
+- app/src/main/java/com/ainotification/inbox/HubUi.kt
+- app/src/main/java/com/ainotification/inbox/InboxUi.kt
+- app/src/main/java/com/ainotification/inbox/ModernistDesign.kt
+- app/src/main/java/com/ainotification/inbox/NowAlerts.kt
+- app/src/main/java/com/ainotification/inbox/SmartDashboard.kt
+- app/src/main/res/values/styles.xml
+- design-qa.md
+
+2. 추가 브랜드 자산
+- assets/branding/nowset_app_icon.png
+- assets/branding/nowset_app_icon.svg
+- assets/branding/nowset_app_icon_512.png
+- assets/branding/nowset_logo_horizontal.png
+- assets/branding/nowset_logo_horizontal.svg
+- assets/branding/nowset_logo_horizontal_light.png
+- assets/branding/nowset_logo_horizontal_light.svg
+- assets/branding/nowset_logo_stacked.png
+- assets/branding/nowset_logo_stacked.svg
+- assets/branding/nowset_logo_stacked_light.png
+- assets/branding/nowset_logo_stacked_light.svg
+- assets/branding/nowset_symbol.png
+- assets/branding/nowset_symbol.svg
+- assets/branding/nowset_symbol_light.png
+- assets/branding/nowset_symbol_light.svg
+- assets/branding/nowset_symbol_monochrome.png
+- assets/branding/nowset_symbol_monochrome.svg
+
+3. 앱 이름
+app/src/main/res/values/nowset.xml의 app_name=NOWSET.
+AndroidManifest.xml의 앱·알림 접근 서비스 라벨에서 공통 참조.
+기존 설정 헤더의 임시 브랜드명도 NOWSET으로 교체.
+패키지명/applicationId/DB 키/기존 저장 데이터는 변경하지 않음.
+
+4. 스플래시
+Android 26~30: Mist 배경 + 중앙 세로형 로고.
+Android 31+: OS 기본 스플래시의 N 아이콘과 NOWSET/슬로건 branding 이미지.
+OS가 배치를 관리하므로 Android 12 이상에서 세로형 전체 로고를 억지로 아이콘 슬롯에 넣지 않음.
+야간 스플래시용 Navy 배경·밝은 자산 제공. 별도 대기 시간/추가 화면 없음.
+
+5. 앱 아이콘
+Adaptive Icon: Navy 배경, 별도 N foreground, 테마 아이콘용 monochrome.
+512×512 RGB PNG와 고해상도 투명 모서리 PNG, SVG 제공.
+알림 상태바용 단색 N 아이콘 별도 제공.
+
+6. 테마 색상
+NowsetColors 공통 객체: DeepNavy #0B1F44, VividBlue #2F7BFF,
+CoolGray #94A3B8, Mist #F4F7FB.
+작은 보조 글자는 Muted #5F718D, 흰색 버튼 글자에는 ActionBlue #2163D4로 대비 보완.
+기존 Modernist 토큰과 스마트함 토큰을 연결. 오류색/의미별 상태색은 유지.
+기존 Archivo 및 한글 시스템 폴백 유지. 앱 전체 다크 UI를 새로 구현하지 않음.
+
+7. 로고 적용 화면
+기본 시스템 스플래시, 기존 온보딩의 첫 단계, 설정 > NOWSET 앱 정보.
+메인 Now/메시지/스마트함에는 큰 로고를 반복하지 않음.
+기존 3개 메뉴·데이터·AI 판단/답변·온보딩 단계는 변경하지 않음.
+
+8. 이미지 추출 여부
+자동 크롭한 로고나 원본 디자인 보드 픽셀은 앱에 포함하지 않음.
+N 모양과 그라데이션을 재구성한 SVG가 원본이며, PNG는 해당 벡터를 렌더링한 결과.
+워드마크는 기존 Archivo 글꼴을 윤곽선으로 변환. 공식 원본 벡터의 1:1 복원이라고 주장하지 않음.
+
+9. 향후 정식 디자인 파일 교체
+공식 로고가 제공되면 assets/branding의 동일 이름 자산을 교체할 수 있음.
+재구성본은 보드의 광택/미세한 곡률/워드마크에 차이가 남음.
+정식 마스터가 없는 현재 상태에서의 잔여 P3 보정 사항으로 기록.
+생성: scripts/generate_nowset_brand.py(fonttools 필요),
+렌더링: scripts/render_nowset_brand.cjs(sharp 필요).
+앱에는 별도 폰트/그래픽 런타임 의존성을 추가하지 않음.
+
+10. 실제 Android 단말에서 확인할 항목
+- 런처 NOWSET 이름과 원형/둥근 사각형 마스크의 N 잘림 여부
+- 콜드 스타트 라이트/야간 스플래시 및 기존 메인 화면 전환
+- Now/메시지/스마트함 탐색과 활성 상태 색상
+- 기존 온보딩 첫 단계 로고 및 큰 글자 설정에서 스크롤 가능 여부
+- 설정 > NOWSET 앱 정보와 밝은/어두운 배경의 로고 품질
+- 단색 상태바 아이콘
+준비된 합성 화면 테스트: NowsetBrandDeviceTest.
+현재 연결된 휴대폰/에뮬레이터가 없어 실행하지 못함.

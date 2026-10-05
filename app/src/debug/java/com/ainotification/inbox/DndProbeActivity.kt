@@ -70,7 +70,7 @@ class DndProbeActivity : Activity() {
         val actual=manager.getNotificationChannel(channel.id)
         check(actual.canBypassDnd() && actual.importance==NotificationManager.IMPORTANCE_HIGH){"테스트 채널 설정 확인 필요"}
         val open=PendingIntent.getActivity(this,42,Intent(this,DndProbeActivity::class.java),PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-        manager.notify(42002,Notification.Builder(this,channel.id).setSmallIcon(com.ainotification.inbox.R.drawable.ic_inbox)
+        manager.notify(42002,Notification.Builder(this,channel.id).setSmallIcon(com.ainotification.inbox.R.drawable.ic_nowset_notification)
             .setContentTitle("우리 앱 소리·팝업 테스트").setContentText("이 알림의 소리와 화면 위 팝업을 확인해 주세요.")
             .setContentIntent(open).setAutoCancel(true).build())
         lastPosted=System.currentTimeMillis();prefs.edit().putLong("lastPosted",lastPosted).apply();refresh()

@@ -1,0 +1,7 @@
+<resources>
+ <string name="app_name">NOWSET</string>
+ <color name="nowset_navy">#0B1F44</color>
+ <color name="nowset_blue">#2F7BFF</color>
+ <color name="nowset_mist">#F4F7FB</color>
+ <color name="nowset_splash_background">#F4F7FB</color>
+</resources>

@@ -81,7 +81,7 @@ internal class NowAlerts(private val app: InboxApplication) {
             },PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             val text=row.currentMessageText().ifBlank { row.preview() }.take(500)
             manager.notify("now:${row.snapshotId}",1,Notification.Builder(app,channelId)
-                .setSmallIcon(R.drawable.ic_inbox).setContentTitle("${row.appLabel} · ${notificationDisplayTitle(row)}")
+                .setSmallIcon(R.drawable.ic_nowset_notification).setContentTitle("${row.appLabel} · ${notificationDisplayTitle(row)}")
                 .setContentText(text).setStyle(Notification.BigTextStyle().bigText(text))
                 .setContentIntent(open).setAutoCancel(true).setOnlyAlertOnce(true)
                 .setVisibility(Notification.VISIBILITY_PRIVATE).build())
