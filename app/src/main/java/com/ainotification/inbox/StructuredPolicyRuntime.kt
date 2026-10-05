@@ -20,10 +20,12 @@ internal class StructuredPolicyRuntime(private val engine:JevEngine, private val
         if(allConditions.any { it.getString("type") in listOf("ANY","EMPTY_CONTENT") && it.getString("value").isNotBlank() })
             return JSONObject().put("status","review").put("reason","기준의 조건을 다시 확인해야 하므로 표시합니다.").put("decision_stage","policy_contract")
         val empty=row.hasEmptyContent()
+        val meeting=extractGroupMeeting(row)!=null
         fun local(c:JSONObject):Boolean? = when {
             c.getString("type")=="ANY"->true
             c.getString("type")=="EMPTY_CONTENT" || (c.getString("type")=="CONTENT" && c.getString("value") in setOf("알림 내용이 비어 있는 경우","알림 내용이 비어있음"))->empty
             empty->false
+            c.getString("type")=="CONTENT" && c.getString("value") in setOf("미팅이나 약속에 관한 내용","미팅 관련된 내용") && meeting->true
             else->null
         }
         val questions=JSONObject();val definitions=JSONObject()

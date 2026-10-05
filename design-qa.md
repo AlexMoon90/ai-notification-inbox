@@ -130,3 +130,7 @@ final result: passed
 - Galaxy S23 합성 UI 테스트 최종 16.421초 통과: 최초 안내/무자동호출, 톤+자연어, 오류/동일 요청 재시도, 직접 수정/클립보드 일치, 수정된 초안만 재작성, 원본 열기 콜백, 동의 재표시 없음, 톤만 선택, 생성 중 방 전환 취소, OFF 시 버튼 숨김. 클립보드는 테스트 이전 값으로 복구.
 - UI 테스트 보완: 별도 dialog/sheet의 테스트 표식 연결, 키보드 없는 입력에 불필요한 뒤로가기 제거, 재작성 패널 이동 후 클릭. 원본 앱 열기는 기존 콜백 연결을 검증했고 실제 카카오톡 대화 이동/발송은 수행하지 않았음.
 - 기존 데이터 유지 설치, 테스트 종료 후 일반 앱 복귀. 임시저장/자동 입력/자동 발송 없음. API 원문/초안/키를 로그에 남기지 않음. 구현 범위는 docs/REPLY_ASSISTANT.md 참고.
+
+## 2026-10-06 — Group meeting schedule recovery
+
+Explicit group notices now bypass the contextual AI allowance, retain day-only/ambiguous-time evidence, and support existing meeting-related Now exceptions without overriding room rules. Repair queries only missing meeting-related group sources; 253 unit tests passed and the targeted device repair test passed (6.531s). Private before/after comparison confirmed seven added schedule records, zero lost originals, and a clean SQLite check. A repeated repair added zero records. Updated app installed and reopened. Historical Now alerts were not resent; actual new-message delivery was not simulated. See `docs/GROUP_MEETING_RECOVERY.md`.

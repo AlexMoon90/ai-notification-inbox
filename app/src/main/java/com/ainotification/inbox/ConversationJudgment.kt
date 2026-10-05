@@ -11,7 +11,9 @@ internal fun conversationValues(w:ConversationWindow):List<ConversationValue> {
    val value=runCatching{java.math.BigDecimal(m.value.replace(Regex("[^0-9.]"),"")).multiply(java.math.BigDecimal(if(m.value.contains("만"))10000 else 1)).longValueExact()}.getOrNull()
    if(value!=null)out+=ConversationValue("V${out.size}",e.id,m.value,value)
   }
-  Regex("(?:(?:20\\d{2}년\\s*)?(?:\\d{1,2}월\\s*)?\\d{1,2}일|[월화수목금토일]요일|오늘|내일|모레)?\\s*(?:오전|오후)?\\s*(?:[0-2]?\\d:[0-5]\\d|\\d{1,2}시(?:\\s*\\d{1,2}분)?)").findAll(e.text).take(4).forEach{m->out+=ConversationValue("V${out.size}",e.id,m.value.trim())}
+  val day="""(?:(?:20\d{2}년\s*)?(?:\d{1,2}월\s*)?\d{1,2}일|[월화수목금토일]요일|오늘|내일|모레)"""
+  val time="""(?:(?:오전|오후)?\s*(?:[0-2]?\d:[0-5]\d|\d{1,2}시(?:\s*\d{1,2}분)?))"""
+  Regex("$day(?:\\s*$time)?|$time").findAll(e.text).take(4).forEach{m->out+=ConversationValue("V${out.size}",e.id,m.value.trim())}
  }
  return out.take(60)
 }

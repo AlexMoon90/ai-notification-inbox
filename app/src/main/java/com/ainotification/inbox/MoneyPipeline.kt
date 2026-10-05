@@ -24,6 +24,11 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
  fun wake(){signal.trySend(Unit)}
  fun start(scope:CoroutineScope){scope.launch {
   db.structured().removeOwnEvents(context.packageName)
+  // Upgrade existing group notices locally once; no historical Now replay or AI calls.
+  if(!limits.getBoolean("group-meeting-repair-v1",false))try {
+   val repaired=lock.withLock { repairGroupMeetings(db,clock()) }
+   limits.edit().putBoolean("group-meeting-repair-v1",true).putInt("group-meeting-repair-count",repaired).apply()
+  }catch(e:CancellationException){throw e}catch(_:Exception){ /* Retry safely on next launch. */ }
   while(isActive){
    if(replay.progress.value.active){
     val p=replay.prefs
@@ -75,7 +80,7 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
    val event=ReceiptSenders(context).enrich(row,receipt)
    db.withTransaction{dao.removeEvent(row.snapshotId);dao.insertEvent(StructuredEvent(event.id,row.snapshotId,"money",moneyLabels.getValue(event.transactionType),row.appLabel,row.packageName,row.postedTime,false,event.createdAt,event.updatedAt));dao.saveMoney(event);settleObligations(db,event);dao.saveProcessing(StructuredProcessing(row.snapshotId,"done"))};return@withLock
   }
-  extractLife(row)?.let{persistLife(db,row,it,clock());return@withLock}
+  (extractGroupMeeting(row) ?: extractLife(row))?.let{persistLife(db,row,it,clock());return@withLock}
   if(force)dao.removeEvent(row.snapshotId)
   if(messageLike(row) && !row.isGroupSummary && !row.hasEmptyContent()){
    ConversationPipeline(context,db,engine,{budget("judgment")},clock).process(row);return@withLock
