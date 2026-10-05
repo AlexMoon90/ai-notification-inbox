@@ -55,22 +55,27 @@ class NotificationOpener(private val capacity: Int = 500) {
     private val targets = object : LinkedHashMap<String, PendingIntent>() {
         override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, PendingIntent>?) = size > capacity
     }
-    @Synchronized fun update(row: CapturedNotification, intent: PendingIntent?) {
-        if (intent != null) targets[row.snapshotId] = intent
+    private val rooms = object : LinkedHashMap<String, Pair<Long,PendingIntent>>() {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Pair<Long,PendingIntent>>?) = size > capacity
     }
-    @Synchronized fun clear() { targets.clear() }
-    @Synchronized fun hasTarget(row: CapturedNotification) = targets.containsKey(row.snapshotId)
+    private fun roomKey(row:CapturedNotification):String? = row.conversationIdentity?.takeIf{it.isNotBlank() && !row.isGroupSummary}?.let{"${row.packageName}:$it"}
+    @Synchronized fun update(row: CapturedNotification, intent: PendingIntent?) {
+        if (intent == null || row.isGroupSummary) return
+        targets[row.snapshotId] = intent
+        roomKey(row)?.let{key->if(row.postedTime >= (rooms[key]?.first ?: Long.MIN_VALUE)){rooms.remove(key);rooms[key]=row.postedTime to intent}}
+    }
+    @Synchronized fun clear() { targets.clear(); rooms.clear() }
+    @Synchronized fun hasTarget(row: CapturedNotification) = targets.containsKey(row.snapshotId) || roomKey(row)?.let{rooms.containsKey(it)}==true
     @Synchronized fun open(row: CapturedNotification, context: Context): Boolean {
-        val intent = targets[row.snapshotId] ?: return false
-        return try {
-            // A successful send is not proof of an Activity launch. On API 34+ the
-            // visible sender must explicitly contribute its launch privileges.
+        // Only an OS shortcut-derived room identity permits reuse. Titles/Android keys can collide.
+        val options=listOfNotNull(targets[row.snapshotId],roomKey(row)?.let{rooms[it]?.second}).distinct()
+        for(intent in options)try {
             intent.send(context, 0, null, null, null, null, notificationLaunchOptions()?.toBundle())
-            true
+            return true
         } catch (_: PendingIntent.CanceledException) {
-            targets.remove(row.snapshotId)
-            false
-        } catch (_: SecurityException) { false }
+            targets.entries.removeAll{it.value==intent};rooms.entries.removeAll{it.value.second==intent}
+        } catch (_: SecurityException) { }
+        return false
     }
 }
 

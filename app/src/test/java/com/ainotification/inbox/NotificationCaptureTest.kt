@@ -181,4 +181,34 @@ class NotificationCaptureTest {
         intent.cancel()
         assertFalse(opener.open(row, context))
     }
+    @Test fun oldSnapshotCanUseNewTokenOnlyFromSameStableRoom(){
+        val row=previewNotifications()[0].copy(snapshotId="old-room-message",packageName="com.kakao.talk",conversationIdentity="room-one",isGroupSummary=false)
+        val old=PendingIntent.getActivity(context,91,Intent(context,MainActivity::class.java),PendingIntent.FLAG_IMMUTABLE)
+        val fresh=PendingIntent.getActivity(context,92,Intent(context,MainActivity::class.java),PendingIntent.FLAG_IMMUTABLE)
+        val opener=NotificationOpener();opener.update(row,old);old.cancel()
+        opener.update(row.copy(snapshotId="new-room-message"),fresh)
+        assertTrue(opener.open(row,context))
+        assertFalse(opener.open(row.copy(snapshotId="other",conversationIdentity="room-two"),context))
+        assertFalse(opener.open(row.copy(snapshotId="other-app",packageName="other.app"),context))
+        opener.clear();assertFalse(opener.open(row,context))
+        opener.update(row.copy(snapshotId="after-reconnect"),fresh)
+        assertTrue(opener.open(row,context))
+    }
+    @Test fun summaryAndMatchingTitleNeverSupplyRoomTarget(){
+        val row=previewNotifications()[0].copy(snapshotId="old",conversationIdentity="stable-room",isGroupSummary=false,title="동일한 이름")
+        val pi=PendingIntent.getActivity(context,93,Intent(context,MainActivity::class.java),PendingIntent.FLAG_IMMUTABLE)
+        val opener=NotificationOpener();opener.update(row.copy(snapshotId="summary",isGroupSummary=true),pi)
+        opener.update(row.copy(snapshotId="other",conversationIdentity="different-room"),pi)
+        assertFalse(opener.open(row,context))
+    }
+
+    @Test fun olderReplayDoesNotReplaceNewerRoomToken(){
+        val base=previewNotifications()[0].copy(snapshotId="original",conversationIdentity="same-room",isGroupSummary=false)
+        val latest=PendingIntent.getActivity(context,94,Intent(context,MainActivity::class.java),PendingIntent.FLAG_IMMUTABLE)
+        val old=PendingIntent.getActivity(context,95,Intent(context,MainActivity::class.java),PendingIntent.FLAG_IMMUTABLE)
+        val opener=NotificationOpener();opener.update(base.copy(snapshotId="latest",postedTime=200),latest)
+        opener.update(base.copy(snapshotId="replayed",postedTime=100),old);old.cancel()
+        assertTrue(opener.open(base,context))
+    }
+
 }

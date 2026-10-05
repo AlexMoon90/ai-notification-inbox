@@ -7,7 +7,7 @@ internal val requestTypes=setOf("bill","billing","payment_request","overdue","sc
 internal val accountTypes=setOf("deposit","withdrawal","transfer_in","transfer_out","refund")
 internal val transactionTypes=setOf("payment","recurring_payment","transfer_out","refund","cancellation")
 internal fun obligationStatus(m:MoneyEvent,now:Long)=if(m.status in setOf("pending","processing") && m.dueAt!=null && m.dueAt<now)"overdue" else m.status
-internal val informationStatuses=mapOf("pending" to "미처리","processing" to "처리 중","completed" to "처리 완료","overdue" to "미납","cancelled" to "취소","unknown" to "확인 필요","candidate" to "확인 필요","confirmed" to "확정","changed" to "변경","ordered" to "주문 접수","preparing" to "배송 준비","shipping" to "배송 중","arriving_today" to "오늘 도착","delivered" to "도착 완료","returning" to "반품 중","returned" to "반품 완료","refunded" to "환불 완료","filled" to "체결","price" to "가격 알림","recorded" to "기록")
+internal val informationStatuses=mapOf("advertisement" to "쇼핑 광고","pending" to "미처리","processing" to "처리 중","completed" to "처리 완료","overdue" to "미납","cancelled" to "취소","unknown" to "확인 필요","candidate" to "확인 필요","confirmed" to "확정","changed" to "변경","ordered" to "주문 접수","preparing" to "배송 준비","shipping" to "배송 중","arriving_today" to "오늘 도착","delivered" to "도착 완료","returning" to "반품 중","returned" to "반품 완료","refunded" to "환불 완료","filled" to "체결","price" to "가격 알림","recorded" to "기록")
 internal fun periodStart(period:String,now:Long,zone:ZoneId=ZoneId.systemDefault()):Long {
  val date=Instant.ofEpochMilli(now).atZone(zone).toLocalDate()
  val start=when(period){"오늘"->date;"이번 주"->date.minusDays((date.dayOfWeek.value-1).toLong());"이번 달"->date.withDayOfMonth(1);"최근 3개월"->date.minusMonths(2).withDayOfMonth(1);else->return Long.MIN_VALUE}

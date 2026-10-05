@@ -42,7 +42,19 @@ class MainActivity : ComponentActivity() {
                     AlertDialog(
                         onDismissRequest = { unavailableRow = null },
                         title = { Text("이 알림으로 바로 이동할 수 없어요") },
-                        text = { Text("대신 ${row.appLabel} 앱을 열까요? 해당 대화나 내용은 앱에서 찾아주세요.") },
+                        text = { Column {
+                            Text(if(messageLike(row))"이 대화방의 바로가기를 현재 사용할 수 없어요. 같은 대화방의 새 알림이 들어오면 다시 연결할 수 있습니다." else "원래 앱에서 제공한 알림 바로가기를 현재 사용할 수 없어요.")
+                            if(messageLike(row)) {
+                                val room=notificationDisplayTitle(row)
+                                Text("찾을 대화방: $room")
+                                TextButton(onClick={
+                                    val clipboard=getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                                    clipboard.setPrimaryClip(android.content.ClipData.newPlainText("대화방 이름",room))
+                                    Toast.makeText(this@MainActivity,"대화방 이름을 복사했어요",Toast.LENGTH_SHORT).show()
+                                }){Text("대화방 이름 복사")}
+                            }
+                            Text("${row.appLabel} 앱을 열어 직접 찾을 수 있습니다.")
+                        } },
                         confirmButton = { TextButton(onClick = {
                             unavailableRow = null
                             openSourceApp(row.packageName)
@@ -56,6 +68,8 @@ class MainActivity : ComponentActivity() {
     internal fun openNotification(row: CapturedNotification) {
         // Called only by an explicit tap while this Activity is resumed.
         if (!lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)) return
+        if (app.opener.open(row, this)) return
+        InboxNotificationListener.refreshOpenTargets()
         if (app.opener.open(row, this)) return
         val sms=smsSenderIntent(row)
         if(sms!=null)try{startActivity(sms);return}

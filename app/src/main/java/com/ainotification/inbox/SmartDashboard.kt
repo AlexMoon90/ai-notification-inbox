@@ -117,6 +117,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  var selected by rememberSaveable{mutableStateOf<String?>(null)}
  var section by rememberSaveable{mutableStateOf("거래 내역")}
  var filter by rememberSaveable{mutableStateOf("전체")}
+ LaunchedEffect(category){if(category=="delivery" && filter !in shoppingTabs)filter="배송"}
  var period by rememberSaveable{mutableStateOf("전체")}
  var account by rememberSaveable{mutableStateOf("전체 계좌")}
  var updatesOnly by rememberSaveable{mutableStateOf(false)}
@@ -148,8 +149,9 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  val groups=current.groupBy{if(showWork && it.event.category=="todo" && it.context?.relationship=="work_likely")"work" else it.event.category}
  val detail=accountRows.find{it.event.id==selected} ?: projected.find{it.event.id==selected}
  fun seenKey(e:StructuredEntry)="${e.event.sourceNotificationId}:${e.event.updatedAt}"
- val fresh=current.count{!it.event.isChanged && seenKey(it) !in seen}
- val changed=current.count{it.event.isChanged && seenKey(it) !in seen}
+ val updates=current.filter{it.life?.status!="advertisement"}
+ val fresh=updates.count{!it.event.isChanged && seenKey(it) !in seen}
+ val changed=updates.count{it.event.isChanged && seenKey(it) !in seen}
  val relatedIds=remember(detail,stored,debitAnswers,learnedRules,paymentProjection){
   val d=detail
   if(d==null)emptyList() else (listOf(d.event.sourceNotificationId)+paymentProjection.sources[d.event.id].orEmpty()+debitPairs.filter{debitDecision(it,debitAnswers,learnedRules)=="debit" && d.event.id in listOf(it.payment.event.id,it.withdrawal.event.id)}.flatMap{listOf(it.payment.event.sourceNotificationId,it.withdrawal.event.sourceNotificationId)}+d.context?.let{evidenceIds(it.evidenceIds)}.orEmpty()+
@@ -158,7 +160,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
    d.money?.settledByTransactionEventId?.let{id->listOfNotNull(stored.find{it.event.id==id}?.event?.sourceNotificationId)}.orEmpty()).distinct()
  }
  val originals by produceState<List<CapturedNotification>?>(null,selected,relatedIds){value=null;value=relatedIds.mapNotNull{loadOriginal(it)}}
- fun enter(key:String,target:String="거래 내역"){category=key;section=if(target=="거래 내역")"거래 내역" else target;filter="전체";period=if(target=="통계")"이번 주" else "전체";account="전체 계좌";query=""}
+ fun enter(key:String,target:String="거래 내역"){category=key;section=if(target=="거래 내역")"거래 내역" else target;filter=if(key=="delivery")"배송" else "전체";period=if(target=="통계")"이번 주" else "전체";account="전체 계좌";query=""}
  fun back(){if(selected!=null){selected=null}else{category=null;updatesOnly=false;query=""}}
  BackHandler(selected!=null || category!=null || updatesOnly){back()}
  fun markRows(rows:List<StructuredEntry>){
@@ -201,9 +203,11 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
     Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(5.dp)){Icon(categoryIcon(key),null,tint=DashboardBlue,modifier=Modifier.size(20.dp));Text(smartCategories[key] ?: key,Modifier.weight(1f),fontWeight=FontWeight.Bold,fontSize=14.sp,color=DashboardInk);Icon(Icons.Default.KeyboardArrowRight,null,Modifier.size(16.dp),tint=DashboardMuted)}
     val active=when(key){"delivery"->rows.count{it.life?.status in setOf("ordered","preparing","shipping","arriving_today")};"schedule"->rows.count{it.life?.scheduledAt?.let{t->t>=now}==true && it.life?.status!="cancelled"};else->rows.size}
     Text(when(key){"delivery"->"진행 ${active}건";"schedule"->"예정 ${active}건";else->"${rows.size}개 기록"},fontSize=12.sp,fontWeight=FontWeight.Medium,color=DashboardInk)
-    val unseen=rows.count{seenKey(it) !in seen};val changes=rows.count{it.event.isChanged && seenKey(it) !in seen}
+    val informationRows=rows.filter{it.life?.status!="advertisement"}
+    val unseen=informationRows.count{seenKey(it) !in seen};val changes=informationRows.count{it.event.isChanged && seenKey(it) !in seen}
     if(unseen>0)Text("새 정보 ${unseen-changes} · 변경 $changes",fontSize=10.sp,color=DashboardBlue)
-    rows.firstOrNull()?.let{e->Text(entryTitle(e),fontSize=12.sp,color=DashboardInk,maxLines=1,overflow=TextOverflow.Ellipsis);Text(e.life?.dateText ?: entryStatus(e,now) ?: "최근 수신 기록",fontSize=10.sp,color=DashboardMuted,maxLines=2)} ?: Text("정보가 들어오면 정리해요",fontSize=11.sp,color=DashboardMuted)
+    if(key=="delivery" && rows.size>informationRows.size)Text("광고 ${rows.size-informationRows.size}건",fontSize=10.sp,color=DashboardMuted)
+    informationRows.firstOrNull()?.let{e->Text(entryTitle(e),fontSize=12.sp,color=DashboardInk,maxLines=1,overflow=TextOverflow.Ellipsis);Text(e.life?.dateText ?: entryStatus(e,now) ?: "최근 수신 기록",fontSize=10.sp,color=DashboardMuted,maxLines=2)} ?: Text("정보가 들어오면 정리해요",fontSize=11.sp,color=DashboardMuted)
    }
   }
  }
@@ -345,13 +349,17 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
    }
    category!=null || updatesOnly || query.isNotBlank() -> {
     val key=category
-    val filters=when(key){"delivery"->listOf("전체","주문","배송 준비","배송 중","오늘 도착","완료","반품","환불");"schedule"->listOf("전체","오늘","예정","변경","확인 필요","완료","취소","지난 일정");else->listOf("전체")}
-    if(key!=null)item{choices(filters,filter){filter=it}}
+    val filters=when(key){"delivery"->shoppingTabs;"schedule"->listOf("전체","오늘","예정","변경","확인 필요","완료","취소","지난 일정");else->listOf("전체")}
+    if(key=="delivery")item{
+     TabRow(selectedTabIndex=shoppingTabs.indexOf(filter).coerceAtLeast(0)){
+      shoppingTabs.forEach { tab->Tab(selected=filter==tab,onClick={filter=tab},modifier=Modifier.testTag("shopping_tab_$tab"),text={Text(tab)}) }
+     }
+    }else if(key!=null)item{choices(filters,filter){filter=it}}
     val sourceRows=if(key==null)current else groups[key].orEmpty()
-    val rows=sourceRows.filter{categoryFilter(it,filter,now) && (!updatesOnly || seenKey(it) in updateSnapshot) && (query.isBlank() || (entryTitle(it)+it.money?.let(::moneySourceLabel)).contains(query,true))}
+    val rows=sourceRows.filter{(if(key=="delivery")shoppingFilter(it,filter) else categoryFilter(it,filter,now)) && (!updatesOnly || seenKey(it) in updateSnapshot) && (query.isBlank() || (entryTitle(it)+it.money?.let(::moneySourceLabel)).contains(query,true))}
     if(rows.isEmpty())item{Text("해당하는 정보가 없어요.",color=DashboardMuted,modifier=Modifier.padding(16.dp))}
     items(rows,key={it.event.id}){record(it)}
-    if(filter=="전체" && key in setOf("delivery","schedule")){
+    if(filter=="전체" && key=="schedule"){
      item{Text("지난 알림 기록",fontSize=13.sp,fontWeight=FontWeight.Bold)}
      val history=stored.filter{it.event.category==key && it.event.id !in sourceRows.map{r->r.event.id} && validSmartEntry(it)}
      items(history,key={"history:${it.event.id}"}){record(it)}
@@ -360,7 +368,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
    else -> {
     item{Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)){
      Surface(color=DashboardBlue,shape=RoundedCornerShape(20.dp),modifier=Modifier.testTag("smart_concept_2")){Text("대시보드",Modifier.padding(horizontal=14.dp,vertical=6.dp),fontSize=12.sp,color=Color.White)}
-     TextButton(onClick={updateSnapshot=current.filter{seenKey(it) !in seen}.map{seenKey(it)}.toSet();updatesOnly=true},modifier=Modifier.testTag("smart_all_changes")){Text("새 정보 $fresh · 변경 $changed",fontSize=12.sp)}
+     TextButton(onClick={updateSnapshot=updates.filter{seenKey(it) !in seen}.map{seenKey(it)}.toSet();updatesOnly=true},modifier=Modifier.testTag("smart_all_changes")){Text("새 정보 $fresh · 변경 $changed",fontSize=12.sp)}
     }}
     item{Surface(color=Color(0xffeaf3ff),shape=RoundedCornerShape(20.dp),modifier=Modifier.testTag("smart_category_money").clickable{enter("money")} ){
      Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(4.dp)){

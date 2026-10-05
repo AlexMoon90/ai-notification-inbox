@@ -8,6 +8,9 @@ import kotlinx.coroutines.launch
 
 class InboxNotificationListener : NotificationListenerService() {
     companion object {
+        @Volatile private var connectedInstance:InboxNotificationListener?=null
+        internal fun refreshOpenTargets(){connectedInstance?.refreshTargets()}
+
         // Instrumentation can inspect public notification metadata on a debug device.
         // Never populated in a non-debuggable build; cleared with the service lifecycle.
         @Volatile internal var diagnosticInstance: InboxNotificationListener? = null
@@ -80,6 +83,7 @@ class InboxNotificationListener : NotificationListenerService() {
     }
     override fun onListenerConnected() {
         super.onListenerConnected()
+        connectedInstance=this
         if (applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0) {
             diagnosticInstance = this
         }
@@ -89,6 +93,11 @@ class InboxNotificationListener : NotificationListenerService() {
         }
         try { activeNotifications?.forEach { capture(it, false) } }
         catch (_: Exception) { app.captureError.value = "현재 알림을 읽지 못했습니다. 알림 접근 설정을 확인해 주세요." }
+    }
+    private fun refreshTargets(){
+        runCatching { activeNotifications?.take(500)?.sortedBy{it.postTime}?.forEach { sbn ->
+            app.opener.update(normalizer.normalize(sbn),sbn.notification.contentIntent)
+        } }
     }
     override fun onNotificationPosted(sbn: StatusBarNotification?) { sbn?.let { capture(it) } }
     private fun capture(sbn: StatusBarNotification, live: Boolean = true) {
@@ -111,12 +120,14 @@ class InboxNotificationListener : NotificationListenerService() {
     }
     // Keep the original token after removal; its creator decides when it is canceled.
     override fun onListenerDisconnected() {
+        if (connectedInstance === this) connectedInstance = null
         if (diagnosticInstance === this) diagnosticInstance = null
         app.listenerConnected.value = false
         runCatching { app.nowAlerts.stop() }
         super.onListenerDisconnected()
     }
     override fun onDestroy() {
+        if (connectedInstance === this) connectedInstance = null
         if (diagnosticInstance === this) diagnosticInstance = null
         app.listenerConnected.value = false
         runCatching { app.nowAlerts.stop() }
