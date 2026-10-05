@@ -83,7 +83,17 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  val source=remember(app,fixture,fixtureEntries){if(fixture)flowOf(fixtureEntries) else app.database.structured().observe()}
  val stored by source.collectAsStateWithLifecycle(initialValue=emptyList())
  val now=System.currentTimeMillis()
- val current=remember(stored){currentInformation(stored)}
+ val base=remember(stored){currentInformation(stored)}
+ val debitPairs=remember(base){debitCandidates(base)}
+ var debitAnswers by remember{mutableStateOf(if(fixture)emptyMap<String,String>() else prefs.all.filterKeys{it.startsWith("debit:")}.mapNotNull{(k,v)->(v as? String)?.let{k.removePrefix("debit:") to it}}.toMap())}
+ var deferredDebit by remember{mutableStateOf(emptySet<String>())}
+ val projected=remember(stored,debitPairs,debitAnswers){applyDebitConfirmations(stored,debitPairs,debitAnswers)}
+ val current=remember(base,debitPairs,debitAnswers){applyDebitConfirmations(base,debitPairs,debitAnswers)}
+ fun answerDebit(pair:DebitCandidate,answer:String){
+  debitAnswers=debitAnswers+(pair.key to answer)
+  if(!fixture)prefs.edit().putString("debit:${pair.key}",answer).apply()
+ }
+
  var seen by remember{mutableStateOf(if(fixture)emptySet<String>() else prefs.getStringSet("ids",emptySet()).orEmpty().toSet())}
  var accepted by remember{mutableStateOf(prefs.getStringSet("personal-categories",emptySet()).orEmpty().toSet())}
  var category by rememberSaveable{mutableStateOf<String?>(null)}
@@ -99,13 +109,13 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  var statusError by remember{mutableStateOf<String?>(null)}
  val showWork=current.count{it.event.category=="todo" && it.context?.relationship=="work_likely"}>=3
  val groups=current.groupBy{if(showWork && it.event.category=="todo" && it.context?.relationship=="work_likely")"work" else it.event.category}
- val detail=stored.find{it.event.id==selected}
+ val detail=projected.find{it.event.id==selected}
  fun seenKey(e:StructuredEntry)="${e.event.sourceNotificationId}:${e.event.updatedAt}"
  val fresh=current.count{!it.event.isChanged && seenKey(it) !in seen}
  val changed=current.count{it.event.isChanged && seenKey(it) !in seen}
- val relatedIds=remember(detail,stored){
+ val relatedIds=remember(detail,stored,debitAnswers){
   val d=detail
-  if(d==null)emptyList() else (listOf(d.event.sourceNotificationId)+d.context?.let{evidenceIds(it.evidenceIds)}.orEmpty()+
+  if(d==null)emptyList() else (listOf(d.event.sourceNotificationId)+debitPairs.filter{debitAnswers[it.key]=="debit" && d.event.id in listOf(it.payment.event.id,it.withdrawal.event.id)}.flatMap{listOf(it.payment.event.sourceNotificationId,it.withdrawal.event.sourceNotificationId)}+d.context?.let{evidenceIds(it.evidenceIds)}.orEmpty()+
    d.life?.referenceKey?.let{ref->stored.filter{it.life?.referenceKey==ref && it.life?.provider==d.life.provider && it.life?.kind==d.life.kind}.map{it.event.sourceNotificationId}}.orEmpty()+
    d.money?.referenceKey?.let{ref->stored.filter{it.money?.referenceKey==ref && it.money?.provider==d.money.provider && it.money?.accountHint==d.money.accountHint && it.money?.transactionType==d.money.transactionType}.map{it.event.sourceNotificationId}}.orEmpty()+
    d.money?.settledByTransactionEventId?.let{id->listOfNotNull(stored.find{it.event.id==id}?.event?.sourceNotificationId)}.orEmpty()).distinct()
@@ -137,6 +147,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
       if(seenKey(e) !in seen)Text(if(e.event.isChanged)"변경" else "●",modifier=Modifier.testTag("smart_unseen_${e.event.sourceNotificationId}"),fontSize=10.sp,color=Color(0xffec6870))}
      e.money?.let{m->
       if(!compact)moneyDisplayAmount(m)?.let{Text(it,fontSize=15.sp,fontWeight=FontWeight.Bold,color=if(m.direction=="in")Color(0xff008b65) else DashboardInk)}
+      m.paymentMethod?.let{Text(it,fontSize=11.sp,color=DashboardBlue)}
       moneySourceLabel(m)?.let{Text(it,fontSize=11.sp,color=DashboardMuted,maxLines=if(compact)1 else Int.MAX_VALUE,overflow=TextOverflow.Ellipsis)}
      }
      val date=e.life?.dateText ?: e.context?.dateTimeText
@@ -161,8 +172,21 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  }
  @Composable fun choices(values:List<String>,selectedValue:String,onSelect:(String)->Unit){Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(6.dp)){values.forEach{value->FilterChip(selectedValue==value,{onSelect(value)},label={Text(value,fontSize=12.sp)},modifier=Modifier.testTag("smart_filter_$value"))}}}
  @Composable fun metric(label:String,value:String){Row(Modifier.fillMaxWidth().padding(vertical=6.dp)){Text(label,Modifier.weight(1f),fontSize=13.sp,color=DashboardMuted);Text(value,fontSize=16.sp,fontWeight=FontWeight.SemiBold,color=DashboardInk)}}
+ @Composable fun debitQuestion(pair:DebitCandidate){
+  Surface(color=Color(0xffeaf3ff),shape=RoundedCornerShape(12.dp),modifier=Modifier.fillMaxWidth().testTag("debit_question")){
+   Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(6.dp)){
+    Text("체크카드 결제인가요?",fontWeight=FontWeight.Bold)
+    Text("삼성 월렛 · ${entryTitle(pair.payment)} · ${moneyText(pair.payment.money!!.transactionAmount!!)}",fontSize=12.sp)
+    Text("결제 ${formatTime(eventTime(pair.payment))}\n계좌 출금 ${formatTime(eventTime(pair.withdrawal))} · ${moneySourceLabel(pair.withdrawal.money!!) ?: pair.withdrawal.event.sourceApp}",fontSize=12.sp)
+    Text("2분 이내 같은 금액의 출금이 있어요. 같은 거래인지 확인해 주세요. 이 거래에만 적용하며 지출은 한 번만 계산해요.",fontSize=12.sp)
+    Row{TextButton(onClick={answerDebit(pair,"debit")},modifier=Modifier.testTag("debit_yes")){Text("네, 체크카드")};TextButton(onClick={answerDebit(pair,"separate")},modifier=Modifier.testTag("debit_no")){Text("다른 거래예요")}}
+    TextButton(onClick={deferredDebit=deferredDebit+pair.key}){Text("나중에 확인")}
+   }
+  }
+ }
  fun LazyListScope.moneyItems(section:String){
     val moneyRows=current.filter{it.money!=null}
+    if(section!="통계")debitPairs.firstOrNull{it.key !in debitAnswers && it.key !in deferredDebit}?.let{pair->item{debitQuestion(pair)}}
     item{choices(if(section=="통계")listOf("이번 주","이번 달","최근 3개월") else listOf("전체","오늘","이번 주","이번 달","최근 3개월"),period){period=it}}
     if(section=="통계"){
      val summary=summarizeMoney(moneyRows,period,now)
@@ -176,7 +200,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
      items(summary.merchants){(label,value)->metric(label,moneyText(value))}
      item{Text("수집된 완료 알림 기준입니다. 계좌 출금은 결제 지출에 더하지 않으며, 미확정·청구·받기 전 송금은 제외합니다. 누락·중복 알림이 있을 수 있어 은행 명세서 합계와 다를 수 있습니다. 분야 분류 근거가 없는 거래에는 지출 분야를 붙이지 않습니다.",fontSize=11.sp,color=DashboardMuted)}
     }else{
-     if(section=="거래 내역")item{choices(listOf("전체","카드","계좌이체","페이","정기결제","환불·취소"),filter){filter=it}}
+     if(section=="거래 내역")item{choices(listOf("전체","카드","체크카드","신용카드","계좌이체","페이","정기결제","환불·취소"),filter){filter=it}}
      if(section=="계좌 입출금"){
       val accounts=moneyRows.mapNotNull{it.money?.let(::moneySourceLabel)?.takeIf{_ -> it.money.accountHint!=null}}.distinct()
       if(accounts.isNotEmpty())item{choices(listOf("전체 계좌")+accounts,account){account=it}}
@@ -235,6 +259,10 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
      item{moneySourceLabel(m)?.let{Text(it,color=DashboardMuted)}}
      m.balanceAfter?.let{item{metric("거래 후 잔액",moneyText(it))}}
      m.paymentMethod?.let{item{metric("결제수단",it)}}
+     debitPairs.firstOrNull{e.event.id in listOf(it.payment.event.id,it.withdrawal.event.id)}?.let{pair->
+      if(pair.key !in debitAnswers)item{debitQuestion(pair)}
+      else item{TextButton(onClick={debitAnswers=debitAnswers-pair.key;deferredDebit=deferredDebit-pair.key;if(!fixture)prefs.edit().remove("debit:${pair.key}").apply()}){Text("결제 연결 다시 확인")}}
+     }
      if(m.recurring)item{chip("정기결제")}
      m.dueAt?.let{item{metric("납부기한",formatTime(it))}}
      entryStatus(e,now)?.let{item{chip(it)}}

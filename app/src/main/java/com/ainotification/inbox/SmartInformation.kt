@@ -18,7 +18,7 @@ internal fun matchesMoney(e:StructuredEntry,section:String,filter:String):Boolea
  val m=e.money ?: return false
  val included=when(section){"계좌 입출금"->m.transactionType in accountTypes;"내야 할 돈"->m.transactionType in requestTypes;"거래 내역"->m.transactionType in transactionTypes;else->true}
  if(!included)return false
- return when(filter){"카드"->m.paymentMethod?.contains("카드")==true || m.provider?.endsWith("카드")==true;"계좌이체"->m.transactionType in setOf("transfer_in","transfer_out");"페이"->m.provider?.contains("페이")==true;"정기결제"->m.recurring;"환불·취소"->m.transactionType in setOf("refund","cancellation");else->true}
+ return when(filter){"체크카드"->m.paymentMethod=="체크카드";"신용카드"->m.paymentMethod=="신용카드";"카드"->m.paymentMethod?.contains("카드")==true || m.provider?.endsWith("카드")==true;"계좌이체"->m.transactionType in setOf("transfer_in","transfer_out");"페이"->m.provider?.contains("페이")==true;"정기결제"->m.recurring;"환불·취소"->m.transactionType in setOf("refund","cancellation");else->true}
 }
 internal fun validSmartEntry(e:StructuredEntry):Boolean = when(e.event.category){
  "money"->e.money!=null
