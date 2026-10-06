@@ -164,6 +164,10 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  fun back(){if(selected!=null){selected=null}else{category=null;updatesOnly=false;query=""}}
  BackHandler(selected!=null || category!=null || updatesOnly){back()}
  fun markRows(rows:List<StructuredEntry>){
+  if(!fixture && rows.isNotEmpty())scope.launch(Dispatchers.IO){
+   app.nowAlerts.acknowledge(rows.flatMap{e->listOf(e.event.sourceNotificationId)+
+    paymentProjection.sources[e.event.id].orEmpty()}.distinct())
+  }
   val next=seen+rows.map{seenKey(it)}
   if(next!=seen){seen=next;if(!fixture)prefs.edit().putStringSet("ids",next).apply()}
  }

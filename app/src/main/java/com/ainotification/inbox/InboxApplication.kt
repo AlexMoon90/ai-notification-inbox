@@ -9,6 +9,7 @@ import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.*
 
 
@@ -25,6 +26,7 @@ class InboxApplication : Application() {
         displayIndexer.start(scope)
         nowQueue.start(scope)
         structured.start(scope)
+        scope.launch { runCatching { nowAlerts.restoreReadState() } }
     }
     val database by lazy { Room.databaseBuilder(this, InboxDatabase::class.java, "inbox.db").addMigrations(object : androidx.room.migration.Migration(1, 2) {
         override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {

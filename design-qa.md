@@ -172,3 +172,11 @@ Limits: actual cold-start splash (light/night), Android 26–30, launcher home-s
 Full requested implementation/asset/file report: `docs/NOWSET_BRAND_REPORT.txt`.
 
 final result: pass with documented P3 differences and untested surfaces
+
+
+## 2026-10-06 — Read notification badges and missing schedules
+
+- Connected Now viewport/detail, app history, conversation read, and smart list/detail acknowledgement to cancellation of the corresponding app-owned relay notification. Persistent 48-hour read markers prevent delayed judgment from reposting an already viewed item. Source-app notifications and stored originals are preserved. Launcher styling/count aggregation remains OEM-controlled; no claim of a direct visual numeric-badge screenshot comparison.
+- Verified initial cause: Now alerts were not connected to in-app read state; recent appointment SMS remained in retry with the 200/day judgment allowance exhausted. Literal coordination/change/cancellation extraction now precedes AI, preserves multiple candidate slots, and distinguishes requests from completed changes/cancellations. Contextless replies remain contextual.
+- Private recovery audit identified duration/coupon-expiry and model-version false positives. Added exclusions/regressions and corrected only this run's exact generated IDs with matching timestamps/status, preserving user edits and all originals. Final net recovery: 9 schedule records (7 coordination, 2 change requests), including 3 recent missing SMS. DB quick check passed, zero lost original IDs, repeated repair added zero records, no historical Now/API replay.
+- Final unit suite: 274 tests, zero failures/errors. Galaxy S23 synthetic system-notification/read and smart category UI tests passed; actual MainActivity detail acknowledgement test passed in 1.928s. Final targeted audit/idempotence tests passed in 63.194s. Installed final APK and returned to normal app. Full evidence and remaining scope: `docs/BADGE_AND_SCHEDULE_REPAIR.md`.

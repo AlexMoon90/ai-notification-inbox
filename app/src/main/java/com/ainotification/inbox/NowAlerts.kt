@@ -14,6 +14,19 @@ internal class NowAlerts(private val app: InboxApplication) {
     private val prefs get() = app.getSharedPreferences("now-alerts", Context.MODE_PRIVATE)
     private val uri get() = Uri.parse("condition://${app.packageName}/now-alerts")
     private val channelId = "now_alerts_v1"
+    private val readState=NowAlertReadState(app)
+    @Synchronized fun acknowledge(ids:Collection<String>)=readState.acknowledge(ids)
+    suspend fun restoreReadState() {
+        readState.reconcile()
+        val smartSeen=app.getSharedPreferences("smart-dashboard-seen",0).getStringSet("ids",emptySet()).orEmpty()
+            .map{it.substringBeforeLast(":")}.toSet()
+        val conversations=ConversationReadStore(app)
+        for(id in readState.activeIds()) {
+            val row=app.database.notifications().find(id) ?: continue
+            val room=conversationRooms(listOf(row)).firstOrNull()
+            if(id in smartSeen || (room!=null && conversations.unread(room)==0))acknowledge(listOf(id))
+        }
+    }
     val enabled get() = prefs.getBoolean("enabled", false)
     val debug get() = app.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0
     @Synchronized fun start() {
@@ -67,6 +80,8 @@ internal class NowAlerts(private val app: InboxApplication) {
     }
     @Synchronized fun deliver(row:CapturedNotification,result:JSONObject) {
         if(!debug || !enabled || !shouldAlertNow(row,result,prefs.getLong("since",Long.MAX_VALUE),app.packageName))return
+        if(readState.isRead(row.snapshotId))return
+        readState.reconcile()
         try {
             val id=prefs.getString("rule",null) ?: return
             if(Build.VERSION.SDK_INT<35 || !manager.isNotificationPolicyAccessGranted || manager.getAutomaticZenRule(id)?.isEnabled!=true ||

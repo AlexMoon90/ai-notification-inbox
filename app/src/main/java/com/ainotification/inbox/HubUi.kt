@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.distinctUntilChanged
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -85,8 +86,11 @@ import org.json.JSONObject
     val unread by produceState<Map<String,Int>>(emptyMap(),rooms,readRevision){
         value=withContext(Dispatchers.IO){rooms.associate{it.id to readStore.unread(it)}}
     }
-    LaunchedEffect(roomId,room?.messages){
-        room?.let{if(withContext(Dispatchers.IO){readStore.markRead(it)})readRevision++}
+    LaunchedEffect(roomId,room?.messages,settingsPage){
+        room?.takeIf{settingsPage==null}?.let{
+            if(withContext(Dispatchers.IO){readStore.markRead(it)})readRevision++
+            if(!fixtureMode)withContext(Dispatchers.IO){app.nowAlerts.acknowledge(it.messages.filter{m->isWithinNowWindow(m.source,System.currentTimeMillis())}.map{m->m.source.snapshotId});app.nowAlerts.restoreReadState()}
+        }
     }
     val listState=remember(roomId,detailId,sourceHistory,review,tab){androidx.compose.foundation.lazy.LazyListState()}
     LaunchedEffect(roomId,room?.id,newestFirst,detailId) {
@@ -126,6 +130,20 @@ import org.json.JSONObject
     val visible=if(review)pending else visibleNow
     val timeGroups=if(review)data.pendingByTime else data.nowByTime
     val appGroups=data.nowByApp
+    LaunchedEffect(detailId,fixtureMode) {
+        if(!fixtureMode && detailId!=null)withContext(Dispatchers.IO){app.nowAlerts.acknowledge(listOf(detailId!!))}
+    }
+    LaunchedEffect(listState,tab,sourceHistory,roomId,detailId,review,fixtureMode,rows) {
+        if(!fixtureMode && roomId==null && detailId==null && (tab==0 || sourceHistory!=null)) {
+            snapshotFlow { listState.layoutInfo.visibleItemsInfo.filter {
+                it.offset+it.size>listState.layoutInfo.viewportStartOffset && it.offset<listState.layoutInfo.viewportEndOffset
+            }.mapNotNull{it.key as? String}.filter{!it.startsWith("header:")} }
+                .distinctUntilChanged().collect { ids ->
+                    val shown=ids.filter{id->rows.any{it.snapshotId==id}}
+                    withContext(Dispatchers.IO){app.nowAlerts.acknowledge(shown)}
+                }
+        }
+    }
     BackHandler(inDetail || category!=null){back()}
     Scaffold(modifier=Modifier.semantics{testTagsAsResourceId=true}.testTag(if(data.loaded)"hub_ready" else "hub_loading"),topBar={
         if(tab==2 && !inDetail)Spacer(Modifier.statusBarsPadding()) else Column(Modifier.statusBarsPadding().fillMaxWidth().padding(horizontal=16.dp).padding(top=8.dp,bottom=24.dp)){

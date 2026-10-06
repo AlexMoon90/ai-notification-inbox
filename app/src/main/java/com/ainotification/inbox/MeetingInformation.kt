@@ -6,6 +6,8 @@ import java.time.*
 internal fun extractGroupMeeting(row:CapturedNotification):LifeEvent? {
  if(!messageLike(row) || row.isGroupConversation!=true || row.isGroupSummary)return null
  val text=row.currentMessageText()
+ // Cancellation/change requests require their own evidence gate, not a keyword status.
+ if(Regex("취소|변경").containsMatchIn(text))return null
  if(text.length>4000 || Regex("광고|예시|예를 들어|(?:미팅|회의|약속).*(?:안\\s*합니다|없습니다|하지\\s*않습니다)").containsMatchIn(text))return null
  // Bind dates to the meeting sentence, never to another topic elsewhere in the message.
  val clauses=text.split(Regex("[\\n!?。]|(?<=[가-힣])\\.\\s*"))

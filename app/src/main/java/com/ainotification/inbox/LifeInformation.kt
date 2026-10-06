@@ -79,7 +79,7 @@ internal suspend fun persistLife(db:InboxDatabase,row:CapturedNotification,life:
   if(db.notifications().find(row.snapshotId)==null)return@withTransaction
   // Stable order/reservation reference only. Never join merely by title or amount.
   val prior=life.referenceKey?.let{db.structured().relatedLife(life.kind,it,life.provider)}.orEmpty()
-  val changed=prior.any{it.status!=life.status}
+  val changed=prior.any{it.status!=life.status} || (life.kind=="schedule" && life.status in setOf("changed","cancelled","change_requested","cancellation_requested"))
   db.structured().insertEvent(StructuredEvent(life.id,row.snapshotId,life.kind,life.title,row.appLabel,row.packageName,row.postedTime,changed,now,now))
   db.structured().saveLife(life);db.structured().saveProcessing(StructuredProcessing(row.snapshotId,"done"))
  }
