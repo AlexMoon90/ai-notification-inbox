@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.service.notification.Condition
 import android.service.notification.ZenPolicy
+import androidx.core.graphics.drawable.toBitmap
 import org.json.JSONObject
 
 /** Private-device opt-in experiment. Never cancels a source notification. */
@@ -95,8 +96,17 @@ internal class NowAlerts(private val app: InboxApplication) {
                 putExtra("now_snapshot",row.snapshotId)
             },PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             val text=row.currentMessageText().ifBlank { row.preview() }.take(500)
+            // Keep NOWSET as the publisher; show the actual source app as the content icon.
+            // A removed/unavailable app icon must never prevent notification delivery.
+            val sourceIcon=runCatching {
+                val size=(48*app.resources.displayMetrics.density).toInt().coerceIn(48,192)
+                app.packageManager.getApplicationIcon(row.packageName).toBitmap(size,size)
+            }.getOrNull()
+            val sourceTitle=notificationDisplayTitle(row)
+            val title=if(sourceTitle==row.appLabel)row.appLabel else "${row.appLabel} · $sourceTitle"
             manager.notify("now:${row.snapshotId}",1,Notification.Builder(app,channelId)
-                .setSmallIcon(R.drawable.ic_nowset_notification).setContentTitle("${row.appLabel} · ${notificationDisplayTitle(row)}")
+                .setSmallIcon(R.drawable.ic_nowset_notification).setContentTitle(title)
+                .apply { sourceIcon?.let { setLargeIcon(it) } }
                 .setContentText(text).setStyle(Notification.BigTextStyle().bigText(text))
                 .setContentIntent(open).setAutoCancel(true).setOnlyAlertOnce(true)
                 .setVisibility(Notification.VISIBILITY_PRIVATE).build())
