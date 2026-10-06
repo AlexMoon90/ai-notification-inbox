@@ -83,6 +83,10 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
  val scope=rememberCoroutineScope()
  val source=remember(app,fixture,fixtureEntries){if(fixture)flowOf(fixtureEntries) else app.database.structured().observe()}
  val stored by source.collectAsStateWithLifecycle(initialValue=emptyList())
+ val contactSource=remember(app,fixture){if(fixture)flowOf(emptyList<ScheduleContact>()) else app.database.structured().observeScheduleContacts()}
+ val contacts by contactSource.collectAsStateWithLifecycle(initialValue=emptyList())
+ val contactsBySource=remember(contacts){contacts.associateBy{it.sourceNotificationId}}
+ fun contactLabel(e:StructuredEntry)=scheduleContactLabel(e,contactsBySource[e.event.sourceNotificationId])
  val now=System.currentTimeMillis()
  val base=remember(stored){currentInformation(stored)}
  val debitPairs=remember(base){debitCandidates(base)}
@@ -193,6 +197,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
       m.paymentMethod?.let{Text(it,fontSize=11.sp,color=DashboardBlue)}
       moneySourceLabel(m)?.let{Text(it,fontSize=11.sp,color=DashboardMuted,maxLines=if(compact)1 else Int.MAX_VALUE,overflow=TextOverflow.Ellipsis)}
      }
+     contactLabel(e)?.let{Text(it,fontSize=12.sp,fontWeight=FontWeight.Medium,color=DashboardInk,maxLines=if(compact)1 else 2,overflow=TextOverflow.Ellipsis)}
      val date=e.life?.dateText ?: e.context?.dateTimeText
      if(!compact)Text(date ?: "수신 ${formatTime(e.event.observedAt)}",fontSize=11.sp,color=DashboardMuted,maxLines=1)
      if(!compact)entryStatus(e,now)?.let{chip(it)}
@@ -211,7 +216,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
     val unseen=informationRows.count{seenKey(it) !in seen};val changes=informationRows.count{it.event.isChanged && seenKey(it) !in seen}
     if(unseen>0)Text("새 정보 ${unseen-changes} · 변경 $changes",fontSize=10.sp,color=DashboardBlue)
     if(key=="delivery" && rows.size>informationRows.size)Text("광고 ${rows.size-informationRows.size}건",fontSize=10.sp,color=DashboardMuted)
-    informationRows.firstOrNull()?.let{e->Text(entryTitle(e),fontSize=12.sp,color=DashboardInk,maxLines=1,overflow=TextOverflow.Ellipsis);Text(e.life?.dateText ?: entryStatus(e,now) ?: "최근 수신 기록",fontSize=10.sp,color=DashboardMuted,maxLines=2)} ?: Text("정보가 들어오면 정리해요",fontSize=11.sp,color=DashboardMuted)
+    informationRows.firstOrNull()?.let{e->contactLabel(e)?.let{Text(it,fontSize=11.sp,color=DashboardInk,maxLines=1,overflow=TextOverflow.Ellipsis)};Text(entryTitle(e),fontSize=12.sp,color=DashboardInk,maxLines=1,overflow=TextOverflow.Ellipsis);Text(e.life?.dateText ?: entryStatus(e,now) ?: "최근 수신 기록",fontSize=10.sp,color=DashboardMuted,maxLines=2)} ?: Text("정보가 들어오면 정리해요",fontSize=11.sp,color=DashboardMuted)
    }
   }
  }
@@ -301,6 +306,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
     val e=detail
     paymentProjection.sources[e.event.id]?.takeIf{it.size>1}?.let{ids->item{chip("같은 거래 · 알림 ${ids.size}개")}}
     item{Text(entryTitle(e),fontSize=24.sp,fontWeight=FontWeight.Bold,color=DashboardInk)}
+    contactLabel(e)?.let{item{Text(it,fontSize=16.sp,fontWeight=FontWeight.SemiBold,color=DashboardInk)}}
     e.money?.let{m->
      item{moneyDisplayAmount(m)?.let{Text(it,fontSize=30.sp,fontWeight=FontWeight.Bold,color=DashboardInk)}}
      item{moneySourceLabel(m)?.let{Text(it,color=DashboardMuted)}}
@@ -325,7 +331,7 @@ private fun categoryIcon(key:String):ImageVector=when(key){"money"->Icons.Defaul
     }
     e.life?.let{l->
      item{chip(informationStatuses[l.status] ?: l.status)}
-     listOf("일시" to l.dateText,"장소" to l.place,"참여자" to l.participant,"배송사" to l.carrier,"상품" to l.itemName).forEach{(label,value)->if(value!=null)item{metric(label,value)}}
+     listOf("일시" to l.dateText,"장소" to l.place,"참여자" to l.participant.takeUnless{l.kind=="schedule"},"배송사" to l.carrier,"상품" to l.itemName).forEach{(label,value)->if(value!=null)item{metric(label,value)}}
      l.value?.let{item{metric(l.title,"${java.text.NumberFormat.getIntegerInstance().format(it)}${l.unit.orEmpty()}")}}
      if(l.kind=="schedule")item{choices(listOf("확정","완료","취소"),informationStatuses[l.status].orEmpty()){updateStatus(e,when(it){"완료"->"completed";"취소"->"cancelled";else->"confirmed"})}}
     }

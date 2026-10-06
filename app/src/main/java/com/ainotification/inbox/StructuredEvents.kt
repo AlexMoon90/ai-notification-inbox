@@ -20,6 +20,7 @@ data class MoneyPattern(@PrimaryKey val key:String,val templateJson:String?,val 
 @Entity(tableName="structured_processing",foreignKeys=[ForeignKey(entity=CapturedNotification::class,parentColumns=["snapshotId"],childColumns=["sourceNotificationId"],onDelete=ForeignKey.CASCADE)])
 data class StructuredProcessing(@PrimaryKey val sourceNotificationId:String,val status:String,val retryAt:Long=Long.MAX_VALUE,val attempts:Int=0)
 @Dao interface StructuredDao {
+ @Query("SELECT n.snapshotId AS sourceNotificationId,n.title,n.conversationTitle,n.isGroupConversation,n.personIdentity,n.appLabel AS sourceApp FROM notifications n INNER JOIN structured_events e ON e.sourceNotificationId=n.snapshotId WHERE e.category='schedule'") fun observeScheduleContacts():Flow<List<ScheduleContact>>
  @Upsert suspend fun saveLife(event:LifeEvent)
  @Query("UPDATE structured_events SET isChanged=1,updatedAt=:at WHERE id=:id") suspend fun markChanged(id:String,at:Long)
  @Query("SELECT * FROM structured_events WHERE id=:id") suspend fun event(id:String):StructuredEvent?
