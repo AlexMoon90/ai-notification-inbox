@@ -56,12 +56,11 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
    if(batch.isEmpty())withTimeoutOrNull(30_000){signal.receive()} else delay(30)
   }
  }}
- private fun budget(kind:String){
+ internal fun recordCall(kind:String){
   if(replaying){replay.charge(kind);return}
   if(designer!=null)return // Injected deterministic tests never spend API budget.
   val day=java.time.LocalDate.now().toString()
   val key="$day:$kind";val count=limits.getInt(key,0)
-  check(count<if(kind=="structure")20 else 200){"Daily money analysis budget reached"}
   limits.edit().putInt(key,count+1).apply()
  }
  suspend fun onClassified(row:CapturedNotification,events:List<String>){
@@ -91,7 +90,7 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
   (extractShoppingAd(row) ?: extractScheduleInformation(row) ?: extractLife(row))?.let{persistLife(db,row,it,clock());return@withLock}
   if(force)dao.removeEvent(row.snapshotId)
   if(messageLike(row) && !row.isGroupSummary && !row.hasEmptyContent()){
-   ConversationPipeline(context,db,engine,{budget("judgment")},clock).process(row);return@withLock
+   ConversationPipeline(context,db,engine,{recordCall("judgment")},clock).process(row);return@withLock
   }
   val events=db.hub().find(row.snapshotId)?.events().orEmpty()
   if(!moneyPossible(row,events)){
@@ -104,7 +103,7 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
   val template=if(existing?.templateJson!=null)validateMoneyTemplate(JSONObject(existing.templateJson)) else {
    // Mark before the external call; failures/restarts do not immediately repeat the same LLM request.
    dao.savePattern(MoneyPattern(key,null,now+3_600_000,existing?.createdAt ?: now,now))
-   budget("structure")
+   recordCall("structure")
    val state=JSONObject().put("sourceApp",row.appLabel).put("pattern",c.redactedText(engine)
      .replace(Regex("(?<![\\d,])(?:\\d{1,3}(?:,\\d{3})+|\\d+)\\s*원"),"<AMOUNT>원")
      .replace(Regex("(?<!\\d)\\d{6,}(?!\\d)"),"<NUMBER>"))
@@ -112,7 +111,7 @@ internal class MoneyPipeline(private val context:Context,private val db:InboxDat
    val result=validateMoneyTemplate(designer?.invoke(state) ?: SetupEngine(context).structured("money_pattern_structure",moneyStructurePrompt,moneyTemplateSchema(),state))
    dao.savePattern(MoneyPattern(key,result.toString(),0,existing?.createdAt ?: now,clock()));result
   }
-  budget("judgment")
+  recordCall("judgment")
   val questions=moneyQuestions(c,template)
   val result=engine.evaluateMoney(c.external(engine).put("sourceApp",row.appLabel),questions)
   val event=assembleMoney(row,c,result,questions,engine,clock())
